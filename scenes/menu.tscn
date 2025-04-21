@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://dypflwg4nyjim"]
+
+[ext_resource type="Script" uid="uid://ivu6dhn22w46" path="res://scripts/main_menu.gd" id="1_yqeox"]
+
+[sub_resource type="SystemFont" id="SystemFont_yqeox"]
+
+[sub_resource type="Theme" id="Theme_vjb58"]
+default_font = SubResource("SystemFont_yqeox")
+default_font_size = 60
+
+[sub_resource type="SystemFont" id="SystemFont_con2f"]
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_mhnvy"]
+default_font = SubResource("SystemFont_con2f")
+default_font_size = 20
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yqeox")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 125
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 125
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_vjb58")
+text = "Curling"
+
+[node name="Options" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 128.0
+offset_top = -264.0
+offset_right = 318.0
+offset_bottom = -160.0
+grow_vertical = 0
+theme = SubResource("Theme_mhnvy")
+
+[node name="StartButton" type="Button" parent="Options"]
+layout_mode = 2
+text = "Start"
+
+[node name="ExitButton" type="Button" parent="Options"]
+layout_mode = 2
+text = "Exit
+"
+
+[connection signal="pressed" from="Options/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Options/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnpxeohkk1cc"]
+
+[ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://dd11xl8paceu7" path="res://scenes/stone.tscn" id="1_o5qli"]
+
+[node name="Root" type="Node3D"]
+
+[node name="Sheet" parent="." instance=ExtResource("1_0wfyh")]
+
+[node name="Stone" parent="." instance=ExtResource("1_o5qli")]
+
+[node name="ThirdPersonCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3, 3)
+
+[node name="TopDownCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, -0.75, 0.433012, 0, 5, 0)
+shadow_enabled = true

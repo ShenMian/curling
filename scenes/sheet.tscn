@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://hmtjjdfsi6rp"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_v0354"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v0354"]
+size = Vector2(5, 45.72)
+
+[node name="Sheet" type="Node3D"]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("WorldBoundaryShape3D_v0354")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("PlaneMesh_v0354")
+skeleton = NodePath("../..")

@@ -20,4 +20,4 @@ transform = Transform3D(1, 0, 0, 0, 0.843794, 0.536666, 0, -0.536666, 0.843794, 
 transform = Transform3D(-2.04146e-06, 0.866026, -0.5, 3.21598e-09, 0.5, 0.866026, 1, 1.3113e-06, -6.78003e-07, 0, 5, 0)
 shadow_enabled = true
 
-[node name="CanvasLayer" parent="." instance=ExtResource("2_0wfyh")]
+[node name="MainMenu" parent="." instance=ExtResource("2_0wfyh")]

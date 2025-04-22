@@ -17,7 +17,7 @@ subpixel_positioning = 0
 default_font = SubResource("SystemFont_con2f")
 default_font_size = 20
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_yqeox")
 
 [node name="Blur" type="ColorRect" parent="."]

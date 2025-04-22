@@ -4,6 +4,8 @@ func _ready() -> void:
 	hide()
 
 func _input(event):
+	if visible:
+		return
 	if Input.is_key_pressed(KEY_ESCAPE):
 		show()
 		$BlurAnimation.play("start_pause")

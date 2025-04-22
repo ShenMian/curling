@@ -14,7 +14,7 @@ background_mode = 2
 sky = SubResource("Sky_tbgi4")
 ambient_light_source = 3
 
-[node name="Root" type="Node3D"]
+[node name="Gameplay" type="Node3D"]
 
 [node name="Sheet" parent="." instance=ExtResource("1_l1v76")]
 

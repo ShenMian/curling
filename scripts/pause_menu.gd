@@ -7,6 +7,7 @@ func _input(event):
 	if visible:
 		return
 	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().paused = true
 		show()
 		$BlurAnimation.play("start_pause")
 

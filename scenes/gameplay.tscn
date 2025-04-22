@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene load_steps=7 format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
 [ext_resource type="PackedScene" uid="uid://dd11xl8paceu7" path="res://scenes/stone.tscn" id="2_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1v76"]
+
+[sub_resource type="Sky" id="Sky_tbgi4"]
+sky_material = SubResource("ProceduralSkyMaterial_l1v76")
+
+[sub_resource type="Environment" id="Environment_ct7aa"]
+background_mode = 2
+sky = SubResource("Sky_tbgi4")
+ambient_light_source = 3
 
 [node name="Root" type="Node3D"]
 
@@ -10,14 +20,30 @@
 
 [node name="Stone" parent="." instance=ExtResource("2_ct7aa")]
 
-[node name="ThirdPersonCamera" type="Camera3D" parent="."]
+[node name="ThirdPersonCamera" type="Camera3D" parent="Stone"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3, 3)
-
-[node name="TopDownCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, -0.75, 0.433012, 0, 5, 0)
 shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ct7aa")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_bottom = 256.0
+grow_horizontal = 0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="TopDownCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, -16.5066)
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]

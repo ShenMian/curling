@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+func _ready() -> void:
+	hide()
+
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		show()

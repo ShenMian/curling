@@ -47,7 +47,6 @@ _data = {
 }
 
 [node name="PauseMenu" type="CanvasLayer"]
-visible = false
 script = ExtResource("1_n87rw")
 
 [node name="Blur" type="ColorRect" parent="."]
@@ -71,6 +70,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_wyi4u")
+alignment = 1
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2

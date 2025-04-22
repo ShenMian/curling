@@ -58,6 +58,7 @@ offset_right = 318.0
 offset_bottom = -228.0
 grow_vertical = 0
 theme = SubResource("Theme_l6cm7")
+alignment = 1
 
 [node name="StartButton" type="Button" parent="Options"]
 layout_mode = 2

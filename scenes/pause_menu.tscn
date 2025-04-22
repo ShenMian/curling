@@ -1,13 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhodt352l54mb"]
+[gd_scene load_steps=6 format=3 uid="uid://8n1e4e5tpjm3"]
+
+[ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Shader" uid="uid://o7om27yfrbib" path="res://shaders/blur.gdshader" id="2_myx47"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kukqi"]
+shader = ExtResource("2_myx47")
+shader_parameter/amount = 1.0
 
 [sub_resource type="SystemFont" id="SystemFont_uahpa"]
 
-[sub_resource type="Theme" id="Theme_n87rw"]
+[sub_resource type="Theme" id="Theme_wyi4u"]
 default_font = SubResource("SystemFont_uahpa")
 default_font_size = 20
 
-[node name="PauseMenu" type="Control"]
-layout_mode = 3
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_n87rw")
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kukqi")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,19 +25,18 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -56.5
-offset_top = -33.0
-offset_right = 56.5
-offset_bottom = 33.0
+offset_left = -95.0
+offset_top = -50.0
+offset_right = 95.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_n87rw")
+theme = SubResource("Theme_wyi4u")
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -36,3 +45,6 @@ text = "Resume"
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

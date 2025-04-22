@@ -1,31 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://dypflwg4nyjim"]
+[gd_scene load_steps=6 format=3 uid="uid://soq5ij35lfxi"]
 
-[ext_resource type="Script" uid="uid://ivu6dhn22w46" path="res://scripts/main_menu.gd" id="1_yqeox"]
+[ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_l6cm7"]
 
 [sub_resource type="SystemFont" id="SystemFont_yqeox"]
 
-[sub_resource type="Theme" id="Theme_vjb58"]
+[sub_resource type="Theme" id="Theme_vue75"]
 default_font = SubResource("SystemFont_yqeox")
 default_font_size = 60
 
 [sub_resource type="SystemFont" id="SystemFont_con2f"]
 subpixel_positioning = 0
 
-[sub_resource type="Theme" id="Theme_mhnvy"]
+[sub_resource type="Theme" id="Theme_l6cm7"]
 default_font = SubResource("SystemFont_con2f")
 default_font_size = 20
 
-[node name="MainMenu" type="Control"]
-layout_mode = 3
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Blur" type="ColorRect" parent="."]
+material = ExtResource("1_l6cm7")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 88.0
+offset_right = -784.0
+offset_bottom = -192.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_yqeox")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -39,11 +43,10 @@ theme_override_constants/margin_bottom = 125
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-theme = SubResource("Theme_vjb58")
+theme = SubResource("Theme_vue75")
 text = "Curling"
 
 [node name="Options" type="VBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -52,7 +55,7 @@ offset_top = -328.0
 offset_right = 318.0
 offset_bottom = -228.0
 grow_vertical = 0
-theme = SubResource("Theme_mhnvy")
+theme = SubResource("Theme_l6cm7")
 
 [node name="StartButton" type="Button" parent="Options"]
 layout_mode = 2
@@ -62,6 +65,3 @@ text = "Start"
 layout_mode = 2
 text = "Exit
 "
-
-[connection signal="pressed" from="Options/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Options/ExitButton" to="." method="_on_exit_button_pressed"]

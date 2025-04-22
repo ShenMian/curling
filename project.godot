@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="curling"
-run/main_scene="uid://dypflwg4nyjim"
+run/main_scene="uid://io1xx04hiqb8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -1,13 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://8n1e4e5tpjm3"]
+[gd_scene load_steps=8 format=3 uid="uid://8n1e4e5tpjm3"]
 
 [ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://pause_menu.gd" id="1_n87rw"]
-[ext_resource type="Shader" uid="uid://o7om27yfrbib" path="res://shaders/blur.gdshader" id="2_myx47"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kukqi"]
-shader = ExtResource("2_myx47")
-shader_parameter/amount = 1.0
+[ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="2_myx47"]
 
 [sub_resource type="SystemFont" id="SystemFont_uahpa"]
+subpixel_positioning = 0
 
 [sub_resource type="Theme" id="Theme_wyi4u"]
 default_font = SubResource("SystemFont_uahpa")
@@ -50,10 +47,11 @@ _data = {
 }
 
 [node name="PauseMenu" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_n87rw")
 
 [node name="Blur" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_kukqi")
+material = ExtResource("2_myx47")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

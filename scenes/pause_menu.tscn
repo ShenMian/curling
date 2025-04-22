@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://8n1e4e5tpjm3"]
 
-[ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="2_myx47"]
 
 [sub_resource type="SystemFont" id="SystemFont_uahpa"]

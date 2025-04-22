@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://soq5ij35lfxi"]
+[gd_scene load_steps=7 format=3 uid="uid://soq5ij35lfxi"]
 
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://ivu6dhn22w46" path="res://scripts/main_menu.gd" id="1_yqeox"]
 
 [sub_resource type="SystemFont" id="SystemFont_yqeox"]
 
@@ -16,6 +17,7 @@ default_font = SubResource("SystemFont_con2f")
 default_font_size = 20
 
 [node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_yqeox")
 
 [node name="Blur" type="ColorRect" parent="."]
 material = ExtResource("1_l6cm7")
@@ -65,3 +67,6 @@ text = "Start"
 layout_mode = 2
 text = "Exit
 "
+
+[connection signal="pressed" from="Options/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Options/ExitButton" to="." method="_on_exit_button_pressed"]

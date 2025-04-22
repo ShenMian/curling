@@ -4,4 +4,4 @@
 
 [resource]
 shader = ExtResource("1_nrgi3")
-shader_parameter/amount = 1.0
+shader_parameter/amount = 2.0

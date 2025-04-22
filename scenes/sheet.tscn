@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://hmtjjdfsi6rp"]
+[gd_scene load_steps=6 format=3 uid="uid://hmtjjdfsi6rp"]
+
+[ext_resource type="Texture2D" uid="uid://bliw2th0v8vdd" path="res://textures/curling_sheet.png" id="1_2hqyf"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2hqyf"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2hqyf"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v0354"]
+albedo_texture = ExtResource("1_2hqyf")
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0354"]
+material = SubResource("StandardMaterial3D_v0354")
 size = Vector2(5, 45.72)
 
 [node name="Sheet" type="Node3D"]

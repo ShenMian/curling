@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://io1xx04hiqb8"]
+[gd_scene load_steps=7 format=3 uid="uid://io1xx04hiqb8"]
 
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_0wfyh"]
-[ext_resource type="Script" uid="uid://dn41b0r7f7cjs" path="res://scripts/main.gd" id="1_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://dd11xl8paceu7" path="res://scenes/stone.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://lu3u3fp16p6x" path="res://scenes/stone.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://soq5ij35lfxi" path="res://scenes/main_menu.tscn" id="2_0wfyh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jyhfs"]
@@ -16,13 +15,14 @@ sky = SubResource("Sky_jyhfs")
 ambient_light_source = 3
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_jyhfs")
-
-[node name="Stone" parent="." instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 
 [node name="Sheet" parent="." instance=ExtResource("1_0wfyh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
+
+[node name="Stone" parent="." instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75741)
+linear_velocity = Vector3(0, 0, -0.15)
+angular_velocity = Vector3(0, 0.785398, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.5, 0.464767, -0.730748, 0, 0.843795, 0.536666, 0.866025, -0.268333, 0.421897, -1.15489, 0.730211, -0.268288)

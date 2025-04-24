@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://lu3u3fp16p6x"]
+[gd_scene load_steps=5 format=3 uid="uid://lu3u3fp16p6x"]
 
-[ext_resource type="PackedScene" uid="uid://r2a2wfdofiau" path="res://models/curling_stone.blend" id="1_hmdus"]
+[ext_resource type="ArrayMesh" uid="uid://bgiehwqdfvmej" path="res://models/curling_stone_Body.res" id="2_f651v"]
+[ext_resource type="ArrayMesh" uid="uid://drgd11bqmsfsf" path="res://models/curling_stone_Handle.res" id="3_6niw0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hmdus"]
 friction = 0.02
@@ -10,14 +11,22 @@ height = 0.3
 radius = 0.26
 
 [node name="Stone" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.189615, 0)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 mass = 17.24
 physics_material_override = SubResource("PhysicsMaterial_hmdus")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152412, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.037123, 0)
 shape = SubResource("CylinderShape3D_tuldt")
 
-[node name="Mesh" parent="." instance=ExtResource("1_hmdus")]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0.00601874)
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(0.009, 0, 0, 0, 0.009, 0, 0, 0, 0.009, 0, 0, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("2_f651v")
+
+[node name="Handle" type="MeshInstance3D" parent="Node3D"]
+mesh = ExtResource("3_6niw0")

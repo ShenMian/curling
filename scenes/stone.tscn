@@ -10,7 +10,6 @@ height = 0.3
 radius = 0.26
 
 [node name="Stone" type="RigidBody3D"]
-axis_lock_linear_y = true
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 mass = 17.24

@@ -9,6 +9,9 @@ extends Camera3D
 # How quickly the camera interpolates to the target position (higher = faster)
 @export var lerp_factor = 3.0
 
+# Vertical offset for the camera's look-at point (positive = look higher, negative = look lower)
+@export var lookat_voffset: float
+
 func _physics_process(delta):
 	if !target:
 		return
@@ -17,4 +20,5 @@ func _physics_process(delta):
 	target_transform = target_transform.translated_local(offset)
 	global_transform = global_transform.interpolate_with(target_transform, lerp_factor * delta)
 
-	look_at(target.global_transform.origin, target.transform.basis.y)
+	var look_at_point = target.global_transform.origin + Vector3(0, lookat_voffset, 0)
+	look_at(look_at_point, target.transform.basis.y)

@@ -20,9 +20,10 @@ ambient_light_source = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 
 [node name="Stone" parent="." instance=ExtResource("1_o5qli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.191612, 0.75741)
-linear_velocity = Vector3(0, 0, -0.8)
-angular_velocity = Vector3(0, 0.785398, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.757)
+linear_velocity = Vector3(0, 0, -0.7)
+angular_velocity = Vector3(0, 2.79253, 0)
+color = Color(0.905882, 0.6, 0.168627, 1)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.5, 0.464767, -0.730748, 0, 0.843795, 0.536666, 0.866025, -0.268333, 0.421897, -1.15489, 0.730211, -0.268288)

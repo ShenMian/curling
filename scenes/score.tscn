@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2fg5nt83iujg"]
+
+[ext_resource type="Script" uid="uid://b325iydyxsrch" path="res://scripts/score.gd" id="1_8juob"]
+
+[node name="Score" type="CanvasLayer"]
+script = ExtResource("1_8juob")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 265.0
+offset_bottom = 137.0
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[color=red]Red[/color] : 0
+[color=blue]Blue[/color]: 0"

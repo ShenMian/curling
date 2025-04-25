@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl1lj6wk00whi"]
+
+[ext_resource type="PackedScene" uid="uid://b3edou237nhlr" path="res://models/curling_broom.blend" id="1_pn3sd"]
+
+[node name="Broom" type="Node3D"]
+
+[node name="Mesh" parent="." instance=ExtResource("1_pn3sd")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)

@@ -5,7 +5,7 @@ var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var stone = stone_scene.instantiate()
-	stone.position = Vector3(0.0, 0.2, 0.3)
+	stone.position = Vector3(0.0, 0.0, 0.3)
 	stone.rotation_degrees = Vector3(0.0, 180.0, 0.0)
 	stone.color = Color.BLUE
 	$Stones.add_child(stone)

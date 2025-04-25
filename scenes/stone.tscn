@@ -8,7 +8,7 @@
 friction = 0.02
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tuldt"]
-height = 0.3
+height = 0.341577
 radius = 0.26
 
 [node name="Stone" type="RigidBody3D"]
@@ -19,11 +19,11 @@ physics_material_override = SubResource("PhysicsMaterial_hmdus")
 script = ExtResource("1_f651v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.037123, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.169552, -0.00438015)
 shape = SubResource("CylinderShape3D_tuldt")
 
 [node name="Meshes" type="Node3D" parent="."]
-transform = Transform3D(0.009, 0, 0, 0, 0.009, 0, 0, 0, 0.009, 0, 0, 0)
+transform = Transform3D(0.009, 0, 0, 0, 0.009, 0, 0, 0, 0.009, 0, 0.184008, 0)
 
 [node name="Body" type="MeshInstance3D" parent="Meshes"]
 mesh = ExtResource("2_f651v")

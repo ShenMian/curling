@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene load_steps=9 format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
 [ext_resource type="Script" uid="uid://b8gkn2ed6qcag" path="res://scripts/third_person_camera.gd" id="4_ocj2s"]
+[ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/score.tscn" id="5_din8e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1v76"]
 
@@ -19,14 +20,15 @@ ambient_light_source = 3
 script = ExtResource("1_ct7aa")
 
 [node name="Sheet" parent="." instance=ExtResource("1_l1v76")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.5178)
 
 [node name="Stones" type="Node" parent="."]
 
 [node name="ThirdPersonCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 2)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 29)
 script = ExtResource("4_ocj2s")
-offset = Vector3(0, 1, 1)
-lookat_voffset = 0.5
+offset = Vector3(0, 2, 1)
+lookat_voffset = 1.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, -0.75, 0.433012, 0, 5, 0)
@@ -49,8 +51,11 @@ size = Vector2i(256, 256)
 render_target_update_mode = 4
 
 [node name="TopDownCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, -16.5066)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
+
+[node name="Score" parent="." instance=ExtResource("5_din8e")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
+visible = false
 
 [connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]

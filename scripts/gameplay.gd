@@ -31,17 +31,7 @@ func _process(_delta: float) -> void:
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		var mouse_position = get_viewport().get_mouse_position()
-		var ray_origin = third_person_camera.project_ray_origin(mouse_position)
-		var ray_end = ray_origin + third_person_camera.project_ray_normal(mouse_position) * 10.0
-
-		var ray_query_params = PhysicsRayQueryParameters3D.new()
-		ray_query_params.from = ray_origin
-		ray_query_params.to = ray_end
-		ray_query_params.exclude = [self]
-
-		var space_state = get_world_3d().direct_space_state
-		var collision = space_state.intersect_ray(ray_query_params)
+		var collision = mouse_ray_cast()
 		if collision.is_empty():
 			return
 
@@ -59,6 +49,19 @@ func _input(event):
 
 func _on_sheet_out_of_bounds(_stone: Node3D) -> void:
 	print("stone out of bounds")
+
+func mouse_ray_cast() -> Dictionary:
+		var mouse_position = get_viewport().get_mouse_position()
+		var ray_origin = third_person_camera.project_ray_origin(mouse_position)
+		var ray_end = ray_origin + third_person_camera.project_ray_normal(mouse_position) * 10.0
+
+		var ray_query_params = PhysicsRayQueryParameters3D.new()
+		ray_query_params.from = ray_origin
+		ray_query_params.to = ray_end
+		ray_query_params.exclude = [self]
+
+		var space_state = get_world_3d().direct_space_state
+		return space_state.intersect_ray(ray_query_params)
 
 func next_round() -> void:
 	round += 1

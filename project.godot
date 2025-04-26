@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="curling"
+config/name="Curling"
 run/main_scene="uid://io1xx04hiqb8"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://dft80r1vrlgsx"
 
 [editor_plugins]
 

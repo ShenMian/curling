@@ -90,7 +90,7 @@ func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	disable_stone(stone)
 
 func disable_stone(stone: Node3D):
-	stone.remove_child(sweep)
+	stone.remove_child(stone.get_node("Sweep"))
 
 	# Disable collision with other stones
 	stone.collision_layer = 0
@@ -150,6 +150,7 @@ func calculate_score() -> void:
 		# Check if the stone is hogged
 		if last_stone.position.z > far_hog_line_marker.global_position.z:
 			disable_stone(last_stone)
+		last_stone.remove_child(last_stone.get_node("Sweep"))
 		next_round()
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))

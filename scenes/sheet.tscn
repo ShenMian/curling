@@ -35,12 +35,14 @@ mesh = SubResource("PlaneMesh_v0354")
 skeleton = NodePath("../..")
 
 [node name="Area" type="Area3D" parent="StaticBody"]
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody/Area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0027771, 1, -0.000152588)
 shape = SubResource("BoxShape3D_2hqyf")
 
 [node name="HouseArea" type="Area3D" parent="."]
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HouseArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -16.527)

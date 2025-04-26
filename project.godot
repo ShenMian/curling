@@ -26,6 +26,7 @@ locale/translations=PackedStringArray("res://translations.en.translation", "res:
 [layer_names]
 
 3d_render/layer_2="Stone Label"
+3d_render/layer_3="Sweep Area"
 
 [rendering]
 

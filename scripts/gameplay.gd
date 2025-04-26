@@ -2,10 +2,14 @@ extends Node3D
 
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
 @onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera
+
 @onready var sheet: Node3D = $Sheet
 @onready var stone_group: Node = $Stones
-@onready var scoreboard: CanvasLayer = $Scoreboard
+
+@onready var tee_line_marker: Marker3D = $Sheet/TeeLineMarker
 @onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
+
+@onready var scoreboard: CanvasLayer = $Scoreboard
 
 var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
 
@@ -43,7 +47,7 @@ func next_round() -> void:
 
 func spwan_stone(color: Color) -> void:
 	var stone = stone_scene.instantiate()
-	stone.position = Vector3(0.0, 0.0, 27.3)
+	stone.position = tee_line_marker.global_position
 	stone.rotation_degrees = Vector3(0.0, 180.0, 0.0)
 	stone.color = color
 	stone_group.add_child(stone)

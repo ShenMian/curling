@@ -17,7 +17,7 @@ func set_blue_score(score: int) -> void:
 	update_label()
 
 func update_label() -> void:
-	rich_text_label.text = "[color=red]{RED_TEAM}[/color] : {red}\n[color=blue]{BLUE_TEAM}[/color]: {blue}".format({
+	rich_text_label.text = "[color=red]{RED_TEAM}[/color]: {red}\n[color=blue]{BLUE_TEAM}[/color]: {blue}".format({
 		"RED_TEAM": tr("RED_TEAM"),
 		"BLUE_TEAM": tr("BLUE_TEAM"),
 		"red": red_score,

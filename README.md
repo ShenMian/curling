@@ -2,6 +2,8 @@
 
 ## Assets
 
+### Models
+
 - [Curling Stone SVG Vector](https://www.svgrepo.com/svg/405166/curling-stone)
     - **Author**: Twitter.
     - **License**: MIT License.
@@ -14,3 +16,9 @@
 - [Rome: Gladiator Arena](https://sketchfab.com/3d-models/rome-gladiator-arena-554186cb26634d5fb48f11b0d9b518d6)
     - **Author**: Jody_Hong
     - **License**: CC Attribution.
+
+### Godot Addons
+
+- [Lines & Trails 3D](https://github.com/CozyCubeGames/cozy-cube-godot-addons)
+    - **Author**: CozyCubeGames.
+    - **License**: MIT License.

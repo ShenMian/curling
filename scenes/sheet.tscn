@@ -52,6 +52,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.527)
 [node name="TeeLineMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.872)
 
+[node name="FarHogLineMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.3244)
+
 [connection signal="area_exited" from="StaticBody/Area" to="." method="_on_area_exited"]
 [connection signal="body_exited" from="StaticBody/Area" to="." method="_on_body_exited"]
 [connection signal="body_entered" from="HouseArea" to="." method="_on_house_area_body_entered"]

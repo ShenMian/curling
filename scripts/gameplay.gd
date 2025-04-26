@@ -10,6 +10,7 @@ extends Node3D
 
 @onready var tee_line_marker: Marker3D = $Sheet/TeeLineMarker
 @onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
+@onready var far_hog_line_marker: Marker3D = $Sheet/FarHogLineMarker
 
 @onready var impulse_indicator: Line3D = $ImpulseIndicator
 @onready var scoreboard: CanvasLayer = $Scoreboard
@@ -34,11 +35,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if is_stone_shot:
 		calculate_score()
-
-func calculate_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
-	var impulse = (to - from) * impulse_factor
-	var length = clamp(impulse.length(), 0.0, impulse_max)
-	return impulse.normalized() * length
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -81,7 +77,10 @@ func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	var material = PhysicsMaterial.new()
 	material.friction = 1.0
 	stone.physics_material_override = material
+	
+	disable_stone(stone)
 
+func disable_stone(stone: Node3D):
 	# Disable collision with other stones
 	stone.collision_layer = 0
 	stone.collision_mask = 1 << 1
@@ -89,6 +88,12 @@ func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	# Make the stone semi-transparent
 	for mesh in stone.get_node("Meshes").get_children():
 		mesh.transparency = 0.3
+
+func calculate_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
+	var impulse = (to - from) * impulse_factor
+	impulse.z = min(impulse.z, 0.0)
+	var length = clamp(impulse.length(), 0.0, impulse_max)
+	return impulse.normalized() * length
 
 func mouse_ray_cast() -> Dictionary:
 		var mouse_position = get_viewport().get_mouse_position()
@@ -125,8 +130,12 @@ func calculate_score() -> void:
 	if stones.is_empty():
 		return
 
-	if is_stone_shot and stones[-1].sleeping:
+	var last_stone = stones[-1]
+	if is_stone_shot and last_stone.sleeping:
 		is_stone_shot = false
+		# Check if the stone is hogged
+		if last_stone.position.z > far_hog_line_marker.global_position.z:
+			disable_stone(last_stone)
 		next_round()
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))

@@ -19,14 +19,22 @@ physics_material_override = SubResource("PhysicsMaterial_hmdus")
 script = ExtResource("1_f651v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.169552, -0.00438015)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.172388, 0)
 shape = SubResource("CylinderShape3D_tuldt")
 
 [node name="Meshes" type="Node3D" parent="."]
-transform = Transform3D(0.009, 0, 0, 0, 0.009, 0, 0, 0, 0.009, 0, 0.184008, 0)
+transform = Transform3D(-0.009, 0, -7.86805e-10, 0, 0.009, 0, 7.86805e-10, 0, -0.009, 0, 0.184008, -0.00488748)
 
 [node name="Body" type="MeshInstance3D" parent="Meshes"]
 mesh = ExtResource("2_f651v")
 
 [node name="Handle" type="MeshInstance3D" parent="Meshes"]
 mesh = ExtResource("3_6niw0")
+
+[node name="NumberLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+layers = 2
+billboard = 1
+no_depth_test = true
+font_size = 96
+outline_size = 24

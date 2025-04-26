@@ -19,6 +19,10 @@ config/icon="uid://dft80r1vrlgsx"
 
 enabled=PackedStringArray("res://addons/lines_and_trails_3d/plugin.cfg")
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://translations.en.translation", "res://translations.zh.translation")
+
 [layer_names]
 
 3d_render/layer_2="Stone Label"

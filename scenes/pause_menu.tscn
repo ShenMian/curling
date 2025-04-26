@@ -75,11 +75,11 @@ alignment = 1
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Resume"
+text = "RESUME"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Quit"
+text = "QUIT"
 
 [node name="BlurAnimation" type="AnimationPlayer" parent="."]
 libraries = {

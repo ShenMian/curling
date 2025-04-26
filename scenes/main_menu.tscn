@@ -43,7 +43,7 @@ layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_vue75")
 theme_override_colors/font_color = Color(0.161769, 0.533234, 0.743294, 1)
-text = "Curling"
+text = "TITLE"
 
 [node name="Options" type="VBoxContainer" parent="."]
 anchors_preset = 2
@@ -59,12 +59,11 @@ alignment = 1
 
 [node name="StartButton" type="Button" parent="Options"]
 layout_mode = 2
-text = "Start"
+text = "START"
 
 [node name="ExitButton" type="Button" parent="Options"]
 layout_mode = 2
-text = "Exit
-"
+text = "EXIT"
 
 [connection signal="pressed" from="Options/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Options/ExitButton" to="." method="_on_exit_button_pressed"]

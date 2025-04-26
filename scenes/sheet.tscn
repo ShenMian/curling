@@ -24,6 +24,7 @@ radius = 1.74561
 script = ExtResource("1_as85d")
 
 [node name="StaticBody" type="StaticBody3D" parent="."]
+collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_2hqyf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody"]

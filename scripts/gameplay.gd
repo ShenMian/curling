@@ -76,8 +76,19 @@ func _input(event):
 			impulse_indicator.points[1].y = 0.1
 			impulse_indicator.rebuild()
 
-func _on_sheet_out_of_bounds(_stone: Node3D) -> void:
-	print("stone out of bounds")
+func _on_sheet_out_of_bounds(stone: Node3D) -> void:
+	# Increase friction to stop the stone quickly
+	var material = PhysicsMaterial.new()
+	material.friction = 1.0
+	stone.physics_material_override = material
+
+	# Disable collision with other stones
+	stone.collision_layer = 0
+	stone.collision_mask = 1 << 1
+
+	# Make the stone semi-transparent
+	for mesh in stone.get_node("Meshes").get_children():
+		mesh.transparency = 0.3
 
 func mouse_ray_cast() -> Dictionary:
 		var mouse_position = get_viewport().get_mouse_position()

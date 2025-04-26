@@ -40,6 +40,7 @@ metadata/_custom_type_script = "uid://c8rainoecpyie"
 
 [node name="ThirdPersonCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 29)
+cull_mask = 1048573
 script = ExtResource("4_ocj2s")
 offset = Vector3(0, 2, 1)
 lookat_voffset = 0.5
@@ -65,7 +66,9 @@ size = Vector2i(256, 256)
 render_target_update_mode = 4
 
 [node name="TopDownCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+projection = 1
+size = 4.14245
 
 [node name="Scoreboard" parent="." instance=ExtResource("5_din8e")]
 

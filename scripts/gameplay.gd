@@ -62,6 +62,7 @@ func _input(event):
 		var collision = mouse_ray_cast()
 		if collision.is_empty():
 			return
+
 		var stone = stone_group.get_children()[-1]
 		if is_stone_drag and collision.collider == $Sheet/StaticBody:
 			var impulse = calculate_clamped_impulse(collision.position, stone.position)
@@ -101,8 +102,8 @@ func next_round() -> void:
 func spwan_stone(color: Color) -> void:
 	var stone = stone_scene.instantiate()
 	stone.position = tee_line_marker.global_position
-	stone.rotation_degrees = Vector3(0.0, 180.0, 0.0)
 	stone.color = color
+	stone.number = stone_group.get_children().size() + 1
 	stone_group.add_child(stone)
 
 	third_person_camera.position = stone.position + third_person_camera.offset

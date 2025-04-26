@@ -7,14 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
 [ext_resource type="Script" uid="uid://b8gkn2ed6qcag" path="res://scripts/third_person_camera.gd" id="4_ocj2s"]
 [ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="5_din8e"]
-[ext_resource type="PackedScene" uid="uid://by5p52mdrg3mg" path="res://models/seats.blend" id="8_e124b"]
+[ext_resource type="PackedScene" uid="uid://e84211jixi3w" path="res://models/arena.blend" id="7_101mb"]
 
 [sub_resource type="Curve" id="Curve_din8e"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_e124b"]
-size = Vector2(50, 60)
+size = Vector2(80, 80)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1v76"]
 
@@ -49,15 +49,13 @@ script = ExtResource("4_ocj2s")
 offset = Vector3(0, 2, 1)
 lookat_voffset = 0.5
 
-[node name="LeftSeats" parent="." instance=ExtResource("8_e124b")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 10, 0, 17.505)
+[node name="Arena" parent="." instance=ExtResource("7_101mb")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 16.5125)
 
-[node name="RightSeats" parent="." instance=ExtResource("8_e124b")]
-transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, -10, 0, 17.505)
-
-[node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 16.409)
+[node name="Floor" type="MeshInstance3D" parent="Arena"]
+transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, -0.00666667, 0.00142002)
 mesh = SubResource("PlaneMesh_e124b")
+skeleton = NodePath("../..")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, -0.75, 0.433012, 0, 5, 0)

@@ -15,7 +15,9 @@ var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
 
 var round: int = 0
 var team_color: Color = Color.RED
-var is_stone_shot: bool = true
+
+var is_stone_shot: bool = false
+var is_stone_drag: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,12 +29,33 @@ func _process(_delta: float) -> void:
 	if is_stone_shot:
 		calculate_score()
 
-func _input(_event):
-	if Input.is_key_pressed(KEY_SPACE):
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		var mouse_position = get_viewport().get_mouse_position()
+		var ray_origin = third_person_camera.project_ray_origin(mouse_position)
+		var ray_end = ray_origin + third_person_camera.project_ray_normal(mouse_position) * 10.0
+
+		var ray_query_params = PhysicsRayQueryParameters3D.new()
+		ray_query_params.from = ray_origin
+		ray_query_params.to = ray_end
+		ray_query_params.exclude = [self]
+
+		var space_state = get_world_3d().direct_space_state
+		var collision = space_state.intersect_ray(ray_query_params)
+		if collision.is_empty():
+			return
+
 		var stone = stone_group.get_children()[-1]
-		stone.apply_force(Vector3(0.0, 0.0, -1000.0))
-		stone.sleeping = false
-		is_stone_shot = true
+		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
+			print("start darg stone")
+			is_stone_drag = true
+		elif is_stone_drag and event.is_released() and collision.collider == $Sheet/StaticBody3D:
+			print("stop darg stone")
+			is_stone_drag = false
+			var impulse = (stone.position - collision.position) * 150.0
+			stone.apply_central_impulse(impulse)
+			stone.sleeping = false
+			is_stone_shot = true
 
 func _on_sheet_out_of_bounds(_stone: Node3D) -> void:
 	print("stone out of bounds")
@@ -54,9 +77,6 @@ func spwan_stone(color: Color) -> void:
 
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
-	
-	assert(is_stone_shot)
-	is_stone_shot = false
 
 func calculate_score() -> void:
 	var stones = stone_group.get_children()
@@ -64,6 +84,7 @@ func calculate_score() -> void:
 		return
 
 	if is_stone_shot and stones[-1].sleeping:
+		is_stone_shot = false
 		next_round()
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))

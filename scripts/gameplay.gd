@@ -21,7 +21,7 @@ signal stone_shot(stone: Node3D)
 
 var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
 
-var round: int = 0
+var ends: int = 0
 var team_color: Color = Color.RED
 
 var is_stone_shot: bool = false
@@ -119,8 +119,8 @@ func mouse_ray_cast() -> Dictionary:
 		return space_state.intersect_ray(ray_query_params)
 
 func next_round() -> void:
-	round += 1
-	if round >= 8:
+	ends += 1
+	if ends >= 8:
 		print("match over")
 		return
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
@@ -180,11 +180,9 @@ func calculate_score() -> void:
 		scoreboard.set_blue_score(score)
 		scoreboard.set_red_score(0)
 
-func _on_sweep_area_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	var stone = stone_group.get_children()[-1]
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		var broom = stone.get_node("Sweep/Broom")
-		var animation = stone.get_node("Sweep/AnimationPlayer")
 		if event.is_pressed():
 			start_sweep(stone)
 		elif event.is_released():

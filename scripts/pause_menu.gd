@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@onready var blur_animation: AnimationPlayer = $BlurAnimation
+
 func _ready() -> void:
 	hide()
 
@@ -9,7 +11,7 @@ func _input(_event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().paused = true
 		show()
-		$BlurAnimation.play("start_pause")
+		blur_animation.play("start_pause")
 
 func _on_resume_button_pressed() -> void:
 	hide()

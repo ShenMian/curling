@@ -45,5 +45,10 @@ shape = SubResource("BoxShape3D_2hqyf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -16.527)
 shape = SubResource("CylinderShape3D_as85d")
 
+[node name="HouseOriginMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.527)
+
 [connection signal="area_exited" from="StaticBody3D/Area" to="." method="_on_area_exited"]
 [connection signal="body_exited" from="StaticBody3D/Area" to="." method="_on_body_exited"]
+[connection signal="body_entered" from="HouseArea" to="." method="_on_house_area_body_entered"]
+[connection signal="body_exited" from="HouseArea" to="." method="_on_house_area_body_exited"]

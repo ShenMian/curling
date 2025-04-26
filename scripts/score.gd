@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@onready var rich_text_label: RichTextLabel = $RichTextLabel
+
 var red_score: int = 0
 var blue_score: int = 0
 
@@ -15,4 +17,4 @@ func set_blue_score(score: int) -> void:
 	update_label()
 
 func update_label() -> void:
-	$RichTextLabel.text = "[color=red]Red[/color] : {red}\n[color=blue]Blue[/color]: {blue}".format({"red": red_score, "blue": blue_score})
+	rich_text_label.text = "[color=red]Red[/color] : {red}\n[color=blue]Blue[/color]: {blue}".format({"red": red_score, "blue": blue_score})

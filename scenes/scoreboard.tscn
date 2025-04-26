@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b325iydyxsrch" path="res://scripts/score.gd" id="1_8juob"]
 
-[node name="Score" type="CanvasLayer"]
+[node name="Scoreboard" type="CanvasLayer"]
 script = ExtResource("1_8juob")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]

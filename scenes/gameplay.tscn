@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
 [ext_resource type="Script" uid="uid://b8gkn2ed6qcag" path="res://scripts/third_person_camera.gd" id="4_ocj2s"]
-[ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/score.tscn" id="5_din8e"]
+[ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="5_din8e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1v76"]
 
@@ -53,7 +53,7 @@ render_target_update_mode = 4
 [node name="TopDownCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
 
-[node name="Score" parent="." instance=ExtResource("5_din8e")]
+[node name="Scoreboard" parent="." instance=ExtResource("5_din8e")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
 visible = false

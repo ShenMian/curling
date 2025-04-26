@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var indicator_color_curve: Curve
+
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
 @onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera
 
@@ -9,6 +11,7 @@ extends Node3D
 @onready var tee_line_marker: Marker3D = $Sheet/TeeLineMarker
 @onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
 
+@onready var impulse_indicator: Line3D = $ImpulseIndicator
 @onready var scoreboard: CanvasLayer = $Scoreboard
 
 var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
@@ -18,6 +21,9 @@ var team_color: Color = Color.RED
 
 var is_stone_shot: bool = false
 var is_stone_drag: bool = false
+
+var impulse_max: float = 150.0
+var impulse_factor: float = 150.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,6 +35,11 @@ func _process(_delta: float) -> void:
 	if is_stone_shot:
 		calculate_score()
 
+func calculate_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
+	var impulse = (to - from) * impulse_factor
+	var length = clamp(impulse.length(), 0.0, impulse_max)
+	return impulse.normalized() * length
+
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		var collision = mouse_ray_cast()
@@ -37,15 +48,32 @@ func _input(event):
 
 		var stone = stone_group.get_children()[-1]
 		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
-			print("start darg stone")
 			is_stone_drag = true
-		elif is_stone_drag and event.is_released() and collision.collider == $Sheet/StaticBody3D:
-			print("stop darg stone")
+		elif is_stone_drag and event.is_released() and collision.collider == $Sheet/StaticBody:
 			is_stone_drag = false
-			var impulse = (stone.position - collision.position) * 150.0
+			impulse_indicator.clear()
+			var impulse = calculate_clamped_impulse(collision.position, stone.position)
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
 			is_stone_shot = true
+			print("stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
+	
+	if event is InputEventMouseMotion and is_stone_drag:
+		var collision = mouse_ray_cast()
+		if collision.is_empty():
+			return
+		var stone = stone_group.get_children()[-1]
+		if is_stone_drag and collision.collider == $Sheet/StaticBody:
+			var impulse = calculate_clamped_impulse(collision.position, stone.position)
+			var factor = indicator_color_curve.sample(impulse.length() / impulse_max)
+			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
+			impulse_indicator.points = PackedVector3Array([
+				stone.position,
+				stone.position - impulse / impulse_factor
+			])
+			impulse_indicator.points[0].y = 0.1
+			impulse_indicator.points[1].y = 0.1
+			impulse_indicator.rebuild()
 
 func _on_sheet_out_of_bounds(_stone: Node3D) -> void:
 	print("stone out of bounds")

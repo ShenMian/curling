@@ -23,19 +23,19 @@ radius = 1.74561
 [node name="Sheet" type="Node3D"]
 script = ExtResource("1_as85d")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_2hqyf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody"]
 shape = SubResource("WorldBoundaryShape3D_2hqyf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody"]
 mesh = SubResource("PlaneMesh_v0354")
 skeleton = NodePath("../..")
 
-[node name="Area" type="Area3D" parent="StaticBody3D"]
+[node name="Area" type="Area3D" parent="StaticBody"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody/Area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0027771, 1, -0.000152588)
 shape = SubResource("BoxShape3D_2hqyf")
 
@@ -51,7 +51,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.527)
 [node name="TeeLineMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.872)
 
-[connection signal="area_exited" from="StaticBody3D/Area" to="." method="_on_area_exited"]
-[connection signal="body_exited" from="StaticBody3D/Area" to="." method="_on_body_exited"]
+[connection signal="area_exited" from="StaticBody/Area" to="." method="_on_area_exited"]
+[connection signal="body_exited" from="StaticBody/Area" to="." method="_on_body_exited"]
 [connection signal="body_entered" from="HouseArea" to="." method="_on_house_area_body_entered"]
 [connection signal="body_exited" from="HouseArea" to="." method="_on_house_area_body_exited"]

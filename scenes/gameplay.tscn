@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene load_steps=19 format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
@@ -7,11 +7,52 @@
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
 [ext_resource type="Script" uid="uid://b8gkn2ed6qcag" path="res://scripts/third_person_camera.gd" id="4_ocj2s"]
 [ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="5_din8e"]
+[ext_resource type="PackedScene" uid="uid://dl1lj6wk00whi" path="res://scenes/broom.tscn" id="6_101mb"]
 [ext_resource type="PackedScene" uid="uid://e84211jixi3w" path="res://models/arena.blend" id="7_101mb"]
 
 [sub_resource type="Curve" id="Curve_din8e"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e124b"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="Animation" id="Animation_101mb"]
+resource_name = "sweep"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Broom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -0.376724), Vector3(0, 0, -0.480921), Vector3(0, 0, -0.376724)]
+}
+
+[sub_resource type="Animation" id="Animation_hbo4f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Broom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.376724)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ctvyo"]
+_data = {
+&"RESET": SubResource("Animation_hbo4f"),
+&"sweep": SubResource("Animation_101mb")
+}
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_e124b"]
 size = Vector2(80, 80)
@@ -48,6 +89,25 @@ cull_mask = 1048573
 script = ExtResource("4_ocj2s")
 offset = Vector3(0, 2, 1)
 lookat_voffset = 0.5
+
+[node name="Sweep" type="Node3D" parent="."]
+
+[node name="Area" type="Area3D" parent="Sweep"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.810667)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sweep/Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.155327)
+shape = SubResource("BoxShape3D_e124b")
+
+[node name="Broom" parent="Sweep" instance=ExtResource("6_101mb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.376724)
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sweep"]
+libraries = {
+&"": SubResource("AnimationLibrary_ctvyo")
+}
+speed_scale = 4.0
 
 [node name="Arena" parent="." instance=ExtResource("7_101mb")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 16.5125)
@@ -87,4 +147,7 @@ size = 4.14245
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
 visible = false
 
+[connection signal="stone_shot" from="." to="." method="_on_stone_shot"]
 [connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]
+[connection signal="input_event" from="Sweep/Area" to="." method="_on_sweep_area_input_event"]
+[connection signal="mouse_exited" from="Sweep/Area" to="." method="_on_sweep_area_mouse_exited"]

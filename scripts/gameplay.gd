@@ -1,12 +1,16 @@
 extends Node3D
 
+signal stone_shot(stone: Node3D)
+
 @export var indicator_color_curve: Curve
+@export var stone_friction: float = 0.02
 
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
 @onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera
 
 @onready var sheet: Node3D = $Sheet
 @onready var stone_group: Node = $Stones
+@onready var sweep: Node3D = $Sweep
 
 @onready var tee_line_marker: Marker3D = $Sheet/TeeLineMarker
 @onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
@@ -28,6 +32,7 @@ var impulse_factor: float = 150.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.remove_child(sweep)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
 	next_round()
@@ -38,6 +43,9 @@ func _process(_delta: float) -> void:
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if is_stone_shot:
+			return
+		
 		var collision = mouse_ray_cast()
 		if collision.is_empty():
 			return
@@ -51,8 +59,8 @@ func _input(event):
 			var impulse = calculate_clamped_impulse(collision.position, stone.position)
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
-			is_stone_shot = true
 			print("stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
+			stone_shot.emit(stone)
 	
 	if event is InputEventMouseMotion and is_stone_drag:
 		var collision = mouse_ray_cast()
@@ -72,15 +80,18 @@ func _input(event):
 			impulse_indicator.points[1].y = 0.1
 			impulse_indicator.rebuild()
 
+func _on_stone_shot(stone: Node3D) -> void:
+	is_stone_shot = true
+	stone.add_child(sweep.duplicate())
+
 func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	# Increase friction to stop the stone quickly
-	var material = PhysicsMaterial.new()
-	material.friction = 1.0
-	stone.physics_material_override = material
-	
+	stone.physics_material_override.friction = 1.0
 	disable_stone(stone)
 
 func disable_stone(stone: Node3D):
+	stone.remove_child(sweep)
+
 	# Disable collision with other stones
 	stone.collision_layer = 0
 	stone.collision_mask = 1 << 1
@@ -120,6 +131,9 @@ func spwan_stone(color: Color) -> void:
 	stone.position = tee_line_marker.global_position
 	stone.color = color
 	stone.number = stone_group.get_children().size() + 1
+	var material = PhysicsMaterial.new()
+	material.friction = stone_friction
+	stone.physics_material_override = material
 	stone_group.add_child(stone)
 
 	third_person_camera.position = stone.position + third_person_camera.offset
@@ -164,3 +178,39 @@ func calculate_score() -> void:
 	else:
 		scoreboard.set_blue_score(score)
 		scoreboard.set_red_score(0)
+
+func _on_sweep_area_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	var stone = stone_group.get_children()[-1]
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		var broom = stone.get_node("Sweep/Broom")
+		var animation = stone.get_node("Sweep/AnimationPlayer")
+		if event.is_pressed():
+			start_sweep(stone)
+		elif event.is_released():
+			stop_sweep(stone)
+
+func _on_sweep_area_mouse_exited() -> void:
+	var stone = stone_group.get_children()[-1]
+	stop_sweep(stone)
+
+func start_sweep(stone: Node3D) -> void:
+		var sweep = stone.get_node("Sweep")
+		if sweep == null:
+			return
+		var broom = sweep.get_node("Broom")
+		var animation = sweep.get_node("AnimationPlayer")
+		broom.visible = true
+		animation.play("sweep")
+
+		stone.physics_material_override.friction = stone_friction * 0.5
+
+func stop_sweep(stone: Node3D) -> void:
+		var sweep = stone.get_node("Sweep")
+		if sweep == null:
+			return
+		var broom = sweep.get_node("Broom")
+		var animation = sweep.get_node("AnimationPlayer")
+		broom.visible = false
+		animation.stop()
+
+		stone.physics_material_override.friction = stone_friction

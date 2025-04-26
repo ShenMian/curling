@@ -15,6 +15,10 @@ run/main_scene="uid://io1xx04hiqb8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/lines_and_trails_3d/plugin.cfg")
+
 [rendering]
 
 anti_aliasing/quality/screen_space_aa=1

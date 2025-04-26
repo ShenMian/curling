@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://soq5ij35lfxi" path="res://scenes/main_menu.tscn" id="2_0wfyh"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
-size = Vector2(50, 60)
+size = Vector2(80, 80)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jyhfs"]
 

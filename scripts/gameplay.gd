@@ -58,7 +58,6 @@ func mouse_ray_cast() -> Dictionary:
 		var ray_query_params = PhysicsRayQueryParameters3D.new()
 		ray_query_params.from = ray_origin
 		ray_query_params.to = ray_end
-		ray_query_params.exclude = [self]
 
 		var space_state = get_world_3d().direct_space_state
 		return space_state.intersect_ray(ray_query_params)

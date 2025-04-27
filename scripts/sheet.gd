@@ -16,4 +16,4 @@ func _on_body_exited(body: Node3D) -> void:
 	out_of_bounds.emit(body)
 
 func is_body_in_house(body: Node3D) -> bool:
-	return $HouseArea.overlaps_body(body)
+	return house_area.overlaps_body(body)

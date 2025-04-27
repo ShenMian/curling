@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene load_steps=18 format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
@@ -15,50 +15,13 @@ _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e124b"]
-size = Vector3(1, 0.1, 1)
+size = Vector3(1, 0.1, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_101mb"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_101mb"]
-size = Vector3(1, 0.1, 1)
-
-[sub_resource type="Animation" id="Animation_hbo4f"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Broom:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, -0.376724)]
-}
-
-[sub_resource type="Animation" id="Animation_101mb"]
-resource_name = "sweep"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Broom:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, -0.376724), Vector3(0, 0, -0.480921), Vector3(0, 0, -0.376724)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ctvyo"]
-_data = {
-&"RESET": SubResource("Animation_hbo4f"),
-&"sweep": SubResource("Animation_101mb")
-}
+size = Vector3(1, 0.1, 0.5)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_e124b"]
 size = Vector2(80, 80)
@@ -99,7 +62,7 @@ lookat_voffset = 0.5
 [node name="Sweep" type="Node3D" parent="."]
 
 [node name="Area" type="Area3D" parent="Sweep"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.811)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.540838)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Sweep/Area"]
 shape = SubResource("BoxShape3D_e124b")
@@ -110,15 +73,15 @@ material_override = SubResource("StandardMaterial3D_101mb")
 transparency = 0.5
 mesh = SubResource("BoxMesh_101mb")
 
-[node name="Broom" parent="Sweep" instance=ExtResource("6_101mb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.376724)
+[node name="Brooms" type="Node3D" parent="Sweep"]
+
+[node name="BroomLeft" parent="Sweep/Brooms" instance=ExtResource("6_101mb")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -0.167012, 0, -0.608823)
 visible = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sweep"]
-libraries = {
-&"": SubResource("AnimationLibrary_ctvyo")
-}
-speed_scale = 4.0
+[node name="BroomRight" parent="Sweep/Brooms" instance=ExtResource("6_101mb")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0.162464, 0, -0.485487)
+visible = false
 
 [node name="Arena" parent="." instance=ExtResource("7_101mb")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 16.5125)

@@ -35,7 +35,7 @@ func _ready() -> void:
 	self.remove_child(sweep)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
-	next_round()
+	next_shot()
 
 func _process(_delta: float) -> void:
 	if is_stone_shot:
@@ -118,13 +118,18 @@ func mouse_ray_cast() -> Dictionary:
 		var space_state = get_world_3d().direct_space_state
 		return space_state.intersect_ray(ray_query_params)
 
-func next_round() -> void:
-	ends += 1
-	if ends >= 8:
-		print("match over")
-		return
+func next_shot() -> void:
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
 	spwan_stone(team_color)
+	if team_color == Color.BLUE:
+		next_end()
+
+func next_end() -> void:
+	ends += 1
+	print("Ends: %d" % ends)
+	if ends >= 9:
+		print("match over")
+		return
 
 func spwan_stone(color: Color) -> void:
 	var stone = stone_scene.instantiate()
@@ -151,7 +156,7 @@ func calculate_score() -> void:
 		if last_stone.position.z > far_hog_line_marker.global_position.z:
 			disable_stone(last_stone)
 		last_stone.remove_child(last_stone.get_node("Sweep"))
-		next_round()
+		next_shot()
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
@@ -196,10 +201,9 @@ func start_sweep(stone: Node3D) -> void:
 		var sweep = stone.get_node("Sweep")
 		if sweep == null:
 			return
-		var broom = sweep.get_node("Broom")
-		var animation = sweep.get_node("AnimationPlayer")
-		broom.visible = true
-		animation.play("sweep")
+		for broom in sweep.get_node("Brooms").get_children():
+			broom.visible = true
+			broom.get_node("AnimationPlayer").play("sweep")
 
 		stone.physics_material_override.friction = stone_friction * 0.5
 
@@ -207,9 +211,8 @@ func stop_sweep(stone: Node3D) -> void:
 		var sweep = stone.get_node("Sweep")
 		if sweep == null:
 			return
-		var broom = sweep.get_node("Broom")
-		var animation = sweep.get_node("AnimationPlayer")
-		broom.visible = false
-		animation.stop()
+		for broom in sweep.get_node("Brooms").get_children():
+			broom.visible = false
+			broom.get_node("AnimationPlayer").stop()
 
 		stone.physics_material_override.friction = stone_friction

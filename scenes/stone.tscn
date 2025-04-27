@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://lu3u3fp16p6x"]
+[gd_scene load_steps=7 format=3 uid="uid://lu3u3fp16p6x"]
 
 [ext_resource type="Script" uid="uid://b3daipni0xpv7" path="res://scripts/stone.gd" id="1_f651v"]
 [ext_resource type="ArrayMesh" uid="uid://bgiehwqdfvmej" path="res://models/curling_stone_Body.res" id="2_f651v"]
 [ext_resource type="ArrayMesh" uid="uid://drgd11bqmsfsf" path="res://models/curling_stone_Handle.res" id="3_6niw0"]
+[ext_resource type="AudioStream" uid="uid://bc5h4qpwx2cmq" path="res://sounds/stone_slide.ogg" id="4_6niw0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hmdus"]
 friction = 0.02
@@ -38,3 +39,6 @@ billboard = 1
 no_depth_test = true
 font_size = 96
 outline_size = 24
+
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_6niw0")

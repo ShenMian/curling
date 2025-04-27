@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://hmtjjdfsi6rp"]
 
-[ext_resource type="Texture2D" uid="uid://bliw2th0v8vdd" path="res://textures/curling_sheet.png" id="1_2hqyf"]
+[ext_resource type="Texture2D" uid="uid://bliw2th0v8vdd" path="res://models/textures/curling_sheet.png" id="1_2hqyf"]
 [ext_resource type="Script" uid="uid://dwu3ncaql5nwo" path="res://scripts/sheet.gd" id="1_as85d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2hqyf"]

@@ -122,7 +122,8 @@ size = 4.14245
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
 visible = false
 
-[connection signal="stone_shot" from="." to="." method="_on_stone_shot"]
+[connection signal="stone_shot_end" from="." to="." method="_on_stone_shot_end"]
+[connection signal="stone_shot_start" from="." to="." method="_on_stone_shot_start"]
 [connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]
 [connection signal="input_event" from="Sweep/Area" to="." method="_on_sweep_area_input_event"]
 [connection signal="mouse_exited" from="Sweep/Area" to="." method="_on_sweep_area_mouse_exited"]

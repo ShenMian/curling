@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bliw2th0v8vdd"
-path.s3tc="res://.godot/imported/curling_sheet.png-35a54f48c3f8c5282594ffbaf52d6e18.s3tc.ctex"
+path.s3tc="res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/curling_sheet.png"
-dest_files=["res://.godot/imported/curling_sheet.png-35a54f48c3f8c5282594ffbaf52d6e18.s3tc.ctex"]
+source_file="res://models/textures/curling_sheet.png"
+dest_files=["res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.s3tc.ctex"]
 
 [params]
 

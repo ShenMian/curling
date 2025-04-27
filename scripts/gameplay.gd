@@ -1,6 +1,7 @@
 extends Node3D
 
-signal stone_shot(stone: Node3D)
+signal stone_shot_start(stone: Node3D)
+signal stone_shot_end(stone: Node3D)
 
 @export var indicator_color_curve: Curve
 @export var stone_friction: float = 0.02
@@ -59,8 +60,8 @@ func _input(event):
 			var impulse = calculate_clamped_impulse(collision.position, stone.position)
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
-			print("stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
-			stone_shot.emit(stone)
+			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
+			stone_shot_start.emit(stone)
 	
 	if event is InputEventMouseMotion and is_stone_drag:
 		var collision = mouse_ray_cast()
@@ -80,9 +81,22 @@ func _input(event):
 			impulse_indicator.points[1].y = 0.1
 			impulse_indicator.rebuild()
 
-func _on_stone_shot(stone: Node3D) -> void:
+func _on_stone_shot_start(stone: Node3D) -> void:
 	is_stone_shot = true
+	stone.get_node("AudioPlayer").play()
 	stone.add_child(sweep.duplicate())
+
+func _on_stone_shot_end(stone: Node3D) -> void:
+	is_stone_shot = false
+
+	# Check if the stone is hogged
+	if stone.position.z > far_hog_line_marker.global_position.z:
+		disable_stone(stone)
+
+	stone.get_node("AudioPlayer").stop()
+	stone.remove_child(stone.get_node("Sweep"))
+
+	next_shot()
 
 func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	# Increase friction to stop the stone quickly
@@ -151,12 +165,8 @@ func calculate_score() -> void:
 
 	var last_stone = stones[-1]
 	if is_stone_shot and last_stone.sleeping:
-		is_stone_shot = false
-		# Check if the stone is hogged
-		if last_stone.position.z > far_hog_line_marker.global_position.z:
-			disable_stone(last_stone)
-		last_stone.remove_child(last_stone.get_node("Sweep"))
-		next_shot()
+		stone_shot_end.emit(last_stone)
+		return
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():

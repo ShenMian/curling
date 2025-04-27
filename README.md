@@ -17,6 +17,10 @@
     - **Author**: Jody_Hong
     - **License**: CC Attribution.
 
+### Sounds
+
+- [Curling Stone Slides Down Ice](https://freesfx.co.uk/Category/Curling/158)
+
 ### Godot Addons
 
 - [Lines & Trails 3D](https://github.com/CozyCubeGames/cozy-cube-godot-addons)

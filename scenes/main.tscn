@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://io1xx04hiqb8"]
+[gd_scene load_steps=19 format=3 uid="uid://io1xx04hiqb8"]
 
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://lu3u3fp16p6x" path="res://scenes/stone.tscn" id="1_o5qli"]
@@ -8,6 +8,58 @@
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
 size = Vector2(80, 80)
+
+[sub_resource type="Gradient" id="Gradient_tefeu"]
+offsets = PackedFloat32Array(0.0108108, 0.508108, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tbgi4"]
+gradient = SubResource("Gradient_tefeu")
+
+[sub_resource type="Curve" id="Curve_tbgi4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.149083, 1), 0.0, 0.0, 0, 0, Vector2(0.84633, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_tefeu"]
+curve = SubResource("Curve_tbgi4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tbgi4"]
+emission_shape_scale = Vector3(1, 0, 1)
+emission_shape = 3
+emission_box_extents = Vector3(5, 2, 5)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, -5.5, 0)
+radial_accel_min = -4.0
+radial_accel_max = 4.0
+tangential_accel_min = -8.0
+tangential_accel_max = 8.0
+damping_max = 4.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_tefeu")
+color_ramp = SubResource("GradientTexture1D_tbgi4")
+
+[sub_resource type="Gradient" id="Gradient_o6xl0"]
+offsets = PackedFloat32Array(0.305263, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tefeu"]
+gradient = SubResource("Gradient_o6xl0")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tipki"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_tefeu")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_tefeu"]
+material = SubResource("StandardMaterial3D_tipki")
+size = Vector2(0.1, 0.1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jyhfs"]
 
@@ -38,6 +90,14 @@ cull_mask = 1048573
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 16.409)
 mesh = SubResource("PlaneMesh_tbgi4")
+
+[node name="Snow" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+layers = 8
+amount = 128
+visibility_aabb = AABB(-15.2766, -16.8293, -17.8526, 33.5744, 17.8293, 35.8583)
+process_material = SubResource("ParticleProcessMaterial_tbgi4")
+draw_pass_1 = SubResource("QuadMesh_tefeu")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.707108, 0.612371, -0.353552, 1.12019e-08, 0.5, 0.866026, 0.707105, 0.612374, -0.353554, 0, 5, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene load_steps=19 format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="5_din8e"]
 [ext_resource type="PackedScene" uid="uid://dl1lj6wk00whi" path="res://scenes/broom.tscn" id="6_101mb"]
 [ext_resource type="PackedScene" uid="uid://e84211jixi3w" path="res://models/arena.blend" id="7_101mb"]
+[ext_resource type="AudioStream" uid="uid://cms7uxh7e4rrf" path="res://sounds/exoplanet_dawn.ogg" id="10_hbo4f"]
 
 [sub_resource type="Curve" id="Curve_din8e"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
@@ -121,6 +122,11 @@ size = 4.14245
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_hbo4f")
+bus = &"Music"
+parameters/looping = true
 
 [connection signal="stone_shot_end" from="." to="." method="_on_stone_shot_end"]
 [connection signal="stone_shot_start" from="." to="." method="_on_stone_shot_start"]

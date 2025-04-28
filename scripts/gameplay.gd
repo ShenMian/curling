@@ -33,6 +33,8 @@ var impulse_factor: float = 150.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$AudioStreamPlayer.play()
+	
 	self.remove_child(sweep)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
@@ -214,6 +216,7 @@ func start_sweep(stone: Node3D) -> void:
 		for broom in sweep.get_node("Brooms").get_children():
 			broom.visible = true
 			broom.get_node("AnimationPlayer").play("sweep")
+			broom.get_node("AudioPlayer").play()
 
 		stone.physics_material_override.friction = stone_friction * 0.5
 
@@ -224,5 +227,6 @@ func stop_sweep(stone: Node3D) -> void:
 		for broom in sweep.get_node("Brooms").get_children():
 			broom.visible = false
 			broom.get_node("AnimationPlayer").stop()
+			broom.get_node("AudioPlayer").stop()
 
 		stone.physics_material_override.friction = stone_friction

@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://io1xx04hiqb8"]
+[gd_scene load_steps=10 format=3 uid="uid://io1xx04hiqb8"]
 
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://lu3u3fp16p6x" path="res://scenes/stone.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cetl3c52rk1w3" path="res://scenes/main.gd" id="1_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://soq5ij35lfxi" path="res://scenes/main_menu.tscn" id="2_0wfyh"]
+[ext_resource type="AudioStream" uid="uid://cgdydo1krqjqj" path="res://sounds/eclipse.ogg" id="4_jyhfs"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
 size = Vector2(80, 80)
@@ -18,6 +20,7 @@ sky = SubResource("Sky_jyhfs")
 ambient_light_source = 3
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_tbgi4")
 
 [node name="Sheet" parent="." instance=ExtResource("1_0wfyh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
@@ -44,3 +47,8 @@ shadow_enabled = true
 environment = SubResource("Environment_tefeu")
 
 [node name="MainMenu" parent="." instance=ExtResource("2_0wfyh")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jyhfs")
+bus = &"Music"
+parameters/looping = true

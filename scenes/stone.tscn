@@ -42,3 +42,5 @@ outline_size = 24
 
 [node name="AudioPlayer" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_6niw0")
+volume_db = -15.0
+bus = &"SFX"

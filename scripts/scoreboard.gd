@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+# Transparency value for cell backgrounds
 @export_range(0.0, 1.0) var transparent: float = 0.8
 
 var red_score: int = 0

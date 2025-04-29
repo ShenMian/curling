@@ -1,15 +1,15 @@
 extends Camera3D
 
-# The target node that the camera will follow
+# Node the camera follows
 @export var target: Node3D
 
-# The offset position from the target
+# Camera's position offset relative to the target
 @export var offset = Vector3.ZERO
 
-# How quickly the camera interpolates to the target position (higher = faster)
+# Interpolation speed for camera movement (higher = snappier)
 @export var lerp_factor = 3.0
 
-# Vertical offset for the camera's look-at point (positive = look higher, negative = look lower)
+# Vertical adjustment for the camera's look-at target
 @export var lookat_voffset: float
 
 func _physics_process(delta):

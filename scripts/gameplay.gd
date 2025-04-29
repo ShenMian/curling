@@ -3,8 +3,10 @@ extends Node3D
 signal shot_started(stone: Node3D)
 signal shot_finished(stone: Node3D)
 
+# Curve used to determine the color of the impulse indicator based on impulse strength
 @export var indicator_color_curve: Curve
-# Stone-ice friction coefficient
+
+# Friction coefficient between the stone and the ice
 @export_range(0.006, 0.016) var stone_friction: float = 0.016
 
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
@@ -32,7 +34,6 @@ var is_stone_shot: bool = false
 var is_stone_drag: bool = false
 
 var impulse_max: float = 150.0
-var impulse_factor: float = 150.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,6 +46,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_stone_shot:
+		var stone = stone_group.get_child(-1)
+		if stone.sleeping:
+			shot_finished.emit(stone)
+			return
 		calculate_score()
 
 func _input(event):
@@ -56,7 +61,7 @@ func _input(event):
 		if collision.is_empty():
 			return
 
-		var stone = stone_group.get_children()[-1]
+		var stone = stone_group.get_child(-1)
 		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
 			is_stone_drag = true
 		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
@@ -73,14 +78,14 @@ func _input(event):
 		if collision.is_empty():
 			return
 
-		var stone = stone_group.get_children()[-1]
+		var stone = stone_group.get_child(-1)
 		if is_stone_drag and collision.collider == sheet_body:
 			var impulse = calculate_clamped_impulse(collision.position, stone.position)
 			var factor = indicator_color_curve.sample(impulse.length() / impulse_max)
 			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
 			impulse_indicator.points = PackedVector3Array([
 				stone.position,
-				stone.position - impulse / impulse_factor
+				stone.position - impulse / impulse_max
 			])
 			impulse_indicator.points[0].y = 0.1
 			impulse_indicator.points[1].y = 0.1
@@ -121,7 +126,7 @@ func disable_stone(stone: Node3D):
 		mesh.transparency = 0.3
 
 func calculate_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
-	var impulse = (to - from) * impulse_factor
+	var impulse = (to - from) * impulse_max
 	impulse.z = min(impulse.z, 0.0)
 	var length = clamp(impulse.length(), 0.0, impulse_max)
 	return impulse.normalized() * length
@@ -171,38 +176,36 @@ func calculate_score() -> void:
 	var stones = stone_group.get_children()
 	if stones.is_empty():
 		return
-
-	var last_stone = stones[-1]
-	if is_stone_shot and last_stone.sleeping:
-		shot_finished.emit(last_stone)
-		return
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
 		scoreboard.set_score(ends, 0, 0)
 		return
-	
+
 	var house_origin = house_origin_marker.global_position
-	var sorted_stones = stones_in_house.duplicate()
-	sorted_stones.sort_custom(func(a, b):
+	stones_in_house.sort_custom(func(a, b):
 		return a.position.distance_to(house_origin) < b.position.distance_to(house_origin)
 	)
-	var winning_color = sorted_stones[0].color
+	var winner_color = stones_in_house[0].color
 
 	var score = 0
-	for stone in sorted_stones:
-		if stone.color == winning_color:
+	for stone in stones_in_house:
+		if stone.color == winner_color:
 			score += 1
 		else:
 			break
-	
-	if winning_color == Color.RED:
-		scoreboard.set_score(ends, score, 0)
+
+	var red_score = 0
+	var blue_score = 0
+	if winner_color == Color.RED:
+		red_score = score
 	else:
-		scoreboard.set_score(ends, 0, score)
+		blue_score = score
+
+	scoreboard.set_score(ends, red_score, blue_score)
 
 func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	var stone = stone_group.get_children()[-1]
+	var stone = stone_group.get_child(-1)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
 			start_sweep(stone)
@@ -210,7 +213,7 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 			stop_sweep(stone)
 
 func _on_sweep_area_mouse_exited() -> void:
-	var stone = stone_group.get_children()[-1]
+	var stone = stone_group.get_child(-1)
 	stop_sweep(stone)
 
 func start_sweep(stone: Node3D) -> void:

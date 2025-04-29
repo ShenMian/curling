@@ -1,7 +1,7 @@
 extends Node3D
 
-signal stone_shot_start(stone: Node3D)
-signal stone_shot_end(stone: Node3D)
+signal shot_started(stone: Node3D)
+signal shot_finished(stone: Node3D)
 
 @export var indicator_color_curve: Curve
 # Stone-ice friction coefficient
@@ -23,7 +23,8 @@ signal stone_shot_end(stone: Node3D)
 
 var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
 
-var ends: int = 0
+var ends: int = 1
+var shots: int = 0
 var team_color: Color = Color.RED
 
 var is_stone_shot: bool = false
@@ -64,7 +65,7 @@ func _input(event):
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
 			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
-			stone_shot_start.emit(stone)
+			shot_started.emit(stone)
 	
 	if event is InputEventMouseMotion and is_stone_drag:
 		var collision = mouse_ray_cast()
@@ -84,12 +85,13 @@ func _input(event):
 			impulse_indicator.points[1].y = 0.1
 			impulse_indicator.rebuild()
 
-func _on_stone_shot_start(stone: Node3D) -> void:
+func _on_shot_started(stone: Node3D) -> void:
 	is_stone_shot = true
+
 	stone.get_node("AudioPlayer").play()
 	stone.add_child(sweep.duplicate())
 
-func _on_stone_shot_end(stone: Node3D) -> void:
+func _on_shot_finished(stone: Node3D) -> void:
 	is_stone_shot = false
 
 	# Check if the stone is hogged
@@ -136,23 +138,26 @@ func mouse_ray_cast() -> Dictionary:
 		return space_state.intersect_ray(ray_query_params)
 
 func next_shot() -> void:
+	if shots >= 16:
+		next_end()
+	shots += 1
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
 	spwan_stone(team_color)
-	if team_color == Color.BLUE:
-		next_end()
 
 func next_end() -> void:
+	shots = 0
+	for stone in stone_group.get_children():
+		stone.queue_free()
 	ends += 1
-	print("Ends: %d" % ends)
-	if ends >= 9:
-		print("match over")
+	if ends >= 8 + 1:
+		print("Match over")
 		return
 
 func spwan_stone(color: Color) -> void:
 	var stone = stone_scene.instantiate()
 	stone.position = tee_line_marker.global_position
 	stone.color = color
-	stone.number = stone_group.get_children().size() + 1
+	stone.number = shots
 	var material = PhysicsMaterial.new()
 	material.friction = stone_friction
 	stone.physics_material_override = material
@@ -168,7 +173,7 @@ func calculate_score() -> void:
 
 	var last_stone = stones[-1]
 	if is_stone_shot and last_stone.sleeping:
-		stone_shot_end.emit(last_stone)
+		shot_finished.emit(last_stone)
 		return
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))

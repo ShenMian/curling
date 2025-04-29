@@ -12,11 +12,11 @@ offset_right = 307.0
 offset_bottom = 131.0
 columns = 8
 
-[node name="ColorRect" type="ColorRect" parent="GridContainer"]
+[node name="Cell" type="ColorRect" parent="GridContainer"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GridContainer/ColorRect"]
+[node name="Label" type="Label" parent="GridContainer/Cell"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,28 +1,26 @@
 extends CanvasLayer
 
-@onready var rich_text_label: RichTextLabel = $RichTextLabel
+@export_range(0.0, 1.0) var transparent: float = 0.8
 
 var red_score: int = 0
 var blue_score: int = 0
 
 func _ready() -> void:
-	var cell = $GridContainer/ColorRect.duplicate()
-	$GridContainer.remove_child($GridContainer/ColorRect)
+	var cell = $GridContainer/Cell.duplicate()
+	$GridContainer.remove_child($GridContainer/Cell)
 
-	for i in range(8):
-		var cell_clone = cell.duplicate()
-		cell_clone.color = Color.RED
-		cell_clone.color.a = 0.8
-		$GridContainer.add_child(cell_clone)
-	for i in range(8):
-		var cell_clone = cell.duplicate()
-		cell_clone.color = Color.BLUE
-		cell_clone.color.a = 0.8
-		$GridContainer.add_child(cell_clone)
+	for color in [Color.RED, Color.BLUE]:
+		for i in range(8):
+			var cell_clone = cell.duplicate()
+			cell_clone.color = color
+			cell_clone.color.a = transparent
+			$GridContainer.add_child(cell_clone)
 
 func set_score(end: int, red: int, blue: int):
 	assert(0 <= end && end <= 8)
 	assert(red == 0 || blue == 0)
 	var cells = $GridContainer.get_children()
-	cells[end - 1].get_child(0).text = str(red)
-	cells[end - 1 + 8].get_child(0).text = str(blue)
+	var red_label = cells[end - 1].get_child(0)
+	var blue_label = cells[end - 1 + 8].get_child(0)
+	red_label.text = str(red)
+	blue_label.text = str(blue)

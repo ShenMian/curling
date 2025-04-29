@@ -178,8 +178,7 @@ func calculate_score() -> void:
 	
 	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
-		scoreboard.set_blue_score(0)
-		scoreboard.set_red_score(0)
+		scoreboard.set_score(ends, 0, 0)
 		return
 	
 	var house_origin = house_origin_marker.global_position
@@ -197,11 +196,9 @@ func calculate_score() -> void:
 			break
 	
 	if winning_color == Color.RED:
-		scoreboard.set_red_score(score)
-		scoreboard.set_blue_score(0)
+		scoreboard.set_score(ends, score, 0)
 	else:
-		scoreboard.set_blue_score(score)
-		scoreboard.set_red_score(0)
+		scoreboard.set_score(ends, 0, score)
 
 func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	var stone = stone_group.get_children()[-1]

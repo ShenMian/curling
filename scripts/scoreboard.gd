@@ -6,19 +6,18 @@ var red_score: int = 0
 var blue_score: int = 0
 
 func _ready() -> void:
-	update_label()
+	var cell = $GridContainer/ColorRect
+	for i in range(7):
+		var cell_clone = cell.duplicate()
+		cell_clone.color = Color.RED
+		$GridContainer.add_child(cell_clone)
+	for i in range(8):
+		var cell_clone = cell.duplicate()
+		cell_clone.color = Color.BLUE
+		$GridContainer.add_child(cell_clone)
 
-func set_red_score(score: int) -> void:
-	red_score = score
-	update_label()
-
-func set_blue_score(score: int) -> void:
-	blue_score = score
-	update_label()
-
-func update_label() -> void:
-	rich_text_label.text = "[color=red]{RED_TEAM}[/color]: {red}\n[color=blue]{BLUE_TEAM}[/color]: {blue}".format({
-		"RED_TEAM": tr("RED_TEAM"),
-		"BLUE_TEAM": tr("BLUE_TEAM"),
-		"red": red_score,
-		"blue": blue_score})
+func set_score(end: int, red: int, blue: int):
+	assert(red == 0 || blue == 0)
+	var cells = $GridContainer.get_children()
+	cells[end - 1].get_child(0).text = str(red)
+	cells[end - 1 + 8].get_child(0).text = str(blue)

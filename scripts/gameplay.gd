@@ -10,10 +10,11 @@ signal shot_finished(stone: Node3D)
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
 @onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera
 
-@onready var sheet: Node3D = $Sheet
 @onready var stone_group: Node = $Stones
 @onready var sweep: Node3D = $Sweep
 
+@onready var sheet: Node3D = $Sheet
+@onready var sheet_body: StaticBody3D = $Sheet/StaticBody
 @onready var tee_line_marker: Marker3D = $Sheet/TeeLineMarker
 @onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
 @onready var far_hog_line_marker: Marker3D = $Sheet/FarHogLineMarker
@@ -58,7 +59,7 @@ func _input(event):
 		var stone = stone_group.get_children()[-1]
 		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
 			is_stone_drag = true
-		elif is_stone_drag and event.is_released() and collision.collider == $Sheet/StaticBody:
+		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
 			is_stone_drag = false
 			impulse_indicator.clear()
 			var impulse = calculate_clamped_impulse(collision.position, stone.position)
@@ -66,14 +67,14 @@ func _input(event):
 			stone.sleeping = false
 			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
 			shot_started.emit(stone)
-	
+
 	if event is InputEventMouseMotion and is_stone_drag:
 		var collision = mouse_ray_cast()
 		if collision.is_empty():
 			return
 
 		var stone = stone_group.get_children()[-1]
-		if is_stone_drag and collision.collider == $Sheet/StaticBody:
+		if is_stone_drag and collision.collider == sheet_body:
 			var impulse = calculate_clamped_impulse(collision.position, stone.position)
 			var factor = indicator_color_curve.sample(impulse.length() / impulse_max)
 			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
@@ -142,7 +143,7 @@ func next_shot() -> void:
 		next_end()
 	shots += 1
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
-	spwan_stone(team_color)
+	spawn_stone(team_color)
 
 func next_end() -> void:
 	shots = 0
@@ -153,7 +154,7 @@ func next_end() -> void:
 		print("Match over")
 		return
 
-func spwan_stone(color: Color) -> void:
+func spawn_stone(color: Color) -> void:
 	var stone = stone_scene.instantiate()
 	stone.position = tee_line_marker.global_position
 	stone.color = color

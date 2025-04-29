@@ -21,6 +21,7 @@ func _ready() -> void:
 		$GridContainer.add_child(cell_clone)
 
 func set_score(end: int, red: int, blue: int):
+	assert(0 <= end && end <= 8)
 	assert(red == 0 || blue == 0)
 	var cells = $GridContainer.get_children()
 	cells[end - 1].get_child(0).text = str(red)

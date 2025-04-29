@@ -15,7 +15,6 @@ columns = 8
 [node name="ColorRect" type="ColorRect" parent="GridContainer"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-color = Color(1, 0, 0, 1)
 
 [node name="Label" type="Label" parent="GridContainer/ColorRect"]
 layout_mode = 1

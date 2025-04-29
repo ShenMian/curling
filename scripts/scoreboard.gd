@@ -6,14 +6,18 @@ var red_score: int = 0
 var blue_score: int = 0
 
 func _ready() -> void:
-	var cell = $GridContainer/ColorRect
-	for i in range(7):
+	var cell = $GridContainer/ColorRect.duplicate()
+	$GridContainer.remove_child($GridContainer/ColorRect)
+
+	for i in range(8):
 		var cell_clone = cell.duplicate()
 		cell_clone.color = Color.RED
+		cell_clone.color.a = 0.8
 		$GridContainer.add_child(cell_clone)
 	for i in range(8):
 		var cell_clone = cell.duplicate()
 		cell_clone.color = Color.BLUE
+		cell_clone.color.a = 0.8
 		$GridContainer.add_child(cell_clone)
 
 func set_score(end: int, red: int, blue: int):

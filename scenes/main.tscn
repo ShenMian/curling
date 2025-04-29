@@ -108,7 +108,7 @@ environment = SubResource("Environment_tefeu")
 
 [node name="MainMenu" parent="." instance=ExtResource("2_0wfyh")]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jyhfs")
 bus = &"Music"
 parameters/looping = true

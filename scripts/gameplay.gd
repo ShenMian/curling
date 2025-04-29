@@ -34,7 +34,7 @@ var impulse_factor: float = 150.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$AudioStreamPlayer.play()
+	$MusicPlayer.play()
 	
 	self.remove_child(sweep)
 	top_down_camera.position = house_origin_marker.global_position

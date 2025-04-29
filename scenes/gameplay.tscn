@@ -184,7 +184,7 @@ size = 4.14245
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
 visible = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_hbo4f")
 bus = &"Music"
 parameters/looping = true

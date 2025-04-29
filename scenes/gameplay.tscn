@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
-[ext_resource type="Curve" uid="uid://6aw8kocya1g" path="res://materials/indicator_color_curve.tres" id="2_4bh5q"]
+[ext_resource type="Curve" uid="uid://6aw8kocya1g" path="res://indicator_color_curve.tres" id="2_4bh5q"]
 [ext_resource type="Script" uid="uid://c8rainoecpyie" path="res://addons/lines_and_trails_3d/line_3d.gd" id="3_din8e"]
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
 [ext_resource type="Script" uid="uid://b8gkn2ed6qcag" path="res://scripts/third_person_camera.gd" id="4_ocj2s"]

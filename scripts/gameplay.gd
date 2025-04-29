@@ -4,7 +4,8 @@ signal stone_shot_start(stone: Node3D)
 signal stone_shot_end(stone: Node3D)
 
 @export var indicator_color_curve: Curve
-@export var stone_friction: float = 0.02
+# Stone-ice friction coefficient
+@export_range(0.006, 0.016) var stone_friction: float = 0.016
 
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
 @onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera

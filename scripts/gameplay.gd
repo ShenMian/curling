@@ -55,14 +55,14 @@ func _process(_delta: float) -> void:
 		if stone.sleeping:
 			shot_finished.emit(stone)
 			return
-		calculate_score()
+		update_scoreboard()
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if is_stone_shot:
 			return
 		
-		var collision := mouse_ray_cast()
+		var collision := get_mouse_ray_collision()
 		if collision.is_empty():
 			return
 
@@ -72,20 +72,20 @@ func _input(event):
 		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
 			is_stone_drag = false
 			impulse_indicator.clear()
-			var impulse := calculate_clamped_impulse(collision.position, stone.position)
+			var impulse := get_clamped_impulse(collision.position, stone.position)
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
 			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / IMPULSE_MAX])
 			shot_started.emit(stone)
 
 	if event is InputEventMouseMotion and is_stone_drag:
-		var collision := mouse_ray_cast()
+		var collision := get_mouse_ray_collision()
 		if collision.is_empty():
 			return
 
 		var stone: RigidBody3D = stone_group.get_child(-1)
 		if is_stone_drag and collision.collider == sheet_body:
-			var impulse := calculate_clamped_impulse(collision.position, stone.position)
+			var impulse := get_clamped_impulse(collision.position, stone.position)
 			var factor := indicator_color_curve.sample(impulse.length() / IMPULSE_MAX)
 			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
 			impulse_indicator.points = PackedVector3Array([
@@ -130,23 +130,25 @@ func disable_stone(stone: Node3D):
 	for mesh in stone.get_node("Meshes").get_children():
 		mesh.transparency = 0.3
 
-func calculate_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
+func get_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
 	var impulse := (to - from) * IMPULSE_MAX
 	impulse.z = min(impulse.z, 0.0)
 	var length: float = clamp(impulse.length(), 0.0, IMPULSE_MAX)
 	return impulse.normalized() * length
 
-func mouse_ray_cast() -> Dictionary:
-		var mouse_position := get_viewport().get_mouse_position()
-		var ray_origin := third_person_camera.project_ray_origin(mouse_position)
-		var ray_end := ray_origin + third_person_camera.project_ray_normal(mouse_position) * 10.0
+func get_mouse_ray_collision() -> Dictionary:
+	const RAY_LENGTH: float = 10.0
 
-		var ray_query_params := PhysicsRayQueryParameters3D.new()
-		ray_query_params.from = ray_origin
-		ray_query_params.to = ray_end
+	var mouse_position := get_viewport().get_mouse_position()
+	var ray_origin := third_person_camera.project_ray_origin(mouse_position)
+	var ray_end := ray_origin + third_person_camera.project_ray_normal(mouse_position) * RAY_LENGTH
 
-		var space_state := get_world_3d().direct_space_state
-		return space_state.intersect_ray(ray_query_params)
+	var ray_query_params := PhysicsRayQueryParameters3D.new()
+	ray_query_params.from = ray_origin
+	ray_query_params.to = ray_end
+
+	var space_state := get_world_3d().direct_space_state
+	return space_state.intersect_ray(ray_query_params)
 
 func next_shot() -> void:
 	if shots >= shots_per_end:
@@ -177,7 +179,7 @@ func spawn_stone(color: Color) -> void:
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
 
-func calculate_score() -> void:
+func update_scoreboard() -> void:
 	var stones := stone_group.get_children()
 	if stones.is_empty():
 		return

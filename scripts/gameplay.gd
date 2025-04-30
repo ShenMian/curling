@@ -9,6 +9,12 @@ signal shot_finished(stone: Node3D)
 # Friction coefficient between the stone and the ice
 @export_range(0.006, 0.016) var stone_friction: float = 0.016
 
+# Number of ends in a match
+@export_range(1, 10) var ends_per_match: int = 8
+
+# Number of shots per end
+@export_range(2, 16) var shots_per_end: int = 16
+
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
 @onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera
 
@@ -144,7 +150,7 @@ func mouse_ray_cast() -> Dictionary:
 		return space_state.intersect_ray(ray_query_params)
 
 func next_shot() -> void:
-	if shots >= 16:
+	if shots >= shots_per_end:
 		next_end()
 	shots += 1
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
@@ -155,7 +161,7 @@ func next_end() -> void:
 	for stone in stone_group.get_children():
 		stone.queue_free()
 	ends += 1
-	if ends >= 8 + 1:
+	if ends >= ends_per_match + 1:
 		print("Match over")
 		return
 

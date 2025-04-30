@@ -30,7 +30,8 @@ signal shot_finished(stone: Node3D)
 @onready var impulse_indicator: Line3D = $ImpulseIndicator
 @onready var scoreboard: CanvasLayer = $Scoreboard
 
-var stone_scene: PackedScene = preload("res://scenes/stone.tscn")
+const STONE_SCENE: PackedScene = preload("res://scenes/stone.tscn")
+const IMPULSE_MAX: float = 150.0
 
 var ends: int = 1
 var shots: int = 0
@@ -38,8 +39,6 @@ var team_color: Color = Color.RED
 
 var is_stone_shot: bool = false
 var is_stone_drag: bool = false
-
-var impulse_max: float = 150.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -52,7 +51,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_stone_shot:
-		var stone = stone_group.get_child(-1)
+		var stone: RigidBody3D = stone_group.get_child(-1)
 		if stone.sleeping:
 			shot_finished.emit(stone)
 			return
@@ -63,35 +62,35 @@ func _input(event):
 		if is_stone_shot:
 			return
 		
-		var collision = mouse_ray_cast()
+		var collision := mouse_ray_cast()
 		if collision.is_empty():
 			return
 
-		var stone = stone_group.get_child(-1)
+		var stone: RigidBody3D = stone_group.get_child(-1)
 		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
 			is_stone_drag = true
 		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
 			is_stone_drag = false
 			impulse_indicator.clear()
-			var impulse = calculate_clamped_impulse(collision.position, stone.position)
+			var impulse := calculate_clamped_impulse(collision.position, stone.position)
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
-			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / impulse_max])
+			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / IMPULSE_MAX])
 			shot_started.emit(stone)
 
 	if event is InputEventMouseMotion and is_stone_drag:
-		var collision = mouse_ray_cast()
+		var collision := mouse_ray_cast()
 		if collision.is_empty():
 			return
 
-		var stone = stone_group.get_child(-1)
+		var stone: RigidBody3D = stone_group.get_child(-1)
 		if is_stone_drag and collision.collider == sheet_body:
-			var impulse = calculate_clamped_impulse(collision.position, stone.position)
-			var factor = indicator_color_curve.sample(impulse.length() / impulse_max)
+			var impulse := calculate_clamped_impulse(collision.position, stone.position)
+			var factor := indicator_color_curve.sample(impulse.length() / IMPULSE_MAX)
 			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
 			impulse_indicator.points = PackedVector3Array([
 				stone.position,
-				stone.position - impulse / impulse_max
+				stone.position - impulse / IMPULSE_MAX
 			])
 			impulse_indicator.points[0].y = 0.1
 			impulse_indicator.points[1].y = 0.1
@@ -132,21 +131,21 @@ func disable_stone(stone: Node3D):
 		mesh.transparency = 0.3
 
 func calculate_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
-	var impulse = (to - from) * impulse_max
+	var impulse := (to - from) * IMPULSE_MAX
 	impulse.z = min(impulse.z, 0.0)
-	var length = clamp(impulse.length(), 0.0, impulse_max)
+	var length: float = clamp(impulse.length(), 0.0, IMPULSE_MAX)
 	return impulse.normalized() * length
 
 func mouse_ray_cast() -> Dictionary:
-		var mouse_position = get_viewport().get_mouse_position()
-		var ray_origin = third_person_camera.project_ray_origin(mouse_position)
-		var ray_end = ray_origin + third_person_camera.project_ray_normal(mouse_position) * 10.0
+		var mouse_position := get_viewport().get_mouse_position()
+		var ray_origin := third_person_camera.project_ray_origin(mouse_position)
+		var ray_end := ray_origin + third_person_camera.project_ray_normal(mouse_position) * 10.0
 
-		var ray_query_params = PhysicsRayQueryParameters3D.new()
+		var ray_query_params := PhysicsRayQueryParameters3D.new()
 		ray_query_params.from = ray_origin
 		ray_query_params.to = ray_end
 
-		var space_state = get_world_3d().direct_space_state
+		var space_state := get_world_3d().direct_space_state
 		return space_state.intersect_ray(ray_query_params)
 
 func next_shot() -> void:
@@ -166,11 +165,11 @@ func next_end() -> void:
 		return
 
 func spawn_stone(color: Color) -> void:
-	var stone = stone_scene.instantiate()
+	var stone := STONE_SCENE.instantiate()
 	stone.position = tee_line_marker.global_position
 	stone.color = color
 	stone.number = shots
-	var material = PhysicsMaterial.new()
+	var material := PhysicsMaterial.new()
 	material.friction = stone_friction
 	stone.physics_material_override = material
 	stone_group.add_child(stone)
@@ -179,30 +178,30 @@ func spawn_stone(color: Color) -> void:
 	third_person_camera.target = stone
 
 func calculate_score() -> void:
-	var stones = stone_group.get_children()
+	var stones := stone_group.get_children()
 	if stones.is_empty():
 		return
 	
-	var stones_in_house = stones.filter(func(stone): return sheet.is_body_in_house(stone))
+	var stones_in_house := stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
 		scoreboard.set_score(ends, 0, 0)
 		return
 
-	var house_origin = house_origin_marker.global_position
+	var house_origin := house_origin_marker.global_position
 	stones_in_house.sort_custom(func(a, b):
 		return a.position.distance_to(house_origin) < b.position.distance_to(house_origin)
 	)
-	var winner_color = stones_in_house[0].color
+	var winner_color: Color = stones_in_house[0].color
 
-	var score = 0
+	var score := 0
 	for stone in stones_in_house:
 		if stone.color == winner_color:
 			score += 1
 		else:
 			break
 
-	var red_score = 0
-	var blue_score = 0
+	var red_score := 0
+	var blue_score := 0
 	if winner_color == Color.RED:
 		red_score = score
 	else:
@@ -211,7 +210,7 @@ func calculate_score() -> void:
 	scoreboard.set_score(ends, red_score, blue_score)
 
 func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	var stone = stone_group.get_child(-1)
+	var stone: RigidBody3D = stone_group.get_child(-1)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
 			start_sweep(stone)
@@ -219,11 +218,11 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 			stop_sweep(stone)
 
 func _on_sweep_area_mouse_exited() -> void:
-	var stone = stone_group.get_child(-1)
+	var stone: RigidBody3D = stone_group.get_child(-1)
 	stop_sweep(stone)
 
-func start_sweep(stone: Node3D) -> void:
-		var sweep = stone.get_node("Sweep")
+func start_sweep(stone: RigidBody3D) -> void:
+		var sweep: Node3D = stone.get_node("Sweep")
 		if sweep == null:
 			return
 		for broom in sweep.get_node("Brooms").get_children():
@@ -233,8 +232,8 @@ func start_sweep(stone: Node3D) -> void:
 
 		stone.physics_material_override.friction = stone_friction * 0.5
 
-func stop_sweep(stone: Node3D) -> void:
-		var sweep = stone.get_node("Sweep")
+func stop_sweep(stone: RigidBody3D) -> void:
+		var sweep: Node3D = stone.get_node("Sweep")
 		if sweep == null:
 			return
 		for broom in sweep.get_node("Brooms").get_children():

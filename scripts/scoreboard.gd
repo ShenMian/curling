@@ -7,7 +7,7 @@ var red_score: int = 0
 var blue_score: int = 0
 
 func _ready() -> void:
-	var cell = $GridContainer/Cell.duplicate()
+	var cell := $GridContainer/Cell.duplicate()
 	$GridContainer.remove_child($GridContainer/Cell)
 
 	for color in [Color.RED, Color.BLUE]:
@@ -20,8 +20,8 @@ func _ready() -> void:
 func set_score(end: int, red: int, blue: int):
 	assert(0 <= end && end <= 8)
 	assert(red == 0 || blue == 0)
-	var cells = $GridContainer.get_children()
-	var red_label = cells[end - 1].get_child(0)
-	var blue_label = cells[end - 1 + 8].get_child(0)
+	var cells := $GridContainer.get_children()
+	var red_label: Label = cells[end - 1].get_child(0)
+	var blue_label: Label = cells[end - 1 + 8].get_child(0)
 	red_label.text = str(red)
 	blue_label.text = str(blue)

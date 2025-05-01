@@ -1,14 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://8n1e4e5tpjm3"]
+[gd_scene load_steps=9 format=3 uid="uid://coltcy4ljevc6"]
 
-[ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://scripts/pause_menu.gd" id="1_n87rw"]
-[ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="2_myx47"]
-[ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_kukqi"]
+[ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_fc626"]
+[ext_resource type="Script" uid="uid://0pbqklp4bg2e" path="res://scripts/result_menu.gd" id="1_tunbr"]
+[ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_6do8i"]
 
-[sub_resource type="SystemFont" id="SystemFont_myx47"]
+[sub_resource type="SystemFont" id="SystemFont_uahpa"]
 subpixel_positioning = 0
 
-[sub_resource type="Theme" id="Theme_wyi4u"]
-default_font = SubResource("SystemFont_myx47")
+[sub_resource type="Theme" id="Theme_fc626"]
+default_font = SubResource("SystemFont_uahpa")
 default_font_size = 20
 
 [sub_resource type="Animation" id="Animation_kukqi"]
@@ -47,12 +47,12 @@ _data = {
 &"start_pause": SubResource("Animation_myx47")
 }
 
-[node name="PauseMenu" type="CanvasLayer"]
+[node name="ResultMenu" type="CanvasLayer"]
 process_mode = 2
-script = ExtResource("1_n87rw")
+script = ExtResource("1_tunbr")
 
 [node name="Blur" type="ColorRect" parent="."]
-material = ExtResource("2_myx47")
+material = ExtResource("1_fc626")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -66,24 +66,24 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = -50.0
+offset_top = 76.0
 offset_right = 95.0
-offset_bottom = 50.0
+offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_wyi4u")
+theme = SubResource("Theme_fc626")
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="ReturnButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
 layout_mode = 2
-text = "RESUME"
-script = ExtResource("3_kukqi")
+text = "RETURN_TO_MAIN_MENU"
+script = ExtResource("3_6do8i")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
 layout_mode = 2
 text = "QUIT"
-script = ExtResource("3_kukqi")
+script = ExtResource("3_6do8i")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [node name="BlurAnimation" type="AnimationPlayer" parent="."]
@@ -91,5 +91,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_kukqi")
 }
 
-[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

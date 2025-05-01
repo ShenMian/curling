@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://soq5ij35lfxi"]
+[gd_scene load_steps=8 format=3 uid="uid://soq5ij35lfxi"]
 
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://ivu6dhn22w46" path="res://scripts/main_menu.gd" id="1_yqeox"]
+[ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_bqqt6"]
 
 [sub_resource type="SystemFont" id="SystemFont_yqeox"]
 subpixel_positioning = 0
@@ -57,13 +58,17 @@ grow_vertical = 0
 theme = SubResource("Theme_l6cm7")
 alignment = 1
 
-[node name="StartButton" type="Button" parent="Options"]
+[node name="StartButton" type="Button" parent="Options" groups=["buttons", "global_buttons"]]
 layout_mode = 2
 text = "START"
+script = ExtResource("3_bqqt6")
+metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
-[node name="ExitButton" type="Button" parent="Options"]
+[node name="ExitButton" type="Button" parent="Options" groups=["buttons", "global_buttons"]]
 layout_mode = 2
 text = "EXIT"
+script = ExtResource("3_bqqt6")
+metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [connection signal="pressed" from="Options/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Options/ExitButton" to="." method="_on_exit_button_pressed"]

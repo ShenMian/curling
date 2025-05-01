@@ -58,6 +58,9 @@ func _process(_delta: float) -> void:
 		update_scoreboard()
 
 func _input(event):
+	if Input.is_action_just_pressed("pause"):
+		$PauseMenu.open()
+	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if is_stone_shot:
 			return
@@ -104,6 +107,8 @@ func _on_shot_started(stone: Node3D) -> void:
 
 func _on_shot_finished(stone: Node3D) -> void:
 	is_stone_shot = false
+
+	await get_tree().create_timer(0.5).timeout
 
 	# Check if the stone is hogged
 	if stone.position.z > far_hog_line_marker.global_position.z:
@@ -163,7 +168,7 @@ func next_end() -> void:
 		stone.queue_free()
 	ends += 1
 	if ends >= ends_per_match + 1:
-		print("Match over")
+		$ResultMenu.open()
 		return
 
 func spawn_stone(color: Color) -> void:

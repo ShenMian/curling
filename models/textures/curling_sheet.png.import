@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bliw2th0v8vdd"
 path.s3tc="res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.s3tc.ctex"
+path.etc2="res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/textures/curling_sheet.png"
-dest_files=["res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.s3tc.ctex"]
+dest_files=["res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.s3tc.ctex", "res://.godot/imported/curling_sheet.png-94be8e82ffe8da918bfc382e2512526c.etc2.ctex"]
 
 [params]
 

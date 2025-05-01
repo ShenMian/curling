@@ -16,7 +16,7 @@ signal shot_finished(stone: Node3D)
 @export_range(2, 16) var shots_per_end: int = 16
 
 @onready var third_person_camera: Camera3D = $ThirdPersonCamera
-@onready var top_down_camera: Camera3D = $SubViewportContainer/SubViewport/TopDownCamera
+@onready var top_down_camera: Camera3D = $MarginContainer/SubViewportContainer/SubViewport/TopDownCamera
 
 @onready var stone_group: Node = $Stones
 @onready var sweep: Node3D = $Sweep

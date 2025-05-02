@@ -74,9 +74,9 @@ grow_vertical = 2
 theme = SubResource("Theme_fc626")
 alignment = 1
 
-[node name="ReturnButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="RetryButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
 layout_mode = 2
-text = "RETURN_TO_MAIN_MENU"
+text = "RETRY"
 script = ExtResource("3_6do8i")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
@@ -91,5 +91,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_kukqi")
 }
 
-[connection signal="pressed" from="VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

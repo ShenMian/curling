@@ -11,5 +11,7 @@ script = SubResource("GDScript_sfopn")
 
 [node name="PressAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_f7l02")
+bus = &"UI"
 
 [node name="HoverAudioPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"UI"

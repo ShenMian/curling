@@ -17,6 +17,7 @@ func _ready() -> void:
 			cell_clone.color.a = transparent
 			$GridContainer.add_child(cell_clone)
 
+
 func set_score(end: int, red: int, blue: int):
 	assert(0 <= end && end <= 8)
 	assert(red == 0 || blue == 0)
@@ -26,6 +27,7 @@ func set_score(end: int, red: int, blue: int):
 	red_label.text = str(red)
 	blue_label.text = str(blue)
 
+
 func red_total_score() -> int:
 	var cells := $GridContainer.get_children()
 	var score: int = 0
@@ -33,6 +35,7 @@ func red_total_score() -> int:
 		var label: Label = cells[i].get_child(0)
 		score += int(label.text)
 	return score
+
 
 func blue_total_score() -> int:
 	var cells := $GridContainer.get_children()

@@ -49,6 +49,7 @@ func _ready() -> void:
 	top_down_camera.position.y = 3.0
 	next_shot()
 
+
 func _process(_delta: float) -> void:
 	if is_stone_shot:
 		var stone: RigidBody3D = stone_group.get_child(-1)
@@ -56,6 +57,7 @@ func _process(_delta: float) -> void:
 			shot_finished.emit(stone)
 			return
 		update_scoreboard()
+
 
 func _input(event):
 	if Input.is_action_just_pressed("pause"):
@@ -99,11 +101,13 @@ func _input(event):
 			impulse_indicator.points[1].y = 0.1
 			impulse_indicator.rebuild()
 
+
 func _on_shot_started(stone: Node3D) -> void:
 	is_stone_shot = true
 
 	stone.get_node("AudioPlayer").play()
 	stone.add_child(sweep.duplicate())
+
 
 func _on_shot_finished(stone: Node3D) -> void:
 	is_stone_shot = false
@@ -119,10 +123,12 @@ func _on_shot_finished(stone: Node3D) -> void:
 
 	next_shot()
 
+
 func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	# Increase friction to stop the stone quickly
 	stone.physics_material_override.friction = 1.0
 	disable_stone(stone)
+
 
 func disable_stone(stone: Node3D):
 	stone.remove_child(stone.get_node("Sweep"))
@@ -135,11 +141,13 @@ func disable_stone(stone: Node3D):
 	for mesh in stone.get_node("Meshes").get_children():
 		mesh.transparency = 0.3
 
+
 func get_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
 	var impulse := (to - from) * IMPULSE_MAX
 	impulse.z = min(impulse.z, 0.0)
 	var length: float = clamp(impulse.length(), 0.0, IMPULSE_MAX)
 	return impulse.normalized() * length
+
 
 func get_mouse_ray_collision() -> Dictionary:
 	const RAY_LENGTH: float = 10.0
@@ -155,12 +163,14 @@ func get_mouse_ray_collision() -> Dictionary:
 	var space_state := get_world_3d().direct_space_state
 	return space_state.intersect_ray(ray_query_params)
 
+
 func next_shot() -> void:
 	if shots >= shots_per_end:
 		next_end()
 	shots += 1
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
 	spawn_stone(team_color)
+
 
 func next_end() -> void:
 	shots = 0
@@ -170,6 +180,7 @@ func next_end() -> void:
 	if ends >= ends_per_match + 1:
 		$ResultMenu.open()
 		return
+
 
 func spawn_stone(color: Color) -> void:
 	var stone := STONE_SCENE.instantiate()
@@ -183,6 +194,7 @@ func spawn_stone(color: Color) -> void:
 
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
+
 
 func update_scoreboard() -> void:
 	var stones := stone_group.get_children()
@@ -216,6 +228,7 @@ func update_scoreboard() -> void:
 
 	scoreboard.set_score(ends, red_score, blue_score)
 
+
 func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	var stone: RigidBody3D = stone_group.get_child(-1)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -224,9 +237,11 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 		elif event.is_released():
 			stop_sweep(stone)
 
+
 func _on_sweep_area_mouse_exited() -> void:
 	var stone: RigidBody3D = stone_group.get_child(-1)
 	stop_sweep(stone)
+
 
 func start_sweep(stone: RigidBody3D) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
@@ -234,6 +249,7 @@ func start_sweep(stone: RigidBody3D) -> void:
 		broom.start_sweep()
 
 	stone.physics_material_override.friction = stone_friction * 0.5
+
 
 func stop_sweep(stone: RigidBody3D) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():

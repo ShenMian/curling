@@ -3,5 +3,6 @@ TITLE,Curling,冰壶
 START,Start,开始
 EXIT,Exit,退出
 RESUME,Resume,恢复
+RETRY,Retry,重试
 QUIT,Quit,退出
 RETURN_TO_MAIN_MENU,Return to menu,返回菜单

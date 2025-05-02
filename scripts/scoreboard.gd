@@ -25,3 +25,19 @@ func set_score(end: int, red: int, blue: int):
 	var blue_label: Label = cells[end - 1 + 8].get_child(0)
 	red_label.text = str(red)
 	blue_label.text = str(blue)
+
+func red_total_score() -> int:
+	var cells := $GridContainer.get_children()
+	var score: int = 0
+	for i in range(8):
+		var label: Label = cells[i].get_child(0)
+		score += int(label.text)
+	return score
+
+func blue_total_score() -> int:
+	var cells := $GridContainer.get_children()
+	var score: int = 0
+	for i in range(8):
+		var label: Label = cells[8 + i].get_child(0)
+		score += int(label.text)
+	return score

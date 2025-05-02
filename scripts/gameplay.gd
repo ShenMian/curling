@@ -231,15 +231,13 @@ func _on_sweep_area_mouse_exited() -> void:
 func start_sweep(stone: RigidBody3D) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
 		broom.visible = true
-		broom.get_node("AnimationPlayer").play("sweep")
-		broom.get_node("AudioPlayer").play()
+		broom.start_sweep()
 
 	stone.physics_material_override.friction = stone_friction * 0.5
 
 func stop_sweep(stone: RigidBody3D) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
 		broom.visible = false
-		broom.get_node("AnimationPlayer").stop()
-		broom.get_node("AudioPlayer").stop()
+		broom.stop_sweep()
 
 	stone.physics_material_override.friction = stone_friction

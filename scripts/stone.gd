@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name Stone
 
 @export var color: Color
 @export var number: int
@@ -12,3 +13,10 @@ func _ready() -> void:
 	material.roughness = 0.2
 	$Meshes/Body.set_material_override(material)
 	number_label.text = str(number)
+
+func _on_body_entered(body: Node) -> void:
+	if body is not Stone:
+		return
+	if $ImpactAudioPlayer.playing:
+		return
+	$ImpactAudioPlayer.play()

@@ -109,7 +109,7 @@ func _input(event):
 func _on_shot_started(stone: Node3D) -> void:
 	is_stone_shot = true
 
-	stone.get_node("AudioPlayer").play()
+	stone.get_node("SlideAudioPlayer").play()
 	stone.add_child(sweep.duplicate())
 
 
@@ -122,7 +122,7 @@ func _on_shot_finished(stone: Node3D) -> void:
 	if stone.position.z > far_hog_line_marker.global_position.z:
 		disable_stone(stone)
 
-	stone.get_node("AudioPlayer").stop()
+	stone.get_node("SlideAudioPlayer").stop()
 	stone.remove_child(stone.get_node("Sweep"))
 
 	next_shot()

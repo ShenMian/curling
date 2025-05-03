@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://lu3u3fp16p6x"]
+[gd_scene load_steps=8 format=3 uid="uid://lu3u3fp16p6x"]
 
 [ext_resource type="Script" uid="uid://b3daipni0xpv7" path="res://scripts/stone.gd" id="1_f651v"]
 [ext_resource type="ArrayMesh" uid="uid://bgiehwqdfvmej" path="res://models/curling_stone_Body.res" id="2_f651v"]
 [ext_resource type="ArrayMesh" uid="uid://drgd11bqmsfsf" path="res://models/curling_stone_Handle.res" id="3_6niw0"]
 [ext_resource type="AudioStream" uid="uid://bc5h4qpwx2cmq" path="res://sounds/stone_slide.ogg" id="4_6niw0"]
+[ext_resource type="AudioStream" uid="uid://bhtfjp4gdxlcm" path="res://sounds/stone_impact.ogg" id="5_w7uw0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hmdus"]
 friction = 0.02
@@ -17,6 +18,8 @@ axis_lock_angular_x = true
 axis_lock_angular_z = true
 mass = 17.24
 physics_material_override = SubResource("PhysicsMaterial_hmdus")
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_f651v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -40,7 +43,14 @@ no_depth_test = true
 font_size = 96
 outline_size = 24
 
-[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="SlideAudioPlayer" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_6niw0")
 volume_db = -15.0
 bus = &"SFX"
+
+[node name="ImpactAudioPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_w7uw0")
+volume_db = -15.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

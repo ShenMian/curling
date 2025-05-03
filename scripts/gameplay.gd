@@ -196,6 +196,8 @@ func spawn_stone(color: Color) -> void:
 	stone.physics_material_override = material
 	stone_group.add_child(stone)
 
+
+func _on_stone_added(stone: Node) -> void:
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
 

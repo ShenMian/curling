@@ -60,7 +60,7 @@ func _process(_delta: float) -> void:
 
 
 func _input(event):
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_released("pause"):
 		$PauseMenu.open()
 	if is_stone_shot:
 		var stone: RigidBody3D = stone_group.get_child(-1)

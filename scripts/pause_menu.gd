@@ -4,13 +4,25 @@ extends CanvasLayer
 
 func open():
 	get_tree().paused = true
+	$VBoxContainer/ResumeButton.grab_focus()
 	show()
 	blur_animation.play("start_pause")
 
 
-func _on_resume_button_pressed() -> void:
+func close():
 	hide()
+	get_viewport().gui_release_focus()
 	get_tree().paused = false
+
+
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_released("pause"):
+		get_viewport().set_input_as_handled()
+		close()
+
+
+func _on_resume_button_pressed() -> void:
+	close()
 
 
 func _on_retry_button_pressed() -> void:

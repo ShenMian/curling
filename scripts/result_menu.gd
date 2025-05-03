@@ -4,6 +4,7 @@ extends CanvasLayer
 
 func open():
 	get_tree().paused = true
+	$VBoxContainer/RetryButton.grab_focus()
 	show()
 	blur_animation.play("start_pause")
 

@@ -66,21 +66,23 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = 76.0
+offset_top = 60.0
 offset_right = 95.0
-offset_bottom = 176.0
+offset_bottom = 186.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_fc626")
 alignment = 1
 
 [node name="RetryButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "RETRY"
 script = ExtResource("3_6do8i")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "QUIT"
 script = ExtResource("3_6do8i")

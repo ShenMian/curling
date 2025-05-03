@@ -51,20 +51,22 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 128.0
-offset_top = -328.0
+offset_top = -332.0
 offset_right = 318.0
-offset_bottom = -228.0
+offset_bottom = -200.0
 grow_vertical = 0
 theme = SubResource("Theme_l6cm7")
 alignment = 1
 
 [node name="StartButton" type="Button" parent="Options" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "START"
 script = ExtResource("3_bqqt6")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [node name="ExitButton" type="Button" parent="Options" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "EXIT"
 script = ExtResource("3_bqqt6")

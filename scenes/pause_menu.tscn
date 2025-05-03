@@ -66,27 +66,30 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = -50.0
+offset_top = -95.5
 offset_right = 95.0
-offset_bottom = 50.0
+offset_bottom = 95.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_wyi4u")
 alignment = 1
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "RESUME"
 script = ExtResource("3_kukqi")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [node name="RetryButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "RETRY"
 script = ExtResource("3_kukqi")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "QUIT"
 script = ExtResource("3_kukqi")

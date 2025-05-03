@@ -16,4 +16,5 @@ bus = &"UI"
 
 [node name="HoverAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_ds1ap")
+volume_db = -10.0
 bus = &"UI"

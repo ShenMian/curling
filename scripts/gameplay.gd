@@ -62,6 +62,12 @@ func _process(_delta: float) -> void:
 func _input(event):
 	if Input.is_action_just_pressed("pause"):
 		$PauseMenu.open()
+	if is_stone_shot:
+		var stone: RigidBody3D = stone_group.get_child(-1)
+		if Input.is_action_just_pressed("sweep"):
+			start_sweep(stone)
+		if Input.is_action_just_released("sweep"):
+			stop_sweep(stone)
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if is_stone_shot:

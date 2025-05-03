@@ -42,8 +42,6 @@ var is_stone_drag: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$MusicPlayer.play()
-	
 	self.remove_child(sweep)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0

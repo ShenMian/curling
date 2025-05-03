@@ -202,6 +202,7 @@ visible = false
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_hbo4f")
+autoplay = true
 bus = &"Music"
 parameters/looping = true
 

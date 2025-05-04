@@ -30,7 +30,7 @@ physics_material_override = SubResource("PhysicsMaterial_2hqyf")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody"]
 shape = SubResource("WorldBoundaryShape3D_2hqyf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody"]
+[node name="Mesh" type="MeshInstance3D" parent="StaticBody"]
 mesh = SubResource("PlaneMesh_v0354")
 skeleton = NodePath("../..")
 

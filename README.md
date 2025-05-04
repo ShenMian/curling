@@ -28,6 +28,9 @@
 - [Curlingsheet flip](https://commons.wikimedia.org/wiki/File:Curlingsheet_flip.svg)
     - **Author**: Antonsusi.
     - **License**: GFDL.
+- [Pxiel Art UI borders](https://gx310.itch.io/pxiel-art-ui-borders)
+    - **Author**: Antonsusi.
+    - **License**: Free for personal/commercial use; modify as needed. Credit optional but appreciated.
 
 ### Sounds
 

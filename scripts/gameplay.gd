@@ -60,12 +60,6 @@ func _process(_delta: float) -> void:
 func _input(event):
 	if Input.is_action_just_released("pause"):
 		$PauseMenu.open()
-	if is_stone_shot:
-		var stone: Stone = stone_group.get_child(-1)
-		if Input.is_action_just_pressed("sweep_area"):
-			_start_sweep(stone)
-		if Input.is_action_just_released("sweep_area"):
-			_stop_sweep(stone)
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if is_stone_shot:
@@ -229,31 +223,3 @@ func _update_scoreboard() -> void:
 		blue_score = score
 
 	scoreboard.set_score(ends, red_score, blue_score)
-
-
-func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	var stone: Stone = stone_group.get_child(-1)
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.is_pressed():
-			_start_sweep(stone)
-		elif event.is_released():
-			_stop_sweep(stone)
-
-
-func _on_sweep_area_mouse_exited() -> void:
-	var stone: Stone = stone_group.get_child(-1)
-	_stop_sweep(stone)
-
-
-func _start_sweep(stone: Stone) -> void:
-	for broom in stone.get_node("SweepArea/Brooms").get_children():
-		broom.visible = true
-		broom.start_sweep()
-	stone.physics_material_override.friction = stone_friction * 0.6
-
-
-func _stop_sweep(stone: Stone) -> void:
-	for broom in stone.get_node("SweepArea/Brooms").get_children():
-		broom.visible = false
-		broom.stop_sweep()
-	stone.physics_material_override.friction = stone_friction

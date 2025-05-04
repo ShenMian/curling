@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7ryq2qpjbl4"]
+
+[ext_resource type="Script" uid="uid://c0fchoxfj8s3g" path="res://scripts/sweep_area.gd" id="1_fj5xc"]
+[ext_resource type="PackedScene" uid="uid://dl1lj6wk00whi" path="res://scenes/broom.tscn" id="1_mottk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e124b"]
+size = Vector3(1, 0.05, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_101mb"]
+albedo_color = Color(0.492761, 0.492761, 0.49276, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_101mb"]
+size = Vector3(1, 0.05, 0.6)
+
+[node name="SweepArea" type="Node3D"]
+script = ExtResource("1_fj5xc")
+
+[node name="Area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -0.6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area"]
+shape = SubResource("BoxShape3D_e124b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area"]
+layers = 4
+material_override = SubResource("StandardMaterial3D_101mb")
+transparency = 0.5
+mesh = SubResource("BoxMesh_101mb")
+
+[node name="Brooms" type="Node3D" parent="."]
+
+[node name="BroomLeft" parent="Brooms" instance=ExtResource("1_mottk")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -0.167012, 0, -0.608823)
+visible = false
+
+[node name="BroomRight" parent="Brooms" instance=ExtResource("1_mottk")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0.162464, 0, -0.485487)
+visible = false
+
+[connection signal="input_event" from="Area" to="." method="_on_sweep_area_input_event"]
+[connection signal="mouse_exited" from="Area" to="." method="_on_sweep_area_mouse_exited"]

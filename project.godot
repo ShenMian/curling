@@ -18,6 +18,7 @@ config/icon="uid://dft80r1vrlgsx"
 [autoload]
 
 UiSound="*res://scenes/ui_sound.tscn"
+MultiplayerManager="*res://scripts/multiplayer_manager.gd"
 
 [editor_plugins]
 

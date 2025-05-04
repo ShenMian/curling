@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene load_steps=26 format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://8n1e4e5tpjm3" path="res://scenes/pause_menu.tscn" id="3_ocj2s"]
 [ext_resource type="Script" uid="uid://b8gkn2ed6qcag" path="res://scripts/third_person_camera.gd" id="4_ocj2s"]
 [ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="5_din8e"]
-[ext_resource type="PackedScene" uid="uid://dl1lj6wk00whi" path="res://scenes/broom.tscn" id="6_101mb"]
+[ext_resource type="PackedScene" uid="uid://c7ryq2qpjbl4" path="res://scenes/sweep_area.tscn" id="6_ctvyo"]
 [ext_resource type="PackedScene" uid="uid://e84211jixi3w" path="res://models/arena.blend" id="7_101mb"]
 [ext_resource type="PackedScene" uid="uid://coltcy4ljevc6" path="res://scenes/result_menu.tscn" id="10_ctvyo"]
 [ext_resource type="AudioStream" uid="uid://cms7uxh7e4rrf" path="res://sounds/music/exoplanet_dawn.ogg" id="10_hbo4f"]
@@ -15,15 +15,6 @@
 [sub_resource type="Curve" id="Curve_din8e"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_e124b"]
-size = Vector3(1, 0.1, 0.5)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_101mb"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_101mb"]
-size = Vector3(1, 0.1, 0.5)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_e124b"]
 size = Vector2(80, 80)
@@ -115,29 +106,7 @@ script = ExtResource("4_ocj2s")
 offset = Vector3(0, 2, 1)
 lookat_voffset = 0.5
 
-[node name="SweepArea" type="Node3D" parent="."]
-
-[node name="Area" type="Area3D" parent="SweepArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.540838)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SweepArea/Area"]
-shape = SubResource("BoxShape3D_e124b")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SweepArea/Area"]
-layers = 4
-material_override = SubResource("StandardMaterial3D_101mb")
-transparency = 0.5
-mesh = SubResource("BoxMesh_101mb")
-
-[node name="Brooms" type="Node3D" parent="SweepArea"]
-
-[node name="BroomLeft" parent="SweepArea/Brooms" instance=ExtResource("6_101mb")]
-transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -0.167012, 0, -0.608823)
-visible = false
-
-[node name="BroomRight" parent="SweepArea/Brooms" instance=ExtResource("6_101mb")]
-transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0.162464, 0, -0.485487)
-visible = false
+[node name="SweepArea" parent="." instance=ExtResource("6_ctvyo")]
 
 [node name="Arena" parent="." instance=ExtResource("7_101mb")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 16.5125)
@@ -209,5 +178,3 @@ parameters/looping = true
 [connection signal="shot_finished" from="." to="." method="_on_shot_finished"]
 [connection signal="shot_started" from="." to="." method="_on_shot_started"]
 [connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]
-[connection signal="input_event" from="SweepArea/Area" to="." method="_on_sweep_area_input_event"]
-[connection signal="mouse_exited" from="SweepArea/Area" to="." method="_on_sweep_area_mouse_exited"]

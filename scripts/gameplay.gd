@@ -45,7 +45,7 @@ func _ready() -> void:
 	self.remove_child(sweep)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
-	next_shot()
+	_next_shot()
 
 
 func _process(_delta: float) -> void:
@@ -54,7 +54,7 @@ func _process(_delta: float) -> void:
 		if stone.sleeping:
 			shot_finished.emit(stone)
 			return
-		update_scoreboard()
+		_update_scoreboard()
 
 
 func _input(event):
@@ -63,15 +63,15 @@ func _input(event):
 	if is_stone_shot:
 		var stone: Stone = stone_group.get_child(-1)
 		if Input.is_action_just_pressed("sweep"):
-			start_sweep(stone)
+			_start_sweep(stone)
 		if Input.is_action_just_released("sweep"):
-			stop_sweep(stone)
+			_stop_sweep(stone)
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if is_stone_shot:
 			return
 		
-		var collision := get_mouse_ray_collision()
+		var collision := _get_mouse_ray_collision()
 		if collision.is_empty():
 			return
 
@@ -81,20 +81,20 @@ func _input(event):
 		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
 			is_stone_drag = false
 			impulse_indicator.clear()
-			var impulse := get_clamped_impulse(collision.position, stone.position)
+			var impulse := _get_clamped_impulse(collision.position, stone.position)
 			stone.apply_central_impulse(impulse)
 			stone.sleeping = false
 			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / IMPULSE_MAX])
 			shot_started.emit(stone)
 
 	if event is InputEventMouseMotion and is_stone_drag:
-		var collision := get_mouse_ray_collision()
+		var collision := _get_mouse_ray_collision()
 		if collision.is_empty():
 			return
 
 		var stone: Stone = stone_group.get_child(-1)
 		if is_stone_drag and collision.collider == sheet_body:
-			var impulse := get_clamped_impulse(collision.position, stone.position)
+			var impulse := _get_clamped_impulse(collision.position, stone.position)
 			var factor := indicator_color_curve.sample(impulse.length() / IMPULSE_MAX)
 			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
 			impulse_indicator.points = PackedVector3Array([
@@ -120,21 +120,21 @@ func _on_shot_finished(stone: Node3D) -> void:
 
 	# Check if the stone is hogged
 	if stone.position.z > far_hog_line_marker.global_position.z:
-		disable_stone(stone)
+		_disable_stone(stone)
 
 	stone.get_node("SlideAudioPlayer").stop()
 	stone.remove_child(stone.get_node("Sweep"))
 
-	next_shot()
+	_next_shot()
 
 
 func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 	# Increase friction to stop the stone quickly
 	stone.physics_material_override.friction = 1.0
-	disable_stone(stone)
+	_disable_stone(stone)
 
 
-func disable_stone(stone: Node3D):
+func _disable_stone(stone: Node3D):
 	stone.remove_child(stone.get_node("Sweep"))
 
 	# Disable collision with other stones
@@ -146,14 +146,14 @@ func disable_stone(stone: Node3D):
 		mesh.transparency = 0.3
 
 
-func get_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
+func _get_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
 	var impulse := (to - from) * IMPULSE_MAX
 	impulse.z = min(impulse.z, 0.0)
 	var length: float = clamp(impulse.length(), 0.0, IMPULSE_MAX)
 	return impulse.normalized() * length
 
 
-func get_mouse_ray_collision() -> Dictionary:
+func _get_mouse_ray_collision() -> Dictionary:
 	const RAY_LENGTH: float = 10.0
 
 	var mouse_position := get_viewport().get_mouse_position()
@@ -168,15 +168,15 @@ func get_mouse_ray_collision() -> Dictionary:
 	return space_state.intersect_ray(ray_query_params)
 
 
-func next_shot() -> void:
+func _next_shot() -> void:
 	if shots >= shots_per_end:
-		next_end()
+		_next_end()
 	shots += 1
 	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
-	spawn_stone(team_color)
+	_spawn_stone(team_color)
 
 
-func next_end() -> void:
+func _next_end() -> void:
 	shots = 0
 	for stone in stone_group.get_children():
 		stone.queue_free()
@@ -186,7 +186,7 @@ func next_end() -> void:
 		return
 
 
-func spawn_stone(color: Color) -> void:
+func _spawn_stone(color: Color) -> void:
 	var stone := STONE_SCENE.instantiate()
 	stone.position = tee_line_marker.global_position
 	stone.color = color
@@ -202,7 +202,7 @@ func _on_stone_added(stone: Node) -> void:
 	third_person_camera.target = stone
 
 
-func update_scoreboard() -> void:
+func _update_scoreboard() -> void:
 	var stones := stone_group.get_children()
 	if stones.is_empty():
 		return
@@ -239,27 +239,27 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 	var stone: Stone = stone_group.get_child(-1)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
-			start_sweep(stone)
+			_start_sweep(stone)
 		elif event.is_released():
-			stop_sweep(stone)
+			_stop_sweep(stone)
 
 
 func _on_sweep_area_mouse_exited() -> void:
 	var stone: Stone = stone_group.get_child(-1)
-	stop_sweep(stone)
+	_stop_sweep(stone)
 
 
-func start_sweep(stone: Stone) -> void:
+func _start_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
 		broom.visible = true
-		broom.start_sweep()
+		broom._start_sweep()
 
 	stone.physics_material_override.friction = stone_friction * 0.6
 
 
-func stop_sweep(stone: Stone) -> void:
+func _stop_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
 		broom.visible = false
-		broom.stop_sweep()
+		broom._stop_sweep()
 
 	stone.physics_material_override.friction = stone_friction

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://lu3u3fp16p6x"]
+[gd_scene load_steps=9 format=3 uid="uid://lu3u3fp16p6x"]
 
 [ext_resource type="Script" uid="uid://b3daipni0xpv7" path="res://scripts/stone.gd" id="1_f651v"]
 [ext_resource type="ArrayMesh" uid="uid://bgiehwqdfvmej" path="res://models/curling_stone_Body.res" id="2_f651v"]
@@ -12,6 +12,9 @@ friction = 0.02
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tuldt"]
 height = 0.254285
 radius = 0.26
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w7uw0"]
+roughness = 0.2
 
 [node name="Stone" type="RigidBody3D"]
 axis_lock_angular_x = true
@@ -30,6 +33,7 @@ shape = SubResource("CylinderShape3D_tuldt")
 transform = Transform3D(-0.009, 0, -7.86805e-10, 0, 0.009, 0, 7.86805e-10, 0, -0.009, 0, 0.184008, -0.00488748)
 
 [node name="Body" type="MeshInstance3D" parent="Meshes"]
+material_override = SubResource("StandardMaterial3D_w7uw0")
 mesh = ExtResource("2_f651v")
 
 [node name="Handle" type="MeshInstance3D" parent="Meshes"]

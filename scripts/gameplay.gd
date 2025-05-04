@@ -50,7 +50,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_stone_shot:
-		var stone: RigidBody3D = stone_group.get_child(-1)
+		var stone: Stone = stone_group.get_child(-1)
 		if stone.sleeping:
 			shot_finished.emit(stone)
 			return
@@ -61,7 +61,7 @@ func _input(event):
 	if Input.is_action_just_released("pause"):
 		$PauseMenu.open()
 	if is_stone_shot:
-		var stone: RigidBody3D = stone_group.get_child(-1)
+		var stone: Stone = stone_group.get_child(-1)
 		if Input.is_action_just_pressed("sweep"):
 			start_sweep(stone)
 		if Input.is_action_just_released("sweep"):
@@ -75,7 +75,7 @@ func _input(event):
 		if collision.is_empty():
 			return
 
-		var stone: RigidBody3D = stone_group.get_child(-1)
+		var stone: Stone = stone_group.get_child(-1)
 		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
 			is_stone_drag = true
 		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
@@ -92,7 +92,7 @@ func _input(event):
 		if collision.is_empty():
 			return
 
-		var stone: RigidBody3D = stone_group.get_child(-1)
+		var stone: Stone = stone_group.get_child(-1)
 		if is_stone_drag and collision.collider == sheet_body:
 			var impulse := get_clamped_impulse(collision.position, stone.position)
 			var factor := indicator_color_curve.sample(impulse.length() / IMPULSE_MAX)
@@ -236,7 +236,7 @@ func update_scoreboard() -> void:
 
 
 func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	var stone: RigidBody3D = stone_group.get_child(-1)
+	var stone: Stone = stone_group.get_child(-1)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
 			start_sweep(stone)
@@ -245,11 +245,11 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 
 
 func _on_sweep_area_mouse_exited() -> void:
-	var stone: RigidBody3D = stone_group.get_child(-1)
+	var stone: Stone = stone_group.get_child(-1)
 	stop_sweep(stone)
 
 
-func start_sweep(stone: RigidBody3D) -> void:
+func start_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
 		broom.visible = true
 		broom.start_sweep()
@@ -257,7 +257,7 @@ func start_sweep(stone: RigidBody3D) -> void:
 	stone.physics_material_override.friction = stone_friction * 0.5
 
 
-func stop_sweep(stone: RigidBody3D) -> void:
+func stop_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("Sweep/Brooms").get_children():
 		broom.visible = false
 		broom.stop_sweep()

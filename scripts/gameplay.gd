@@ -40,6 +40,7 @@ var team_color: Color = Color.RED
 var is_stone_shot: bool = false
 var is_stone_drag: bool = false
 
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0

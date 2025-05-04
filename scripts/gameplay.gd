@@ -185,7 +185,7 @@ func _spawn_stone(color: Color) -> void:
 	material.friction = stone_friction
 	stone.physics_material_override = material
 	stone_group.add_child(stone)
-	
+
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
 

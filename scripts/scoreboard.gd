@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-# Transparency value for cell backgrounds
+# Transparency value for cell backgrounds.
 @export_range(0.0, 1.0) var transparent: float = 0.8
 
 var red_score: int = 0
@@ -18,6 +18,7 @@ func _ready() -> void:
 			$GridContainer.add_child(cell_clone)
 
 
+# Sets the score for a specific end for both red and blue teams.
 func set_score(end: int, red: int, blue: int):
 	assert(0 <= end && end <= 8)
 	assert(red == 0 || blue == 0)
@@ -28,6 +29,7 @@ func set_score(end: int, red: int, blue: int):
 	blue_label.text = str(blue)
 
 
+# Calculates the total score for the red team.
 func red_total_score() -> int:
 	var cells := $GridContainer.get_children()
 	var score: int = 0
@@ -37,6 +39,7 @@ func red_total_score() -> int:
 	return score
 
 
+# Calculates the total score for the blue team.
 func blue_total_score() -> int:
 	var cells := $GridContainer.get_children()
 	var score: int = 0

@@ -10,6 +10,7 @@ func _ready() -> void:
 	$Meshes/Body.material_override.albedo_color = color
 	number_label.text = str(number)
 
+# Plays the impact sound when the stone collides with another stone.
 func _on_body_entered(body: Node) -> void:
 	if body is not Stone:
 		return

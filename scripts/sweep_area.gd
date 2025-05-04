@@ -1,5 +1,9 @@
 extends Node3D
 
+# Multiplier to reduce friction when sweeping.
+@export var factor: float = 0.6
+
+# Stores the original friction value of the stone.
 var stone_friction: float
 
 func _process(_delta: float) -> void:
@@ -28,14 +32,16 @@ func _on_sweep_area_mouse_exited() -> void:
 	_stop_sweep(stone)
 
 
+# Starts the sweeping action and reduces the stone's friction.
 func _start_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = true
 		broom.start_sweep()
 	stone_friction = stone.physics_material_override.friction
-	stone.physics_material_override.friction = stone_friction * 0.6
+	stone.physics_material_override.friction = stone_friction * factor
 
 
+# Stops the sweeping action and restores the stone's friction.
 func _stop_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = false

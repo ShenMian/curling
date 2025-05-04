@@ -19,7 +19,6 @@ signal shot_finished(stone: Node3D)
 @onready var top_down_camera: Camera3D = $MarginContainer/SubViewportContainer/SubViewport/TopDownCamera
 
 @onready var stone_group: Node = $Stones
-@onready var sweep_area: Node3D = $SweepArea
 
 @onready var sheet: Node3D = $Sheet
 @onready var sheet_body: StaticBody3D = $Sheet/StaticBody
@@ -31,6 +30,7 @@ signal shot_finished(stone: Node3D)
 @onready var scoreboard: CanvasLayer = $Scoreboard
 
 const STONE_SCENE: PackedScene = preload("res://scenes/stone.tscn")
+const SWEEP_AREA_SCENE: PackedScene = preload("res://scenes/sweep_area.tscn")
 const IMPULSE_MAX: float = 150.0
 
 var ends: int = 1
@@ -42,7 +42,6 @@ var is_stone_drag: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	self.remove_child(sweep_area)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
 	_next_shot()
@@ -104,7 +103,7 @@ func _on_shot_started(stone: Node3D) -> void:
 	is_stone_shot = true
 
 	stone.get_node("SlideAudioPlayer").play()
-	stone.add_child(sweep_area.duplicate())
+	stone.add_child(SWEEP_AREA_SCENE.instantiate())
 
 
 func _on_shot_finished(stone: Node3D) -> void:
@@ -117,7 +116,7 @@ func _on_shot_finished(stone: Node3D) -> void:
 	if stone.position.z > far_hog_line_marker.global_position.z:
 		_disable_stone(stone)
 
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1.0).timeout
 
 	_next_shot()
 

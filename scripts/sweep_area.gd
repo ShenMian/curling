@@ -2,6 +2,10 @@ extends Node3D
 
 var stone_friction: float
 
+func _process(_delta: float) -> void:
+	self.global_rotation_degrees.y = 0.0
+
+
 func _input(_event: InputEvent) -> void:
 	var stone: Stone = self.get_parent()
 	if Input.is_action_just_pressed("sweep"):

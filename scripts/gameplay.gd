@@ -116,14 +116,14 @@ func _on_shot_started(stone: Node3D) -> void:
 func _on_shot_finished(stone: Node3D) -> void:
 	is_stone_shot = false
 
-	await get_tree().create_timer(0.5).timeout
+	stone.get_node("SlideAudioPlayer").stop()
+	stone.remove_child(stone.get_node("SweepArea"))
 
 	# Check if the stone is hogged
 	if stone.position.z > far_hog_line_marker.global_position.z:
 		_disable_stone(stone)
 
-	stone.get_node("SlideAudioPlayer").stop()
-	stone.remove_child(stone.get_node("Sweep"))
+	await get_tree().create_timer(0.5).timeout
 
 	_next_shot()
 
@@ -135,8 +135,6 @@ func _on_sheet_out_of_bounds(stone: Node3D) -> void:
 
 
 func _disable_stone(stone: Node3D):
-	stone.remove_child(stone.get_node("Sweep"))
-
 	# Disable collision with other stones
 	stone.collision_layer = 0
 	stone.collision_mask = 1 << 1
@@ -195,9 +193,7 @@ func _spawn_stone(color: Color) -> void:
 	material.friction = stone_friction
 	stone.physics_material_override = material
 	stone_group.add_child(stone)
-
-
-func _on_stone_added(stone: Node) -> void:
+	
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
 

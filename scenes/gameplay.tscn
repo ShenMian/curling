@@ -209,6 +209,5 @@ parameters/looping = true
 [connection signal="shot_finished" from="." to="." method="_on_shot_finished"]
 [connection signal="shot_started" from="." to="." method="_on_shot_started"]
 [connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]
-[connection signal="child_entered_tree" from="Stones" to="." method="_on_stone_added"]
 [connection signal="input_event" from="SweepArea/Area" to="." method="_on_sweep_area_input_event"]
 [connection signal="mouse_exited" from="SweepArea/Area" to="." method="_on_sweep_area_mouse_exited"]

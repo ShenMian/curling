@@ -254,7 +254,7 @@ func start_sweep(stone: Stone) -> void:
 		broom.visible = true
 		broom.start_sweep()
 
-	stone.physics_material_override.friction = stone_friction * 0.5
+	stone.physics_material_override.friction = stone_friction * 0.6
 
 
 func stop_sweep(stone: Stone) -> void:

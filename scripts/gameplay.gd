@@ -19,7 +19,7 @@ signal shot_finished(stone: Node3D)
 @onready var top_down_camera: Camera3D = $MarginContainer/SubViewportContainer/SubViewport/TopDownCamera
 
 @onready var stone_group: Node = $Stones
-@onready var sweep: Node3D = $Sweep
+@onready var sweep_area: Node3D = $SweepArea
 
 @onready var sheet: Node3D = $Sheet
 @onready var sheet_body: StaticBody3D = $Sheet/StaticBody
@@ -42,7 +42,7 @@ var is_stone_drag: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	self.remove_child(sweep)
+	self.remove_child(sweep_area)
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
 	_next_shot()
@@ -62,9 +62,9 @@ func _input(event):
 		$PauseMenu.open()
 	if is_stone_shot:
 		var stone: Stone = stone_group.get_child(-1)
-		if Input.is_action_just_pressed("sweep"):
+		if Input.is_action_just_pressed("sweep_area"):
 			_start_sweep(stone)
-		if Input.is_action_just_released("sweep"):
+		if Input.is_action_just_released("sweep_area"):
 			_stop_sweep(stone)
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -110,7 +110,7 @@ func _on_shot_started(stone: Node3D) -> void:
 	is_stone_shot = true
 
 	stone.get_node("SlideAudioPlayer").play()
-	stone.add_child(sweep.duplicate())
+	stone.add_child(sweep_area.duplicate())
 
 
 func _on_shot_finished(stone: Node3D) -> void:
@@ -250,16 +250,16 @@ func _on_sweep_area_mouse_exited() -> void:
 
 
 func _start_sweep(stone: Stone) -> void:
-	for broom in stone.get_node("Sweep/Brooms").get_children():
+	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = true
-		broom._start_sweep()
+		broom.start_sweep()
 
 	stone.physics_material_override.friction = stone_friction * 0.6
 
 
 func _stop_sweep(stone: Stone) -> void:
-	for broom in stone.get_node("Sweep/Brooms").get_children():
+	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = false
-		broom._stop_sweep()
+		broom.stop_sweep()
 
 	stone.physics_material_override.friction = stone_friction

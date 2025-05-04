@@ -115,27 +115,27 @@ script = ExtResource("4_ocj2s")
 offset = Vector3(0, 2, 1)
 lookat_voffset = 0.5
 
-[node name="Sweep" type="Node3D" parent="."]
+[node name="SweepArea" type="Node3D" parent="."]
 
-[node name="Area" type="Area3D" parent="Sweep"]
+[node name="Area" type="Area3D" parent="SweepArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.540838)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Sweep/Area"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SweepArea/Area"]
 shape = SubResource("BoxShape3D_e124b")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Sweep/Area"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SweepArea/Area"]
 layers = 4
 material_override = SubResource("StandardMaterial3D_101mb")
 transparency = 0.5
 mesh = SubResource("BoxMesh_101mb")
 
-[node name="Brooms" type="Node3D" parent="Sweep"]
+[node name="Brooms" type="Node3D" parent="SweepArea"]
 
-[node name="BroomLeft" parent="Sweep/Brooms" instance=ExtResource("6_101mb")]
+[node name="BroomLeft" parent="SweepArea/Brooms" instance=ExtResource("6_101mb")]
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -0.167012, 0, -0.608823)
 visible = false
 
-[node name="BroomRight" parent="Sweep/Brooms" instance=ExtResource("6_101mb")]
+[node name="BroomRight" parent="SweepArea/Brooms" instance=ExtResource("6_101mb")]
 transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0.162464, 0, -0.485487)
 visible = false
 
@@ -210,5 +210,5 @@ parameters/looping = true
 [connection signal="shot_started" from="." to="." method="_on_shot_started"]
 [connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]
 [connection signal="child_entered_tree" from="Stones" to="." method="_on_stone_added"]
-[connection signal="input_event" from="Sweep/Area" to="." method="_on_sweep_area_input_event"]
-[connection signal="mouse_exited" from="Sweep/Area" to="." method="_on_sweep_area_mouse_exited"]
+[connection signal="input_event" from="SweepArea/Area" to="." method="_on_sweep_area_input_event"]
+[connection signal="mouse_exited" from="SweepArea/Area" to="." method="_on_sweep_area_mouse_exited"]

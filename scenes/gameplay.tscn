@@ -159,6 +159,10 @@ projection = 1
 size = 4.14245
 
 [node name="Scoreboard" parent="." instance=ExtResource("5_din8e")]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 45.0
+offset_bottom = 45.0
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
 visible = false

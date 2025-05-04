@@ -1,7 +1,7 @@
 extends Node3D
 
-signal shot_started(stone: Node3D)
-signal shot_finished(stone: Node3D)
+signal shot_started(stone: Stone)
+signal shot_finished(stone: Stone)
 
 # Curve used to determine the color of the impulse indicator based on impulse strength
 @export var indicator_color_curve: Curve
@@ -37,78 +37,91 @@ var ends: int = 1
 var shots: int = 0
 var team_color: Color = Color.RED
 
-var is_stone_shot: bool = false
 var is_stone_drag: bool = false
+var is_stone_shot: bool = false
+var is_stone_ready: bool = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
 	_next_shot()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	var stone: Stone = stone_group.get_child(-1)
 	if is_stone_shot:
-		var stone: Stone = stone_group.get_child(-1)
 		if stone.sleeping:
+			is_stone_shot = false
 			shot_finished.emit(stone)
 			return
 		_update_scoreboard()
+	# if is_stone_ready && not is_stone_drag:
+	# 	if Input.is_action_pressed("spin_stone_cw"):
+	# 		stone.rotate_y(-delta)
+	# 	if Input.is_action_pressed("spin_stone_ccw"):
+	# 		stone.rotate_y(delta)
+	# 	if Input.is_action_pressed("adjust_stone_left"):
+	# 		stone.position.x -= delta
+	# 	if Input.is_action_pressed("adjust_stone_right"):
+	# 		stone.position.x += delta
+	# 	var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
+	# 	stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
 
 
 func _input(event):
 	if Input.is_action_just_released("pause"):
 		$PauseMenu.open()
 	
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if is_stone_shot:
-			return
-		
-		var collision := _get_mouse_ray_collision()
-		if collision.is_empty():
-			return
+	if is_stone_ready:
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			var collision := _get_mouse_ray_collision()
+			if collision.is_empty():
+				return
 
-		var stone: Stone = stone_group.get_child(-1)
-		if not is_stone_drag and event.is_pressed() and collision.collider == stone:
-			is_stone_drag = true
-		elif is_stone_drag and event.is_released() and collision.collider == sheet_body:
-			is_stone_drag = false
-			impulse_indicator.clear()
-			var impulse := _get_clamped_impulse(collision.position, stone.position)
-			stone.apply_central_impulse(impulse)
-			stone.sleeping = false
-			print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / IMPULSE_MAX])
-			shot_started.emit(stone)
+			var stone: Stone = stone_group.get_child(-1)
+			if not is_stone_drag and event.is_pressed() and collision.collider == stone:
+				is_stone_drag = true
+			elif is_stone_drag and event.is_released():
+				is_stone_drag = false
+				if collision.collider == sheet_body:
+					is_stone_ready = false
+					impulse_indicator.clear()
+					var impulse := _get_clamped_impulse(collision.position, stone.position)
+					stone.apply_central_impulse(impulse)
+					stone.apply_torque_impulse(Vector3(0, -stone.rotation.y, 0))
+					stone.sleeping = false
+					print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / IMPULSE_MAX])
+					shot_started.emit(stone)
 
-	if event is InputEventMouseMotion and is_stone_drag:
-		var collision := _get_mouse_ray_collision()
-		if collision.is_empty():
-			return
+		if event is InputEventMouseMotion and is_stone_drag:
+			var collision := _get_mouse_ray_collision()
+			if collision.is_empty():
+				return
 
-		var stone: Stone = stone_group.get_child(-1)
-		if is_stone_drag and collision.collider == sheet_body:
-			var impulse := _get_clamped_impulse(collision.position, stone.position)
-			var factor := indicator_color_curve.sample(impulse.length() / IMPULSE_MAX)
-			impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
-			impulse_indicator.points = PackedVector3Array([
-				stone.position,
-				stone.position - impulse / IMPULSE_MAX
-			])
-			impulse_indicator.points[0].y = 0.1
-			impulse_indicator.points[1].y = 0.1
-			impulse_indicator.rebuild()
+			var stone: Stone = stone_group.get_child(-1)
+			if collision.collider == sheet_body:
+				var impulse := _get_clamped_impulse(collision.position, stone.position)
+				var factor := indicator_color_curve.sample(impulse.length() / IMPULSE_MAX)
+				impulse_indicator.color = (1.0 - factor) * Color.RED + factor * Color.GREEN
+				impulse_indicator.points = PackedVector3Array([
+					stone.position,
+					stone.position - impulse / IMPULSE_MAX
+				])
+				impulse_indicator.points[0].y = 0.1
+				impulse_indicator.points[1].y = 0.1
+				impulse_indicator.rebuild()
+			else:
+				impulse_indicator.clear()
 
 
-func _on_shot_started(stone: Node3D) -> void:
+func _on_shot_started(stone: Stone) -> void:
 	is_stone_shot = true
 
 	stone.get_node("SlideAudioPlayer").play()
 	stone.add_child(SWEEP_AREA_SCENE.instantiate())
 
 
-func _on_shot_finished(stone: Node3D) -> void:
-	is_stone_shot = false
-
+func _on_shot_finished(stone: Stone) -> void:
 	stone.get_node("SlideAudioPlayer").stop()
 	stone.remove_child(stone.get_node("SweepArea"))
 
@@ -121,13 +134,13 @@ func _on_shot_finished(stone: Node3D) -> void:
 	_next_shot()
 
 
-func _on_sheet_out_of_bounds(stone: Node3D) -> void:
+func _on_sheet_out_of_bounds(stone: Stone) -> void:
 	# Increase friction to stop the stone quickly
 	stone.physics_material_override.friction = 1.0
 	_disable_stone(stone)
 
 
-func _disable_stone(stone: Node3D):
+func _disable_stone(stone: Stone):
 	# Disable collision with other stones
 	stone.collision_layer = 0
 	stone.collision_mask = 1 << 1
@@ -189,6 +202,8 @@ func _spawn_stone(color: Color) -> void:
 
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
+
+	is_stone_ready = true
 
 
 func _update_scoreboard() -> void:

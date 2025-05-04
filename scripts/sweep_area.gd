@@ -5,6 +5,7 @@ extends Node3D
 
 # Stores the original friction value of the stone.
 var stone_friction: float
+var is_sweeping: bool = false
 
 func _process(_delta: float) -> void:
 	self.global_rotation_degrees.y = 0.0
@@ -29,11 +30,13 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 
 func _on_sweep_area_mouse_exited() -> void:
 	var stone: Stone = self.get_parent()
-	_stop_sweep(stone)
+	if is_sweeping:
+		_stop_sweep(stone)
 
 
 # Starts the sweeping action and reduces the stone's friction.
 func _start_sweep(stone: Stone) -> void:
+	is_sweeping = true
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = true
 		broom.start_sweep()
@@ -43,7 +46,9 @@ func _start_sweep(stone: Stone) -> void:
 
 # Stops the sweeping action and restores the stone's friction.
 func _stop_sweep(stone: Stone) -> void:
+	is_sweeping = false
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = false
 		broom.stop_sweep()
+	assert(stone_friction > 0.01)
 	stone.physics_material_override.friction = stone_friction

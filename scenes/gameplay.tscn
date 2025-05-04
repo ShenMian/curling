@@ -83,7 +83,7 @@ ambient_light_source = 3
 [node name="Gameplay" type="Node3D"]
 script = ExtResource("1_ct7aa")
 indicator_color_curve = ExtResource("2_4bh5q")
-ends_per_match = 1
+ends_per_match = 2
 shots_per_end = 2
 
 [node name="Sheet" parent="." instance=ExtResource("1_l1v76")]

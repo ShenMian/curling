@@ -30,3 +30,4 @@ Button/font_sizes/font_size = 20
 Button/styles/hover = SubResource("StyleBoxTexture_tbeor")
 Button/styles/normal = SubResource("StyleBoxTexture_8ln24")
 Button/styles/pressed = SubResource("StyleBoxTexture_mk0s6")
+VBoxContainer/constants/separation = 8

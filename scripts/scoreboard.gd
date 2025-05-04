@@ -1,10 +1,8 @@
 extends GridContainer
+class_name Scoreboard
 
 # Transparency value for cell backgrounds.
 @export_range(0.0, 1.0) var transparent: float = 0.8
-
-var red_score: int = 0
-var blue_score: int = 0
 
 func _ready() -> void:
 	var cell := $Cell.duplicate()

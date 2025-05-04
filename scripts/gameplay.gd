@@ -27,7 +27,7 @@ signal shot_finished(stone: Stone)
 @onready var far_hog_line_marker: Marker3D = $Sheet/FarHogLineMarker
 
 @onready var impulse_indicator: Line3D = $ImpulseIndicator
-@onready var scoreboard: GridContainer = $Scoreboard
+@onready var scoreboard: Scoreboard = $Scoreboard
 
 const STONE_SCENE: PackedScene = preload("res://scenes/stone.tscn")
 const SWEEP_AREA_SCENE: PackedScene = preload("res://scenes/sweep_area.tscn")
@@ -214,6 +214,7 @@ func _update_scoreboard() -> void:
 	var stones_in_house := stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
 		scoreboard.set_score(ends, 0, 0)
+		$ResultMenu.get_node("Scoreboard").set_score(ends, 0, 0)
 		return
 
 	var house_origin := house_origin_marker.global_position
@@ -237,3 +238,4 @@ func _update_scoreboard() -> void:
 		blue_score = score
 
 	scoreboard.set_score(ends, red_score, blue_score)
+	$ResultMenu.get_node("Scoreboard").set_score(ends, red_score, blue_score)

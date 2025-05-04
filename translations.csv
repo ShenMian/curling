@@ -5,3 +5,6 @@ EXIT,Exit,退出
 RESUME,Resume,恢复
 RETRY,Retry,重试
 QUIT,Quit,退出
+RED_TEAM_WINS,Red team wins,红队获胜
+BLUE_TEAM_WINS,Blue team wins,蓝队获胜
+TWO_TEAMS_TIED,Two teams tied, 两队平局

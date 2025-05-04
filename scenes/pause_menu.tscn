@@ -1,15 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://8n1e4e5tpjm3"]
+[gd_scene load_steps=8 format=3 uid="uid://8n1e4e5tpjm3"]
 
 [ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="2_myx47"]
+[ext_resource type="Theme" uid="uid://bwmwcysm1gr0f" path="res://ui_theme.tres" id="3_5d2l8"]
 [ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_kukqi"]
-
-[sub_resource type="SystemFont" id="SystemFont_myx47"]
-subpixel_positioning = 0
-
-[sub_resource type="Theme" id="Theme_wyi4u"]
-default_font = SubResource("SystemFont_myx47")
-default_font_size = 20
 
 [sub_resource type="Animation" id="Animation_kukqi"]
 length = 0.001
@@ -71,7 +65,7 @@ offset_right = 95.0
 offset_bottom = 95.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_wyi4u")
+theme = ExtResource("3_5d2l8")
 alignment = 1
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]

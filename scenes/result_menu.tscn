@@ -1,16 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://coltcy4ljevc6"]
+[gd_scene load_steps=9 format=3 uid="uid://coltcy4ljevc6"]
 
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_fc626"]
 [ext_resource type="Script" uid="uid://0pbqklp4bg2e" path="res://scripts/result_menu.gd" id="1_tunbr"]
 [ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_6do8i"]
 [ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="3_h5jln"]
-
-[sub_resource type="SystemFont" id="SystemFont_uahpa"]
-subpixel_positioning = 0
-
-[sub_resource type="Theme" id="Theme_fc626"]
-default_font = SubResource("SystemFont_uahpa")
-default_font_size = 20
+[ext_resource type="Theme" uid="uid://bwmwcysm1gr0f" path="res://ui_theme.tres" id="4_fl5he"]
 
 [sub_resource type="Animation" id="Animation_kukqi"]
 length = 0.001
@@ -85,7 +79,7 @@ offset_right = 95.0
 offset_bottom = 186.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_fc626")
+theme = ExtResource("4_fl5he")
 alignment = 1
 
 [node name="RetryButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]

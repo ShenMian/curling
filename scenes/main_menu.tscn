@@ -1,8 +1,78 @@
-[gd_scene load_steps=8 format=3 uid="uid://soq5ij35lfxi"]
+[gd_scene load_steps=12 format=3 uid="uid://soq5ij35lfxi"]
 
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://ivu6dhn22w46" path="res://scripts/main_menu.gd" id="1_yqeox"]
 [ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_bqqt6"]
+[ext_resource type="Theme" uid="uid://bwmwcysm1gr0f" path="res://ui_theme.tres" id="3_wu84c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu84c"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ln24"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtw2f"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa1go"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbmy8"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [sub_resource type="SystemFont" id="SystemFont_yqeox"]
 subpixel_positioning = 0
@@ -10,13 +80,28 @@ subpixel_positioning = 0
 [sub_resource type="Theme" id="Theme_vue75"]
 default_font = SubResource("SystemFont_yqeox")
 default_font_size = 60
-
-[sub_resource type="SystemFont" id="SystemFont_con2f"]
-subpixel_positioning = 0
-
-[sub_resource type="Theme" id="Theme_l6cm7"]
-default_font = SubResource("SystemFont_con2f")
-default_font_size = 20
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/styles/disabled = SubResource("StyleBoxFlat_wu84c")
+Button/styles/focus = SubResource("StyleBoxFlat_8ln24")
+Button/styles/hover = SubResource("StyleBoxFlat_rtw2f")
+Button/styles/normal = SubResource("StyleBoxFlat_oa1go")
+Button/styles/pressed = SubResource("StyleBoxFlat_tbmy8")
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_yqeox")
@@ -55,7 +140,7 @@ offset_top = -332.0
 offset_right = 318.0
 offset_bottom = -200.0
 grow_vertical = 0
-theme = SubResource("Theme_l6cm7")
+theme = ExtResource("3_wu84c")
 alignment = 1
 
 [node name="StartButton" type="Button" parent="Options" groups=["buttons", "global_buttons"]]

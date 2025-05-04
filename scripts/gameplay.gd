@@ -253,7 +253,6 @@ func _start_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = true
 		broom.start_sweep()
-
 	stone.physics_material_override.friction = stone_friction * 0.6
 
 
@@ -261,5 +260,4 @@ func _stop_sweep(stone: Stone) -> void:
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = false
 		broom.stop_sweep()
-
 	stone.physics_material_override.friction = stone_friction

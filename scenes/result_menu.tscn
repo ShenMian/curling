@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://coltcy4ljevc6"]
+[gd_scene load_steps=10 format=3 uid="uid://coltcy4ljevc6"]
 
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_fc626"]
 [ext_resource type="Script" uid="uid://0pbqklp4bg2e" path="res://scripts/result_menu.gd" id="1_tunbr"]
 [ext_resource type="Script" uid="uid://nj4e0f4ef1ul" path="res://scripts/sound_button.gd" id="3_6do8i"]
+[ext_resource type="PackedScene" uid="uid://b2fg5nt83iujg" path="res://scenes/scoreboard.tscn" id="3_h5jln"]
 
 [sub_resource type="SystemFont" id="SystemFont_uahpa"]
 subpixel_positioning = 0
@@ -56,6 +57,19 @@ material = ExtResource("1_fc626")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scoreboard" parent="." instance=ExtResource("3_h5jln")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -180.0
+offset_right = 15.0
+offset_bottom = -150.0
 grow_horizontal = 2
 grow_vertical = 2
 

@@ -10,9 +10,6 @@
 
 ### Models
 
-- [Curling Stone SVG Vector](https://www.svgrepo.com/svg/405166/curling-stone)
-    - **Author**: Twitter.
-    - **License**: MIT License.
 - [Curling Cartoon Tiger and Ball](https://sketchfab.com/3d-models/curling-cartoon-tiger-and-ball-382f4534a1c24b4dacd011378a2a6359)
     - **Author**: ADMA200.
     - **License**: CC Attribution.
@@ -25,6 +22,9 @@
 
 ### Textures
 
+- [Curling Stone SVG Vector](https://www.svgrepo.com/svg/405166/curling-stone)
+    - **Author**: Twitter.
+    - **License**: MIT License.
 - [Curlingsheet flip](https://commons.wikimedia.org/wiki/File:Curlingsheet_flip.svg)
     - **Author**: Antonsusi.
     - **License**: GFDL.

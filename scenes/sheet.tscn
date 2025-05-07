@@ -52,7 +52,7 @@ shape = SubResource("CylinderShape3D_as85d")
 [node name="HouseOriginMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.527)
 
-[node name="TeeLineMarker" type="Marker3D" parent="."]
+[node name="NearHogLineMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.872)
 
 [node name="FarHogLineMarker" type="Marker3D" parent="."]

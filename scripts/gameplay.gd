@@ -22,8 +22,8 @@ signal shot_finished(stone: Stone)
 
 @onready var sheet: Node3D = $Sheet
 @onready var sheet_body: StaticBody3D = $Sheet/StaticBody
-@onready var tee_line_marker: Marker3D = $Sheet/TeeLineMarker
 @onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
+@onready var near_hog_line_marker: Marker3D = $Sheet/NearHogLineMarker
 @onready var far_hog_line_marker: Marker3D = $Sheet/FarHogLineMarker
 
 @onready var impulse_indicator: Line3D = $ImpulseIndicator
@@ -215,7 +215,7 @@ func _next_end() -> void:
 
 func _spawn_stone(color: Color) -> void:
 	var stone := STONE_SCENE.instantiate()
-	stone.position = tee_line_marker.global_position
+	stone.position = near_hog_line_marker.global_position
 	stone.color = color
 	stone.number = _shots
 	var material := PhysicsMaterial.new()

@@ -62,11 +62,12 @@ func _process(delta: float) -> void:
 		if Input.is_action_pressed("spin_stone_ccw"):
 			stone.rotate_y(delta)
 		if Input.is_action_pressed("adjust_stone_left"):
-			stone.position.x -= delta
+			stone.translate(Vector3(-delta, 0, 0))
 		if Input.is_action_pressed("adjust_stone_right"):
-			stone.position.x += delta
-		# var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
-		# stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
+			stone.translate(Vector3(delta, 0, 0))
+		var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
+		if stone.position.x < -width / 2 * 0.2 or stone.position.x > width / 2 * 0.2:
+			stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
 
 
 func _input(event):

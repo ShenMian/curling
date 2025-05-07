@@ -62,6 +62,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _is_stone_shot:
 		var stone: Stone = stone_group.get_child(-1)
+		# Check if the stone has stopped moving
 		if stone.sleeping:
 			_is_stone_shot = false
 			shot_finished.emit(stone)
@@ -72,14 +73,17 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if _is_stone_ready && not _is_stone_drag:
 		var stone: Stone = stone_group.get_child(-1)
+
 		if Input.is_action_pressed("spin_stone_cw"):
 			stone.rotate_y(-delta)
 		if Input.is_action_pressed("spin_stone_ccw"):
 			stone.rotate_y(delta)
+
 		if Input.is_action_pressed("adjust_stone_left"):
 			stone.global_translate(Vector3(-delta, 0, 0))
 		if Input.is_action_pressed("adjust_stone_right"):
 			stone.global_translate(Vector3(delta, 0, 0))
+
 		# Clamp the stone's horizontal position to keep it within the allowed area of the sheet.
 		# WARNING: Avoid continuously modifying position, as it may cause physics issues.
 		var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
@@ -97,12 +101,14 @@ func _input(event):
 			if collision.is_empty():
 				return
 
+			# Handles the stone dragging and releasing action.
 			var stone: Stone = stone_group.get_child(-1)
 			if not _is_stone_drag and event.is_pressed() and collision.collider == stone:
 				_is_stone_drag = true
 			elif _is_stone_drag and event.is_released():
 				_is_stone_drag = false
 				if collision.collider == sheet_body:
+					# Applies the impulse to the stone.
 					var impulse := _get_clamped_impulse(collision.position, stone.position)
 					if impulse.length() < 0.01:
 						return
@@ -120,6 +126,7 @@ func _input(event):
 			if collision.is_empty():
 				return
 
+			# Updates the impulse indicator during the stone dragging operation.
 			var stone: Stone = stone_group.get_child(-1)
 			if collision.collider == sheet_body:
 				var impulse := _get_clamped_impulse(collision.position, stone.position)
@@ -147,7 +154,7 @@ func _on_shot_finished(stone: Stone) -> void:
 	stone.get_node("SlideAudioPlayer").stop()
 	stone.remove_child(stone.get_node("SweepArea"))
 
-	# Check if the stone is hogged
+	# Checks if the stone is hogged.
 	if stone.position.z > far_hog_line.global_position.z:
 		_disable_stone(stone)
 
@@ -163,10 +170,10 @@ func _on_stone_out_of_sheet(stone: Stone) -> void:
 
 
 func _disable_stone(stone: Stone):
-	# Disable collision with other stones
+	# Disables collision detection between this stone and other stones.
 	stone.collision_mask = 1 << 1
 
-	# Make the stone semi-transparent
+	# Makes the stone semi-transparent
 	for mesh in stone.get_node("Meshes").get_children():
 		mesh.transparency = 0.3
 
@@ -211,6 +218,7 @@ func _next_end() -> void:
 		return
 
 
+# Spawns a new curling stone.
 func _spawn_stone(color: Color) -> void:
 	var stone := STONE_SCENE.instantiate()
 	stone.position = near_hog_line.global_position
@@ -227,6 +235,7 @@ func _spawn_stone(color: Color) -> void:
 	_is_stone_ready = true
 
 
+# Updates the scoreboard based on the current positions of the stones.
 func _update_scoreboard() -> void:
 	var stones := stone_group.get_children()
 	if stones.is_empty():
@@ -234,13 +243,11 @@ func _update_scoreboard() -> void:
 	
 	var stones_in_house := stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
-		scoreboard.set_score(_ends, 0, 0)
-		$ResultMenu.get_node("Scoreboard").set_score(_ends, 0, 0)
+		_set_scoreboard(0, 0)
 		return
 
-	var house_origin := house_origin.global_position
 	stones_in_house.sort_custom(func(a, b):
-		return a.position.distance_to(house_origin) < b.position.distance_to(house_origin)
+		return a.position.distance_to(house_origin.global_position) < b.position.distance_to(house_origin.global_position)
 	)
 	var winner_color: Color = stones_in_house[0].color
 
@@ -258,5 +265,9 @@ func _update_scoreboard() -> void:
 	else:
 		blue_score = score
 
+	_set_scoreboard(red_score, blue_score)
+
+# Sets scoreboards with the current scores for red and blue teams.
+func _set_scoreboard(red_score: int, blue_score: int) -> void:
 	scoreboard.set_score(_ends, red_score, blue_score)
 	$ResultMenu.get_node("Scoreboard").set_score(_ends, red_score, blue_score)

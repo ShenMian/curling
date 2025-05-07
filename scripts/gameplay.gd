@@ -42,12 +42,13 @@ var is_stone_shot: bool = false
 var is_stone_ready: bool = false
 
 func _ready() -> void:
+	# Set the top-down camera position above the house
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
 	_next_shot()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var stone: Stone = stone_group.get_child(-1)
 	if is_stone_shot:
 		if stone.sleeping:
@@ -55,17 +56,17 @@ func _process(_delta: float) -> void:
 			shot_finished.emit(stone)
 			return
 		_update_scoreboard()
-	#if is_stone_ready && not is_stone_drag:
-		#if Input.is_action_pressed("spin_stone_cw"):
-			#stone.rotate_y(-delta)
-		#if Input.is_action_pressed("spin_stone_ccw"):
-			#stone.rotate_y(delta)
-		#if Input.is_action_pressed("adjust_stone_left"):
-			#stone.position.x -= delta
-		#if Input.is_action_pressed("adjust_stone_right"):
-			#stone.position.x += delta
-		#var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
-		#stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
+	if is_stone_ready && not is_stone_drag:
+		if Input.is_action_pressed("spin_stone_cw"):
+			stone.rotate_y(-delta)
+		if Input.is_action_pressed("spin_stone_ccw"):
+			stone.rotate_y(delta)
+		if Input.is_action_pressed("adjust_stone_left"):
+			stone.position.x -= delta
+		if Input.is_action_pressed("adjust_stone_right"):
+			stone.position.x += delta
+		# var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
+		# stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
 
 
 func _input(event):
@@ -84,9 +85,12 @@ func _input(event):
 			elif is_stone_drag and event.is_released():
 				is_stone_drag = false
 				if collision.collider == sheet_body:
+					var impulse := _get_clamped_impulse(collision.position, stone.position)
+					if impulse.length() < 0.01:
+						return
+
 					is_stone_ready = false
 					impulse_indicator.clear()
-					var impulse := _get_clamped_impulse(collision.position, stone.position)
 					stone.apply_central_impulse(impulse)
 					stone.apply_torque_impulse(Vector3(0, -stone.rotation.y, 0))
 					stone.sleeping = false
@@ -151,6 +155,8 @@ func _disable_stone(stone: Stone):
 
 func _get_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
 	var impulse := (to - from) * IMPULSE_MAX
+	if impulse.dot(Vector3.FORWARD) < -0.5:
+		return Vector3.ZERO
 	impulse.z = min(impulse.z, 0.0)
 	var length: float = clamp(impulse.length(), 0.0, IMPULSE_MAX)
 	return impulse.normalized() * length

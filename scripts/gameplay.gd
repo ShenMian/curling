@@ -33,13 +33,13 @@ const STONE_SCENE: PackedScene = preload("res://scenes/stone.tscn")
 const SWEEP_AREA_SCENE: PackedScene = preload("res://scenes/sweep_area.tscn")
 const IMPULSE_MAX: float = 150.0
 
-var ends: int = 1
-var shots: int = 0
-var team_color: Color = Color.RED
+var _ends: int = 1
+var _shots: int = 0
+var _team_color: Color = Color.RED
 
-var is_stone_drag: bool = false
-var is_stone_shot: bool = false
-var is_stone_ready: bool = false
+var _is_stone_drag: bool = false
+var _is_stone_shot: bool = false
+var _is_stone_ready: bool = false
 
 func _ready() -> void:
 	# Set the top-down camera position above the house
@@ -50,13 +50,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var stone: Stone = stone_group.get_child(-1)
-	if is_stone_shot:
+	if _is_stone_shot:
 		if stone.sleeping:
-			is_stone_shot = false
+			_is_stone_shot = false
 			shot_finished.emit(stone)
 			return
 		_update_scoreboard()
-	if is_stone_ready && not is_stone_drag:
+	if _is_stone_ready && not _is_stone_drag:
 		if Input.is_action_pressed("spin_stone_cw"):
 			stone.rotate_y(-delta)
 		if Input.is_action_pressed("spin_stone_ccw"):
@@ -73,23 +73,23 @@ func _input(event):
 	if Input.is_action_just_released("pause"):
 		$PauseMenu.open()
 	
-	if is_stone_ready:
+	if _is_stone_ready:
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			var collision := _get_mouse_ray_collision()
 			if collision.is_empty():
 				return
 
 			var stone: Stone = stone_group.get_child(-1)
-			if not is_stone_drag and event.is_pressed() and collision.collider == stone:
-				is_stone_drag = true
-			elif is_stone_drag and event.is_released():
-				is_stone_drag = false
+			if not _is_stone_drag and event.is_pressed() and collision.collider == stone:
+				_is_stone_drag = true
+			elif _is_stone_drag and event.is_released():
+				_is_stone_drag = false
 				if collision.collider == sheet_body:
 					var impulse := _get_clamped_impulse(collision.position, stone.position)
 					if impulse.length() < 0.01:
 						return
 
-					is_stone_ready = false
+					_is_stone_ready = false
 					impulse_indicator.clear()
 					stone.apply_central_impulse(impulse)
 					stone.apply_torque_impulse(Vector3(0, -stone.rotation.y, 0))
@@ -97,7 +97,7 @@ func _input(event):
 					print("Stone shot, impulse: %v, length: %f" % [impulse, impulse.length() / IMPULSE_MAX])
 					shot_started.emit(stone)
 
-		if event is InputEventMouseMotion and is_stone_drag:
+		if event is InputEventMouseMotion and _is_stone_drag:
 			var collision := _get_mouse_ray_collision()
 			if collision.is_empty():
 				return
@@ -119,7 +119,7 @@ func _input(event):
 
 
 func _on_shot_started(stone: Stone) -> void:
-	is_stone_shot = true
+	_is_stone_shot = true
 
 	stone.get_node("SlideAudioPlayer").play()
 	stone.add_child(SWEEP_AREA_SCENE.instantiate())
@@ -178,19 +178,19 @@ func _get_mouse_ray_collision() -> Dictionary:
 
 
 func _next_shot() -> void:
-	if shots >= shots_per_end:
+	if _shots >= shots_per_end:
 		_next_end()
-	shots += 1
-	team_color = Color.RED if team_color == Color.BLUE else Color.BLUE
-	_spawn_stone(team_color)
+	_shots += 1
+	_team_color = Color.RED if _team_color == Color.BLUE else Color.BLUE
+	_spawn_stone(_team_color)
 
 
 func _next_end() -> void:
-	shots = 0
+	_shots = 0
 	for stone in stone_group.get_children():
 		stone.queue_free()
-	ends += 1
-	if ends >= ends_per_match + 1:
+	_ends += 1
+	if _ends >= ends_per_match + 1:
 		$ResultMenu.open()
 		return
 
@@ -199,7 +199,7 @@ func _spawn_stone(color: Color) -> void:
 	var stone := STONE_SCENE.instantiate()
 	stone.position = tee_line_marker.global_position
 	stone.color = color
-	stone.number = shots
+	stone.number = _shots
 	var material := PhysicsMaterial.new()
 	material.friction = stone_friction
 	stone.physics_material_override = material
@@ -208,7 +208,7 @@ func _spawn_stone(color: Color) -> void:
 	third_person_camera.position = stone.position + third_person_camera.offset
 	third_person_camera.target = stone
 
-	is_stone_ready = true
+	_is_stone_ready = true
 
 
 func _update_scoreboard() -> void:
@@ -218,8 +218,8 @@ func _update_scoreboard() -> void:
 	
 	var stones_in_house := stones.filter(func(stone): return sheet.is_body_in_house(stone))
 	if stones_in_house.is_empty():
-		scoreboard.set_score(ends, 0, 0)
-		$ResultMenu.get_node("Scoreboard").set_score(ends, 0, 0)
+		scoreboard.set_score(_ends, 0, 0)
+		$ResultMenu.get_node("Scoreboard").set_score(_ends, 0, 0)
 		return
 
 	var house_origin := house_origin_marker.global_position
@@ -242,5 +242,5 @@ func _update_scoreboard() -> void:
 	else:
 		blue_score = score
 
-	scoreboard.set_score(ends, red_score, blue_score)
-	$ResultMenu.get_node("Scoreboard").set_score(ends, red_score, blue_score)
+	scoreboard.set_score(_ends, red_score, blue_score)
+	$ResultMenu.get_node("Scoreboard").set_score(_ends, red_score, blue_score)

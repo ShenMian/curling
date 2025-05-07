@@ -48,15 +48,19 @@ func _ready() -> void:
 	_next_shot()
 
 
-func _process(delta: float) -> void:
-	var stone: Stone = stone_group.get_child(-1)
+func _process(_delta: float) -> void:
 	if _is_stone_shot:
+		var stone: Stone = stone_group.get_child(-1)
 		if stone.sleeping:
 			_is_stone_shot = false
 			shot_finished.emit(stone)
 			return
 		_update_scoreboard()
+
+
+func _physics_process(delta: float) -> void:
 	if _is_stone_ready && not _is_stone_drag:
+		var stone: Stone = stone_group.get_child(-1)
 		if Input.is_action_pressed("spin_stone_cw"):
 			stone.rotate_y(-delta)
 		if Input.is_action_pressed("spin_stone_ccw"):
@@ -65,6 +69,7 @@ func _process(delta: float) -> void:
 			stone.translate(Vector3(-delta, 0, 0))
 		if Input.is_action_pressed("adjust_stone_right"):
 			stone.translate(Vector3(delta, 0, 0))
+		# WARNING: Avoid continuously modifying position, as it may cause physics issues.
 		var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
 		if stone.position.x < -width / 2 * 0.2 or stone.position.x > width / 2 * 0.2:
 			stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)

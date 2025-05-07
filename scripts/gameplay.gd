@@ -22,9 +22,9 @@ signal shot_finished(stone: Stone)
 
 @onready var sheet: Node3D = $Sheet
 @onready var sheet_body: StaticBody3D = $Sheet/StaticBody
-@onready var house_origin_marker: Marker3D = $Sheet/HouseOriginMarker
-@onready var near_hog_line_marker: Marker3D = $Sheet/NearHogLineMarker
-@onready var far_hog_line_marker: Marker3D = $Sheet/FarHogLineMarker
+@onready var house_origin: Marker3D = $Sheet/HouseOriginMarker
+@onready var near_hog_line: Marker3D = $Sheet/NearHogLineMarker
+@onready var far_hog_line: Marker3D = $Sheet/FarHogLineMarker
 
 @onready var impulse_indicator: Line3D = $ImpulseIndicator
 @onready var scoreboard: Scoreboard = $Scoreboard
@@ -53,7 +53,7 @@ var _is_stone_shot: bool = false
 
 func _ready() -> void:
 	# Set the top-down camera position above the house
-	top_down_camera.position = house_origin_marker.global_position
+	top_down_camera.position = house_origin.global_position
 	top_down_camera.position.y = 3.0
 
 	_next_shot()
@@ -148,7 +148,7 @@ func _on_shot_finished(stone: Stone) -> void:
 	stone.remove_child(stone.get_node("SweepArea"))
 
 	# Check if the stone is hogged
-	if stone.position.z > far_hog_line_marker.global_position.z:
+	if stone.position.z > far_hog_line.global_position.z:
 		_disable_stone(stone)
 
 	await get_tree().create_timer(1.0).timeout
@@ -215,7 +215,7 @@ func _next_end() -> void:
 
 func _spawn_stone(color: Color) -> void:
 	var stone := STONE_SCENE.instantiate()
-	stone.position = near_hog_line_marker.global_position
+	stone.position = near_hog_line.global_position
 	stone.color = color
 	stone.number = _shots
 	var material := PhysicsMaterial.new()
@@ -240,7 +240,7 @@ func _update_scoreboard() -> void:
 		$ResultMenu.get_node("Scoreboard").set_score(_ends, 0, 0)
 		return
 
-	var house_origin := house_origin_marker.global_position
+	var house_origin := house_origin.global_position
 	stones_in_house.sort_custom(func(a, b):
 		return a.position.distance_to(house_origin) < b.position.distance_to(house_origin)
 	)

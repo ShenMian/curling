@@ -178,4 +178,4 @@ parameters/looping = true
 
 [connection signal="shot_finished" from="." to="." method="_on_shot_finished"]
 [connection signal="shot_started" from="." to="." method="_on_shot_started"]
-[connection signal="out_of_bounds" from="Sheet" to="." method="_on_sheet_out_of_bounds"]
+[connection signal="out_of_bounds" from="Sheet" to="." method="_on_stone_out_of_sheet"]

@@ -33,18 +33,29 @@ const STONE_SCENE: PackedScene = preload("res://scenes/stone.tscn")
 const SWEEP_AREA_SCENE: PackedScene = preload("res://scenes/sweep_area.tscn")
 const IMPULSE_MAX: float = 150.0
 
+# The number of ends played in the current match
 var _ends: int = 1
+
+# The number of shots taken in the current end
 var _shots: int = 0
+
+# The color of the team that is currently playing
 var _team_color: Color = Color.RED
 
-var _is_stone_drag: bool = false
-var _is_stone_shot: bool = false
+# If the stone is ready to be shot
 var _is_stone_ready: bool = false
+
+# If the stone is currently being dragged
+var _is_stone_drag: bool = false
+
+# If the stone is currently being shot
+var _is_stone_shot: bool = false
 
 func _ready() -> void:
 	# Set the top-down camera position above the house
 	top_down_camera.position = house_origin_marker.global_position
 	top_down_camera.position.y = 3.0
+
 	_next_shot()
 
 
@@ -69,6 +80,7 @@ func _physics_process(delta: float) -> void:
 			stone.translate(Vector3(-delta, 0, 0))
 		if Input.is_action_pressed("adjust_stone_right"):
 			stone.translate(Vector3(delta, 0, 0))
+		# Clamp the stone's horizontal position to keep it within the allowed area of the sheet.
 		# WARNING: Avoid continuously modifying position, as it may cause physics issues.
 		var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
 		if stone.position.x < -width / 2 * 0.2 or stone.position.x > width / 2 * 0.2:
@@ -144,7 +156,7 @@ func _on_shot_finished(stone: Stone) -> void:
 	_next_shot()
 
 
-func _on_sheet_out_of_bounds(stone: Stone) -> void:
+func _on_stone_out_of_sheet(stone: Stone) -> void:
 	# Increase friction to stop the stone quickly
 	stone.physics_material_override.friction = 1.0
 	_disable_stone(stone)

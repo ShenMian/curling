@@ -22,7 +22,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -0.6)
 shape = SubResource("BoxShape3D_e124b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area"]
-layers = 4
 material_override = SubResource("StandardMaterial3D_101mb")
 transparency = 0.5
 mesh = SubResource("BoxMesh_101mb")
@@ -34,7 +33,7 @@ transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 
 visible = false
 
 [node name="BroomRight" parent="Brooms" instance=ExtResource("1_mottk")]
-transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0.162464, 0, -0.485487)
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0.117856, 0, -0.287196)
 visible = false
 
 [connection signal="input_event" from="Area" to="." method="_on_sweep_area_input_event"]

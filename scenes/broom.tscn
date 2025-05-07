@@ -1,15 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl1lj6wk00whi"]
+[gd_scene load_steps=9 format=3 uid="uid://dl1lj6wk00whi"]
 
 [ext_resource type="Script" uid="uid://lkx4ykavnfag" path="res://scripts/broom.gd" id="1_gcf3r"]
-[ext_resource type="PackedScene" uid="uid://b3edou237nhlr" path="res://models/curling_broom.blend" id="1_pn3sd"]
 [ext_resource type="AudioStream" uid="uid://bs6hw047g3a1a" path="res://sounds/broom_sweep.ogg" id="2_o7a3y"]
+[ext_resource type="ArrayMesh" uid="uid://chn4dtqnyer6h" path="res://models/curling_broom_Brush.res" id="3_vbxak"]
+[ext_resource type="ArrayMesh" uid="uid://bmjd2dvgotfum" path="res://models/curling_broom_Joint.res" id="4_rbgf6"]
+[ext_resource type="ArrayMesh" uid="uid://d0a7fwn5352mw" path="res://models/curling_broom_Handle.res" id="5_x4wwx"]
 
 [sub_resource type="Animation" id="Animation_o7a3y"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh:position")
+tracks/0/path = NodePath("Meshes:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -25,9 +27,9 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh:position")
+tracks/0/path = NodePath("Meshes:position")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
@@ -44,8 +46,19 @@ _data = {
 [node name="Broom" type="Node3D"]
 script = ExtResource("1_gcf3r")
 
-[node name="Mesh" parent="." instance=ExtResource("1_pn3sd")]
+[node name="Meshes" type="Node3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0.1)
+
+[node name="Brush" type="MeshInstance3D" parent="Meshes"]
+mesh = ExtResource("3_vbxak")
+
+[node name="Joint" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, 0, 5.088, 0)
+mesh = ExtResource("4_rbgf6")
+
+[node name="Handle" type="MeshInstance3D" parent="Meshes/Joint"]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, -5, 0)
+mesh = ExtResource("5_x4wwx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

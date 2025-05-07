@@ -115,7 +115,6 @@ skeleton = NodePath("../..")
 
 [node name="Snow" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 16.512)
-layers = 8
 amount = 1280
 lifetime = 3.0
 visibility_aabb = AABB(-127.107, -109.48, -106.821, 222.649, 109.68, 207.066)
@@ -124,6 +123,7 @@ draw_pass_1 = SubResource("QuadMesh_bhmdk")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, -0.75, 0.433012, 0, 5, 0)
+layers = 3
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -154,7 +154,7 @@ render_target_update_mode = 4
 
 [node name="TopDownCamera" type="Camera3D" parent="MarginContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
-cull_mask = 1048563
+cull_mask = 2
 projection = 1
 size = 4.14245
 

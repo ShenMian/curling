@@ -91,7 +91,6 @@ mesh = SubResource("PlaneMesh_tbgi4")
 
 [node name="Snow" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-layers = 8
 amount = 128
 visibility_aabb = AABB(-15.2766, -16.8293, -17.8526, 33.5744, 17.8293, 35.8583)
 process_material = SubResource("ParticleProcessMaterial_tbgi4")

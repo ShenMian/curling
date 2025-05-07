@@ -30,9 +30,11 @@ shape = SubResource("CylinderShape3D_tuldt")
 transform = Transform3D(-0.009, 0, -7.86805e-10, 0, 0.009, 0, 7.86805e-10, 0, -0.009, 0, 0.184008, -0.00488748)
 
 [node name="Body" type="MeshInstance3D" parent="Meshes"]
+layers = 3
 mesh = ExtResource("2_f651v")
 
 [node name="Handle" type="MeshInstance3D" parent="Meshes"]
+layers = 3
 mesh = ExtResource("3_6niw0")
 
 [node name="NumberLabel" type="Label3D" parent="."]

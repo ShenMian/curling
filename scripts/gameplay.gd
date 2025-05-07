@@ -142,7 +142,6 @@ func _on_sheet_out_of_bounds(stone: Stone) -> void:
 
 func _disable_stone(stone: Stone):
 	# Disable collision with other stones
-	stone.collision_layer = 0
 	stone.collision_mask = 1 << 1
 
 	# Make the stone semi-transparent

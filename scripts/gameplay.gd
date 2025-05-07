@@ -77,9 +77,9 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("spin_stone_ccw"):
 			stone.rotate_y(delta)
 		if Input.is_action_pressed("adjust_stone_left"):
-			stone.translate(Vector3(-delta, 0, 0))
+			stone.global_translate(Vector3(-delta, 0, 0))
 		if Input.is_action_pressed("adjust_stone_right"):
-			stone.translate(Vector3(delta, 0, 0))
+			stone.global_translate(Vector3(delta, 0, 0))
 		# Clamp the stone's horizontal position to keep it within the allowed area of the sheet.
 		# WARNING: Avoid continuously modifying position, as it may cause physics issues.
 		var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
@@ -173,8 +173,6 @@ func _disable_stone(stone: Stone):
 
 func _get_clamped_impulse(from: Vector3, to: Vector3) -> Vector3:
 	var impulse := (to - from) * IMPULSE_MAX
-	if impulse.dot(Vector3.FORWARD) < -0.5:
-		return Vector3.ZERO
 	impulse.z = min(impulse.z, 0.0)
 	var length: float = clamp(impulse.length(), 0.0, IMPULSE_MAX)
 	return impulse.normalized() * length

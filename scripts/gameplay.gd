@@ -47,7 +47,7 @@ func _ready() -> void:
 	_next_shot()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var stone: Stone = stone_group.get_child(-1)
 	if is_stone_shot:
 		if stone.sleeping:
@@ -55,17 +55,17 @@ func _process(delta: float) -> void:
 			shot_finished.emit(stone)
 			return
 		_update_scoreboard()
-	# if is_stone_ready && not is_stone_drag:
-	# 	if Input.is_action_pressed("spin_stone_cw"):
-	# 		stone.rotate_y(-delta)
-	# 	if Input.is_action_pressed("spin_stone_ccw"):
-	# 		stone.rotate_y(delta)
-	# 	if Input.is_action_pressed("adjust_stone_left"):
-	# 		stone.position.x -= delta
-	# 	if Input.is_action_pressed("adjust_stone_right"):
-	# 		stone.position.x += delta
-	# 	var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
-	# 	stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
+	#if is_stone_ready && not is_stone_drag:
+		#if Input.is_action_pressed("spin_stone_cw"):
+			#stone.rotate_y(-delta)
+		#if Input.is_action_pressed("spin_stone_ccw"):
+			#stone.rotate_y(delta)
+		#if Input.is_action_pressed("adjust_stone_left"):
+			#stone.position.x -= delta
+		#if Input.is_action_pressed("adjust_stone_right"):
+			#stone.position.x += delta
+		#var width = sheet.get_node("StaticBody/Mesh").mesh.size.x
+		#stone.position.x = clamp(stone.position.x, -width / 2 * 0.2, width / 2 * 0.2)
 
 
 func _input(event):

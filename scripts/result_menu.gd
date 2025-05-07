@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var blur_animation: AnimationPlayer = $BlurAnimation
 
 func open():
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	get_tree().paused = true
 	$VBoxContainer/RetryButton.grab_focus()
 	
@@ -26,6 +27,14 @@ func open():
 	
 	show()
 	blur_animation.play("start_pause")
+
+
+func _on_joy_connection_changed(_device: int, connected: bool) -> void:
+	if connected:
+		$VBoxContainer/RetryButton.grab_focus()
+	else:
+		if Input.get_connected_joypads().is_empty():
+			get_viewport().gui_release_focus()
 
 
 func _on_retry_button_pressed() -> void:

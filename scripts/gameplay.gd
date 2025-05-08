@@ -59,9 +59,10 @@ func _ready() -> void:
 	_next_shot()
 
 
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	var stone: Stone = stone_group.get_child(-1)
+
 	if _is_stone_shot:
-		var stone: Stone = stone_group.get_child(-1)
 		# Check if the stone has stopped moving
 		if stone.sleeping:
 			_is_stone_shot = false
@@ -69,11 +70,7 @@ func _process(_delta: float) -> void:
 			return
 		_update_scoreboard()
 
-
-func _physics_process(delta: float) -> void:
 	if _is_stone_ready && not _is_stone_drag:
-		var stone: Stone = stone_group.get_child(-1)
-
 		if Input.is_action_pressed("spin_stone_cw"):
 			stone.rotate_y(-delta)
 		if Input.is_action_pressed("spin_stone_ccw"):
@@ -156,6 +153,7 @@ func _on_shot_finished(stone: Stone) -> void:
 
 	# Checks if the stone is hogged.
 	if stone.position.z > far_hog_line.global_position.z:
+		print("Stone was hogged")
 		_disable_stone(stone)
 
 	await get_tree().create_timer(1.0).timeout
@@ -163,7 +161,11 @@ func _on_shot_finished(stone: Stone) -> void:
 	_next_shot()
 
 
-func _on_stone_out_of_sheet(stone: Stone) -> void:
+func _on_stone_out_of_sheet(node: Node3D) -> void:
+	if node is not Stone:
+		return
+	var stone: Stone = node
+
 	# Increase friction to stop the stone quickly
 	stone.physics_material_override.friction = 1.0
 	_disable_stone(stone)
@@ -171,6 +173,7 @@ func _on_stone_out_of_sheet(stone: Stone) -> void:
 
 func _disable_stone(stone: Stone):
 	# Disables collision detection between this stone and other stones.
+	stone.collision_layer = 0
 	stone.collision_mask = 1 << 1
 
 	# Makes the stone semi-transparent

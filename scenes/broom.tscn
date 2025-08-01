@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://lkx4ykavnfag" path="res://scripts/broom.gd" id="1_gcf3r"]
 [ext_resource type="AudioStream" uid="uid://bs6hw047g3a1a" path="res://sounds/broom_sweep.ogg" id="2_o7a3y"]
-[ext_resource type="ArrayMesh" uid="uid://chn4dtqnyer6h" path="res://models/curling_broom_Brush.res" id="3_vbxak"]
-[ext_resource type="ArrayMesh" uid="uid://bmjd2dvgotfum" path="res://models/curling_broom_Joint.res" id="4_rbgf6"]
-[ext_resource type="ArrayMesh" uid="uid://d0a7fwn5352mw" path="res://models/curling_broom_Handle.res" id="5_x4wwx"]
+[ext_resource type="ArrayMesh" uid="uid://chn4dtqnyer6h" path="res://models/curling_broom/curling_broom_Brush.res" id="3_vbxak"]
+[ext_resource type="ArrayMesh" uid="uid://bmjd2dvgotfum" path="res://models/curling_broom/curling_broom_Joint.res" id="4_rbgf6"]
+[ext_resource type="ArrayMesh" uid="uid://d0a7fwn5352mw" path="res://models/curling_broom/curling_broom_Handle.res" id="5_x4wwx"]
 
 [sub_resource type="Animation" id="Animation_o7a3y"]
 length = 0.001

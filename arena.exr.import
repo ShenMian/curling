@@ -1,0 +1,28 @@
+[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+uid="uid://buyb81ajnildw"
+path.bptc="res://.godot/imported/arena.exr-c97c134a4803ea92a6ccc0170489faf3.bptc.ctexarray"
+path.astc="res://.godot/imported/arena.exr-c97c134a4803ea92a6ccc0170489faf3.astc.ctexarray"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://arena.exr"
+dest_files=["res://.godot/imported/arena.exr-c97c134a4803ea92a6ccc0170489faf3.bptc.ctexarray", "res://.godot/imported/arena.exr-c97c134a4803ea92a6ccc0170489faf3.astc.ctexarray"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/channel_pack=1
+mipmaps/generate=false
+mipmaps/limit=-1
+slices/horizontal=1
+slices/vertical=1

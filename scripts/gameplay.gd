@@ -51,7 +51,7 @@ var _is_stone_drag: bool = false
 # If the stone is currently being shot
 var _is_stone_shot: bool = false
 
-func _ready() -> void:
+func _ready():
 	# Set the top-down camera position above the house
 	top_down_camera.position = house_origin.global_position
 	top_down_camera.position.y = 3.0
@@ -59,7 +59,7 @@ func _ready() -> void:
 	_next_shot()
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float):
 	var stone: Stone = stone_group.get_child(-1)
 
 	if _is_stone_shot:
@@ -140,14 +140,14 @@ func _input(event):
 				impulse_indicator.clear()
 
 
-func _on_shot_started(stone: Stone) -> void:
+func _on_shot_started(stone: Stone):
 	_is_stone_shot = true
 
 	stone.get_node("SlideAudioPlayer").play()
 	stone.add_child(SWEEP_AREA_SCENE.instantiate())
 
 
-func _on_shot_finished(stone: Stone) -> void:
+func _on_shot_finished(stone: Stone):
 	stone.get_node("SlideAudioPlayer").stop()
 	stone.remove_child(stone.get_node("SweepArea"))
 
@@ -161,7 +161,7 @@ func _on_shot_finished(stone: Stone) -> void:
 	_next_shot()
 
 
-func _on_stone_out_of_sheet(node: Node3D) -> void:
+func _on_stone_out_of_sheet(node: Node3D):
 	if node is not Stone:
 		return
 	var stone: Stone = node
@@ -203,7 +203,7 @@ func _get_mouse_ray_collision() -> Dictionary:
 	return space_state.intersect_ray(ray_query_params)
 
 
-func _next_shot() -> void:
+func _next_shot():
 	if _shots >= shots_per_end:
 		_next_end()
 	_shots += 1
@@ -211,7 +211,7 @@ func _next_shot() -> void:
 	_spawn_stone(_team_color)
 
 
-func _next_end() -> void:
+func _next_end():
 	_shots = 0
 	for stone in stone_group.get_children():
 		stone.queue_free()
@@ -222,7 +222,7 @@ func _next_end() -> void:
 
 
 # Spawns a new curling stone.
-func _spawn_stone(color: Color) -> void:
+func _spawn_stone(color: Color):
 	var stone := STONE_SCENE.instantiate()
 	stone.position = near_hog_line.global_position
 	stone.color = color
@@ -239,7 +239,7 @@ func _spawn_stone(color: Color) -> void:
 
 
 # Updates the scoreboard based on the current positions of the stones.
-func _update_scoreboard() -> void:
+func _update_scoreboard():
 	var stones := stone_group.get_children()
 	if stones.is_empty():
 		return
@@ -271,6 +271,6 @@ func _update_scoreboard() -> void:
 	_set_scoreboard(red_score, blue_score)
 
 # Sets scoreboards with the current scores for red and blue teams.
-func _set_scoreboard(red_score: int, blue_score: int) -> void:
+func _set_scoreboard(red_score: int, blue_score: int):
 	scoreboard.set_score(_ends, red_score, blue_score)
 	$ResultMenu.get_node("Scoreboard").set_score(_ends, red_score, blue_score)

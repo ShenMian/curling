@@ -29,7 +29,7 @@ func open():
 	blur_animation.play("start_pause")
 
 
-func _on_joy_connection_changed(_device: int, connected: bool) -> void:
+func _on_joy_connection_changed(_device: int, connected: bool):
 	if connected:
 		$VBoxContainer/RetryButton.grab_focus()
 	else:
@@ -37,11 +37,11 @@ func _on_joy_connection_changed(_device: int, connected: bool) -> void:
 			get_viewport().gui_release_focus()
 
 
-func _on_retry_button_pressed() -> void:
+func _on_retry_button_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 
-func _on_quit_button_pressed() -> void:
+func _on_quit_button_pressed():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

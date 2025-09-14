@@ -6,7 +6,7 @@ class_name Stone
 
 @onready var number_label: Label3D = $NumberLabel
 
-func _ready() -> void:
+func _ready():
 	# Ensure each stone has an independent StandardMaterial3D
 	var material := StandardMaterial3D.new()
 	material.albedo_color = color
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 # Plays the impact sound when the stone collides with another stone.
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(body: Node):
 	if body is not Stone:
 		return
 	if $ImpactAudioPlayer.playing:

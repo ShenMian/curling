@@ -4,7 +4,7 @@ class_name Scoreboard
 # Transparency value for cell backgrounds.
 @export_range(0.0, 1.0) var transparent: float = 0.8
 
-func _ready() -> void:
+func _ready():
 	var cell := $Cell.duplicate()
 	self.remove_child($Cell)
 

@@ -6,15 +6,15 @@ signal body_exited_sheet(node: Node3D)
 
 @onready var house_area: Area3D = $HouseArea
 
-func _on_house_area_body_entered(body: Node3D) -> void:
+func _on_house_area_body_entered(body: Node3D):
 	body_entered_house.emit(body)
 
 
-func _on_house_area_body_exited(body: Node3D) -> void:
+func _on_house_area_body_exited(body: Node3D):
 	body_exited_house.emit(body)
 
 
-func _on_body_exited(body: Node3D) -> void:
+func _on_body_exited(body: Node3D):
 	body_exited_sheet.emit(body)
 
 

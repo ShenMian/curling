@@ -7,11 +7,11 @@ extends Node3D
 var stone_friction: float
 var is_sweeping: bool = false
 
-func _process(_delta: float) -> void:
+func _process(_delta: float):
 	self.global_rotation_degrees.y = 0.0
 
 
-func _input(_event: InputEvent) -> void:
+func _input(_event: InputEvent):
 	var stone: Stone = self.get_parent()
 	if Input.is_action_just_pressed("sweep"):
 		_start_sweep(stone)
@@ -19,7 +19,7 @@ func _input(_event: InputEvent) -> void:
 		_stop_sweep(stone)
 
 
-func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int):
 	var stone: Stone = self.get_parent()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
@@ -28,14 +28,14 @@ func _on_sweep_area_input_event(_camera: Node, event: InputEvent, _event_positio
 			_stop_sweep(stone)
 
 
-func _on_sweep_area_mouse_exited() -> void:
+func _on_sweep_area_mouse_exited():
 	var stone: Stone = self.get_parent()
 	if is_sweeping:
 		_stop_sweep(stone)
 
 
 # Starts the sweeping action and reduces the stone's friction.
-func _start_sweep(stone: Stone) -> void:
+func _start_sweep(stone: Stone):
 	is_sweeping = true
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = true
@@ -45,7 +45,7 @@ func _start_sweep(stone: Stone) -> void:
 
 
 # Stops the sweeping action and restores the stone's friction.
-func _stop_sweep(stone: Stone) -> void:
+func _stop_sweep(stone: Stone):
 	is_sweeping = false
 	for broom in stone.get_node("SweepArea/Brooms").get_children():
 		broom.visible = false

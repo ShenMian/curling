@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://8n1e4e5tpjm3"]
+[gd_scene format=3 uid="uid://8n1e4e5tpjm3"]
 
 [ext_resource type="Script" uid="uid://cbm37pj12gros" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="2_myx47"]
@@ -41,11 +41,11 @@ _data = {
 &"start_pause": SubResource("Animation_myx47")
 }
 
-[node name="PauseMenu" type="CanvasLayer"]
+[node name="PauseMenu" type="CanvasLayer" unique_id=1460428260]
 process_mode = 2
 script = ExtResource("1_n87rw")
 
-[node name="Blur" type="ColorRect" parent="."]
+[node name="Blur" type="ColorRect" parent="." unique_id=1238712059]
 material = ExtResource("2_myx47")
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,7 +53,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2007456029]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -68,31 +68,29 @@ grow_vertical = 2
 theme = ExtResource("3_5d2l8")
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="ResumeButton" type="Button" parent="VBoxContainer" unique_id=179595307 groups=["buttons", "global_buttons"]]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "RESUME"
 script = ExtResource("3_kukqi")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
-[node name="RetryButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="RetryButton" type="Button" parent="VBoxContainer" unique_id=1709141297 groups=["buttons", "global_buttons"]]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "RETRY"
 script = ExtResource("3_kukqi")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=123660947 groups=["buttons", "global_buttons"]]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "QUIT"
 script = ExtResource("3_kukqi")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
-[node name="BlurAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_kukqi")
-}
+[node name="BlurAnimation" type="AnimationPlayer" parent="." unique_id=964183356]
+libraries/ = SubResource("AnimationLibrary_kukqi")
 
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bf6dctg6s16j3"]
+[gd_scene format=3 uid="uid://bf6dctg6s16j3"]
 
 [ext_resource type="AudioStream" uid="uid://sicrp3q0w42l" path="res://sounds/ui/hover.ogg" id="2_ds1ap"]
 [ext_resource type="AudioStream" uid="uid://b2hjthxgqvcxa" path="res://sounds/ui/click.ogg" id="2_f7l02"]
@@ -7,14 +7,14 @@
 script/source = "extends Node
 "
 
-[node name="UiSound" type="Node"]
+[node name="UiSound" type="Node" unique_id=32014900]
 script = SubResource("GDScript_sfopn")
 
-[node name="PressAudioPlayer" type="AudioStreamPlayer" parent="."]
+[node name="PressAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1036910407]
 stream = ExtResource("2_f7l02")
 bus = &"UI"
 
-[node name="HoverAudioPlayer" type="AudioStreamPlayer" parent="."]
+[node name="HoverAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1815487983]
 stream = ExtResource("2_ds1ap")
 volume_db = -10.0
 bus = &"UI"

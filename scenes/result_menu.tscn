@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://coltcy4ljevc6"]
+[gd_scene format=3 uid="uid://coltcy4ljevc6"]
 
 [ext_resource type="Material" uid="uid://dk21qjvkacpb1" path="res://materials/blur.tres" id="1_fc626"]
 [ext_resource type="Script" uid="uid://0pbqklp4bg2e" path="res://scripts/result_menu.gd" id="1_tunbr"]
@@ -42,11 +42,11 @@ _data = {
 &"start_pause": SubResource("Animation_myx47")
 }
 
-[node name="ResultMenu" type="CanvasLayer"]
+[node name="ResultMenu" type="CanvasLayer" unique_id=887070144]
 process_mode = 2
 script = ExtResource("1_tunbr")
 
-[node name="Blur" type="ColorRect" parent="."]
+[node name="Blur" type="ColorRect" parent="." unique_id=324071089]
 material = ExtResource("1_fc626")
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,7 +54,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1804482433]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -70,7 +70,7 @@ theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 40
 text = "TEST"
 
-[node name="Scoreboard" parent="." instance=ExtResource("3_h5jln")]
+[node name="Scoreboard" parent="." unique_id=1631274162 instance=ExtResource("3_h5jln")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -83,7 +83,7 @@ offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1729060502]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -98,24 +98,22 @@ grow_vertical = 2
 theme = ExtResource("4_fl5he")
 alignment = 1
 
-[node name="RetryButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="RetryButton" type="Button" parent="VBoxContainer" unique_id=97026162 groups=["buttons", "global_buttons"]]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "RETRY"
 script = ExtResource("3_6do8i")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer" groups=["buttons", "global_buttons"]]
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1165071100 groups=["buttons", "global_buttons"]]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "QUIT"
 script = ExtResource("3_6do8i")
 metadata/_custom_type_script = "uid://nj4e0f4ef1ul"
 
-[node name="BlurAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_kukqi")
-}
+[node name="BlurAnimation" type="AnimationPlayer" parent="." unique_id=795273056]
+libraries/ = SubResource("AnimationLibrary_kukqi")
 
 [connection signal="pressed" from="VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

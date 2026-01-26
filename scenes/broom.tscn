@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl1lj6wk00whi"]
+[gd_scene format=3 uid="uid://dl1lj6wk00whi"]
 
 [ext_resource type="Script" uid="uid://lkx4ykavnfag" path="res://scripts/broom.gd" id="1_gcf3r"]
 [ext_resource type="AudioStream" uid="uid://bs6hw047g3a1a" path="res://sounds/broom_sweep.ogg" id="2_o7a3y"]
-[ext_resource type="ArrayMesh" uid="uid://chn4dtqnyer6h" path="res://models/curling_broom/curling_broom_Brush.res" id="3_vbxak"]
-[ext_resource type="ArrayMesh" uid="uid://bmjd2dvgotfum" path="res://models/curling_broom/curling_broom_Joint.res" id="4_rbgf6"]
-[ext_resource type="ArrayMesh" uid="uid://d0a7fwn5352mw" path="res://models/curling_broom/curling_broom_Handle.res" id="5_x4wwx"]
+[ext_resource type="ArrayMesh" uid="uid://m1bcwekllhhh" path="res://models/curling_broom/curling_broom_Brush.res" id="3_vbxak"]
+[ext_resource type="ArrayMesh" uid="uid://d0pl7f3ygs7wv" path="res://models/curling_broom/curling_broom_Joint.res" id="4_rbgf6"]
+[ext_resource type="ArrayMesh" uid="uid://dj7njs3fl7p1x" path="res://models/curling_broom/curling_broom_Handle.res" id="5_x4wwx"]
 
 [sub_resource type="Animation" id="Animation_o7a3y"]
 length = 0.001
@@ -43,30 +43,28 @@ _data = {
 &"sweep": SubResource("Animation_pn3sd")
 }
 
-[node name="Broom" type="Node3D"]
+[node name="Broom" type="Node3D" unique_id=1550043803]
 script = ExtResource("1_gcf3r")
 
-[node name="Meshes" type="Node3D" parent="."]
+[node name="Meshes" type="Node3D" parent="." unique_id=640353383]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0.1)
 
-[node name="Brush" type="MeshInstance3D" parent="Meshes"]
+[node name="Brush" type="MeshInstance3D" parent="Meshes" unique_id=227305418]
 mesh = ExtResource("3_vbxak")
 
-[node name="Joint" type="MeshInstance3D" parent="Meshes"]
+[node name="Joint" type="MeshInstance3D" parent="Meshes" unique_id=1326789680]
 transform = Transform3D(0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, 0, 5.088, 0)
 mesh = ExtResource("4_rbgf6")
 
-[node name="Handle" type="MeshInstance3D" parent="Meshes/Joint"]
+[node name="Handle" type="MeshInstance3D" parent="Meshes/Joint" unique_id=848898164]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, -5, 0)
 mesh = ExtResource("5_x4wwx")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_o7a3y")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1955785993]
+libraries/ = SubResource("AnimationLibrary_o7a3y")
 speed_scale = 8.0
 
-[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1577731992]
 stream = ExtResource("2_o7a3y")
 volume_db = -25.0
 pitch_scale = 5.0

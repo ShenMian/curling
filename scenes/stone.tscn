@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://lu3u3fp16p6x"]
+[gd_scene format=3 uid="uid://lu3u3fp16p6x"]
 
 [ext_resource type="Script" uid="uid://b3daipni0xpv7" path="res://scripts/stone.gd" id="1_f651v"]
 [ext_resource type="ArrayMesh" uid="uid://bgiehwqdfvmej" path="res://models/curling_stone/curling_stone_Body.res" id="2_f651v"]
@@ -13,7 +13,7 @@ friction = 0.02
 height = 0.254285
 radius = 0.26
 
-[node name="Stone" type="RigidBody3D"]
+[node name="Stone" type="RigidBody3D" unique_id=616368542]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 mass = 17.24
@@ -22,22 +22,22 @@ contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_f651v")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1270316471]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128742, 0)
 shape = SubResource("CylinderShape3D_tuldt")
 
-[node name="Meshes" type="Node3D" parent="."]
+[node name="Meshes" type="Node3D" parent="." unique_id=1205275867]
 transform = Transform3D(-0.009, 0, -7.86805e-10, 0, 0.009, 0, 7.86805e-10, 0, -0.009, 0, 0.184008, -0.00488748)
 
-[node name="Body" type="MeshInstance3D" parent="Meshes"]
+[node name="Body" type="MeshInstance3D" parent="Meshes" unique_id=1774848650]
 layers = 3
 mesh = ExtResource("2_f651v")
 
-[node name="Handle" type="MeshInstance3D" parent="Meshes"]
+[node name="Handle" type="MeshInstance3D" parent="Meshes" unique_id=1925133391]
 layers = 3
 mesh = ExtResource("3_6niw0")
 
-[node name="NumberLabel" type="Label3D" parent="."]
+[node name="NumberLabel" type="Label3D" parent="." unique_id=1186884258]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 layers = 2
 billboard = 1
@@ -45,12 +45,12 @@ no_depth_test = true
 font_size = 96
 outline_size = 24
 
-[node name="SlideAudioPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="SlideAudioPlayer" type="AudioStreamPlayer3D" parent="." unique_id=928362827]
 stream = ExtResource("4_6niw0")
 volume_db = -15.0
 bus = &"SFX"
 
-[node name="ImpactAudioPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="ImpactAudioPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1582992191]
 stream = ExtResource("5_w7uw0")
 volume_db = -15.0
 bus = &"SFX"

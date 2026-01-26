@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cnpxeohkk1cc"]
+[gd_scene format=3 uid="uid://cnpxeohkk1cc"]
 
 [ext_resource type="Script" uid="uid://cs5hreuj4f1h0" path="res://scripts/gameplay.gd" id="1_ct7aa"]
 [ext_resource type="PackedScene" uid="uid://hmtjjdfsi6rp" path="res://scenes/sheet.tscn" id="1_l1v76"]
@@ -85,43 +85,43 @@ background_mode = 2
 sky = SubResource("Sky_tbgi4")
 ambient_light_source = 3
 
-[node name="Gameplay" type="Node3D"]
+[node name="Gameplay" type="Node3D" unique_id=1149356215]
 script = ExtResource("1_ct7aa")
 indicator_color_curve = ExtResource("2_4bh5q")
 
-[node name="Sheet" parent="." instance=ExtResource("1_l1v76")]
+[node name="Sheet" parent="." unique_id=1705111019 instance=ExtResource("1_l1v76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.5178)
 
-[node name="Stones" type="Node" parent="."]
+[node name="Stones" type="Node" parent="." unique_id=1701989312]
 
-[node name="ImpulseIndicator" type="MeshInstance3D" parent="."]
+[node name="ImpulseIndicator" type="MeshInstance3D" parent="." unique_id=1613258510]
 script = ExtResource("3_din8e")
 width = 0.5
 width_curve = SubResource("Curve_din8e")
 points = PackedVector3Array(0, 0, 0, 0, 0, 0)
 metadata/_custom_type_script = "uid://c8rainoecpyie"
 
-[node name="ThirdPersonCamera" type="Camera3D" parent="."]
+[node name="ThirdPersonCamera" type="Camera3D" parent="." unique_id=1166686474]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 29)
 cull_mask = 1048573
 script = ExtResource("4_ocj2s")
 offset = Vector3(0, 2, 1)
 lookat_voffset = 0.5
 
-[node name="Arena" parent="." instance=ExtResource("7_101mb")]
+[node name="Arena" parent="." unique_id=1898760292 instance=ExtResource("7_101mb")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 16.5125)
 
-[node name="Floor" type="MeshInstance3D" parent="Arena"]
+[node name="Floor" type="MeshInstance3D" parent="Arena" unique_id=1902589176]
 transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, -0.00666667, 0.00142002)
 mesh = SubResource("PlaneMesh_e124b")
 skeleton = NodePath("../..")
 
-[node name="LightmapGI" type="LightmapGI" parent="Arena"]
+[node name="LightmapGI" type="LightmapGI" parent="Arena" unique_id=782187721]
 quality = 3
 bounces = 6
 light_data = ExtResource("7_ctvyo")
 
-[node name="Snow" type="GPUParticles3D" parent="."]
+[node name="Snow" type="GPUParticles3D" parent="." unique_id=862858083]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 16.512)
 amount = 1280
 lifetime = 3.0
@@ -129,15 +129,15 @@ visibility_aabb = AABB(-127.107, -109.48, -106.821, 222.649, 109.68, 207.066)
 process_material = SubResource("ParticleProcessMaterial_qixtg")
 draw_pass_1 = SubResource("QuadMesh_bhmdk")
 
-[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight" type="DirectionalLight3D" parent="." unique_id=878137386]
 transform = Transform3D(0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, -0.75, 0.433012, 0, 5, 0)
 layers = 3
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=791126487]
 environment = SubResource("Environment_ct7aa")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=858109532]
 custom_minimum_size = Vector2(260, 260)
 anchors_preset = 1
 anchor_left = 1.0
@@ -146,39 +146,39 @@ offset_left = -256.0
 offset_bottom = 256.0
 grow_horizontal = 0
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="MarginContainer" unique_id=965922832]
 layout_mode = 2
 color = Color(0, 0, 0, 0.470588)
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer" unique_id=1457383575]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 
-[node name="SubViewport" type="SubViewport" parent="MarginContainer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/SubViewportContainer" unique_id=1770177510]
 handle_input_locally = false
 size = Vector2i(256, 256)
 render_target_update_mode = 4
 
-[node name="TopDownCamera" type="Camera3D" parent="MarginContainer/SubViewportContainer/SubViewport"]
+[node name="TopDownCamera" type="Camera3D" parent="MarginContainer/SubViewportContainer/SubViewport" unique_id=1209556989]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
 cull_mask = 2
 projection = 1
 size = 4.14245
 
-[node name="Scoreboard" parent="." instance=ExtResource("5_din8e")]
+[node name="Scoreboard" parent="." unique_id=1590987822 instance=ExtResource("5_din8e")]
 offset_left = 15.0
 offset_top = 15.0
 offset_right = 45.0
 offset_bottom = 45.0
 
-[node name="PauseMenu" parent="." instance=ExtResource("3_ocj2s")]
+[node name="PauseMenu" parent="." unique_id=80448507 instance=ExtResource("3_ocj2s")]
 visible = false
 
-[node name="ResultMenu" parent="." instance=ExtResource("10_ctvyo")]
+[node name="ResultMenu" parent="." unique_id=1394233391 instance=ExtResource("10_ctvyo")]
 visible = false
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1017690613]
 stream = ExtResource("10_hbo4f")
 autoplay = true
 bus = &"Music"
